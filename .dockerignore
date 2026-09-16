@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# Docker build context filter — keep the context small and reproducible.
+# Everything here is either installed/rebuilt inside the image or is
+# developer-only scratch data.
+# ---------------------------------------------------------------------------
+
+# Dependencies (re-installed inside the image from package-lock.json)
+node_modules
+.npm-cache
+
+# Build output (always rebuilt inside the image; host .next is Windows-built)
+.next
+out
+build
+*.tsbuildinfo
+
+# Local env files — production values are injected as build args by compose
+.env
+.env.*
+.env.local
+.env.production
+
+# Dev-only tooling and asset scratch space (never needed inside the image).
+# This also covers _tools/originals (image backups) and _tools/logo-source.png.
+_tools
+
+# Docker metadata itself
+Dockerfile
+Dockerfile.*
+docker-compose*.yml
+.dockerignore
+
+# Editor / OS noise
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.log

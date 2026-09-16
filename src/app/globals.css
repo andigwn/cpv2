@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts (no external font requests, zero layout shift).
+   Archivo = bold editorial display, Inter = body copy. */
+@import "@fontsource-variable/archivo/wght.css";
+@import "@fontsource-variable/inter/wght.css";
+
+/* ------------------------------------------------------------------------- */
+/* Design tokens — bright hospitality palette (light theme, prd.md section 6) */
+/* ------------------------------------------------------------------------- */
+@theme {
+  --font-display: "Archivo Variable", "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Primary accent: clear lagoon water */
+  --color-lagoon-50: #eff9ff;
+  --color-lagoon-100: #dbf0fe;
+  --color-lagoon-200: #bfe5fd;
+  --color-lagoon-300: #92d5fb;
+  --color-lagoon-400: #5fbff6;
+  --color-lagoon-500: #38a5ea;
+  --color-lagoon-600: #2287cd;
+  --color-lagoon-700: #1c6ba6;
+  --color-lagoon-800: #1d5a88;
+  --color-lagoon-900: #1d4b70;
+
+  /* Secondary accent: tropical leaf */
+  --color-leaf-50: #f0fdf4;
+  --color-leaf-100: #dcfce7;
+  --color-leaf-200: #bbf7d0;
+  --color-leaf-300: #86efac;
+  --color-leaf-400: #4ade80;
+  --color-leaf-500: #22c55e;
+  --color-leaf-600: #16a34a;
+  --color-leaf-700: #15803d;
+  --color-leaf-800: #166534;
+  --color-leaf-900: #14532d;
+
+  /* Highlight accent: morning sun */
+  --color-sunshine-50: #fffbeb;
+  --color-sunshine-100: #fef3c7;
+  --color-sunshine-200: #fde68a;
+  --color-sunshine-300: #fcd34d;
+  --color-sunshine-400: #fbbf24;
+  --color-sunshine-500: #f59e0b;
+  --color-sunshine-600: #d97706;
+  --color-sunshine-700: #b45309;
+  --color-sunshine-800: #92400e;
+  --color-sunshine-900: #78350f;
+
+  /* Warm accent: sunset coral (reserved for promotions) */
+  --color-coral-50: #fff5f2;
+  --color-coral-100: #ffe6df;
+  --color-coral-200: #ffcdc0;
+  --color-coral-300: #ffa78f;
+  --color-coral-400: #fb7c5c;
+  --color-coral-500: #ef5b38;
+  --color-coral-600: #d84421;
+
+  /* Neutrals: sand & ink tuned for a light, warm UI */
+  --color-sand-50: #fdfcf9;
+  --color-sand-100: #faf7f0;
+  --color-sand-200: #f2ede2;
+  --color-sand-300: #e6dece;
+
+  --color-ink-50: #f6f8fa;
+  --color-ink-100: #eceff3;
+  --color-ink-200: #d8dee6;
+  --color-ink-300: #b7c1ce;
+  --color-ink-400: #8c99a9;
+  --color-ink-500: #65717f;
+  --color-ink-600: #4b5563;
+  --color-ink-700: #3a4250;
+  --color-ink-800: #262e3a;
+  --color-ink-900: #131922;
+
+  --container-site: 84rem;
+  --container-wide: 96rem;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Base                                                                      */
+/* ------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --site-header-height: 5rem;
+    color-scheme: light;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --site-header-height: 5.75rem;
+    }
+  }
+
+  * {
+    border-color: var(--color-ink-200);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  /* Lenis drives scrolling; native smooth behaviour must stand down. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--color-sand-100);
+    color: var(--color-ink-800);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--color-ink-900);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-lagoon-200);
+    color: var(--color-ink-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lagoon-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-sand-200);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-lagoon-300);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-lagoon-400);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+/* Reusable utilities                                                        */
+/* ------------------------------------------------------------------------- */
+@utility shell {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility shell-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+/** Thin white/light overlay so text stays readable above moving backgrounds. */
+@utility overlay-light {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 88%, transparent),
+    color-mix(in oklab, white 72%, transparent) 45%,
+    color-mix(in oklab, white 90%, transparent)
+  );
+}
+
+@utility overlay-soft {
+  background-image: linear-gradient(
+    to top,
+    color-mix(in oklab, white 92%, transparent),
+    color-mix(in oklab, white 62%, transparent) 55%,
+    color-mix(in oklab, white 25%, transparent)
+  );
+}
+
+@utility text-shadow-hero {
+  text-shadow: 0 2px 24px color-mix(in oklab, white 65%, transparent);
+}
+
+@utility glass-card {
+  background-color: color-mix(in oklab, white 78%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in oklab, white 60%, transparent);
+}
+
+/** Fine grid texture used behind editorial sections. */
+@utility texture-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-ink-300) 40%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-ink-300) 40%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 3.5rem 3.5rem;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+/* Keyframe helpers (marquee, soft bounce)                                   */
+/* ------------------------------------------------------------------------- */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes soft-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.5rem);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee-x 32s linear infinite;
+}
+
+@utility animate-soft-bounce {
+  animation: soft-bounce 2.4s ease-in-out infinite;
+}
