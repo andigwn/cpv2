@@ -37,10 +37,10 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: [
       {
-        url: absoluteUrl("/images/og-cover.jpg"),
-        width: 1600,
-        height: 900,
-        alt: "Kolam resort Qubu Resort dengan air biru dan taman tropis",
+        url: absoluteUrl("/images/qubu-resort-1.jpeg"),
+        width: 1280,
+        height: 853,
+        alt: "Gerbang masuk kawasan Qubu Resort dengan logo Q",
       },
     ],
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
-    images: [absoluteUrl("/images/og-cover.jpg")],
+    images: [absoluteUrl("/images/qubu-resort-1.jpeg")],
   },
   robots: {
     index: true,
@@ -69,7 +69,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="id" className="h-full antialiased">
       <head>
         {/* Warm the connection for the largest hero photo. */}
-        <link rel="preload" as="image" href="/images/hero-resort-pool.jpg" fetchPriority="high" />
+        <link rel="preload" as="image" href="/images/qubu-resort-1.jpeg" fetchPriority="high" />
       </head>
       <body className="flex min-h-full flex-col bg-sand-100">
         <a

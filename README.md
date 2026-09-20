@@ -404,7 +404,60 @@ Ringkasan lengkap ada di [`SECURITY.md`](./SECURITY.md). Poin utamanya:
 
 ---
 
-## 11. Yang perlu diganti sebelum go-live
+## 11. Ritme section & animasi gambar
+
+Setiap halaman dibangun dari dua jenis band yang bergantian di atas **satu kanvas broken-white**
+(`--color-sand-100`). Tidak ada divider antar-section: tidak ada `border-t`, tidak ada pergantian warna
+keras, dan band konten tidak punya background sendiri.
+
+```
+PageHero / Hero  ->  ContentBand  ->  ImageBand  ->  ContentBand  ->  ImageBand  ->  ...
+```
+
+| Komponen | Peran |
+| --- | --- |
+| `components/sections/ImageBand.tsx` | Foto full-viewport yang **di-pin** (`sticky top-0 h-svh`). Diam saat konten naik menutupinya, lalu menutupi konten berikutnya. Zoom loop lambat agar tidak kaku. Props: `image`, `caption`, `fade`, `align`, `priority`. |
+| `components/sections/ContentBand.tsx` | Sheet opak yang **selalu di atas gambar** (`z-10`, tidak di-pin), jadi konten tidak pernah terpotong foto. Foto berikutnya muncul dari bawah setelah sheet bergeser. Prop `hold` memberi sheet satu layar penuh sebelum foto berikutnya mendekat. Isi di-zoom (0,94 -> 1). Props: `spacing`, `width`, `hold`, `id`. |
+| `components/sections/PageHero.tsx` | Band pembuka halaman dalam: foto + judul halaman. |
+| `components/ui/InfoCard.tsx` | Kartu untuk semua konten daftar: nilai, benefit, FAQ, kanal kontak, fitur, spesifikasi. Props: `title`, `body`, `eyebrow`, `icon`, `footer`, `href`, `titleClassName`. |
+| `components/ui/AnimatedText.tsx` | Reveal teks kata-per-kata. Sudah dipakai otomatis oleh `SectionTitle`, jadi setiap judul band ikut beranimasi. |
+
+Cara kerjanya: setiap `ImageBand` memakai `position: sticky` dengan `top: 0` pada containing block yang
+sama (seluruh halaman). Akibatnya:
+
+- foto tetap diam sementara `ContentBand` berikutnya naik menutupinya;
+- `ImageBand` berikutnya naik menutupi foto sebelumnya lalu ikut ter-pin di tempatnya — itulah momen
+  background berganti;
+- saat di-scroll ke atas, urutannya berbalik dengan sendirinya.
+
+Syarat teknis: jangan membungkus konten dengan ancestor ber-`transform`, dan jangan menaruh
+`overflow: hidden` di antara band dan root. Lenis dipasang dengan `root` (native scroll) sehingga
+`sticky` tetap bekerja.
+
+Aturan saat menambah konten baru:
+
+1. **Jangan** menambahkan `border-t`, `border-b`, `divide-y`, atau `SectionBackground` di dalam band.
+   Ritme berasal dari sheet yang naik menutupi foto, bukan dari garis.
+2. Selalu selingi `ImageBand` di antara dua `ContentBand`. Dua sheet bersebelahan akan memunculkan
+   garis sambungan karena masing-masing punya sudut membulat dan shadow atas.
+3. Jaga konten tetap ringkas: satu eyebrow, satu judul pendek, maksimal satu paragraf pendek, dan
+   maksimal 4-6 item per band. Uraian panjang hanya di halaman detail.
+4. Footer sengaja opak (`bg-sand-100`) karena ada foto ter-pin di belakang seluruh halaman.
+5. Setiap band konten minimal setinggi satu layar (`min-h-svh` sudah diatur di `ContentBand`), dan
+   ikut ter-pin dari breakpoint `lg`. Di bawah `lg` band konten mengalir normal: grid kartu menjadi
+   satu kolom yang lebih tinggi dari layar, dan mem-pin-nya akan menyembunyikan konten di balik foto
+   berikutnya. Jaga konten tetap cukup pendek agar muat satu layar di desktop.
+6. Peralihan gambar dan konten memakai gradasi dua arah dari `ContentBand` (`-top-*` dan `-bottom-*`).
+   Jangan menambah garis atau bayangan di tepi band — gradasi itu yang menyatukannya.
+7. Konten yang berupa daftar wajib memakai `InfoCard` di dalam `StaggerContainer`, jangan teks polos
+   berderet. Untuk sub-judul di bawah `SectionTitle`, pakai `AnimatedText`.
+
+`components/sections/home/HighlightCarousel.tsx` sudah tidak dipakai di halaman mana pun (digantikan
+oleh ImageBand). Filenya sengaja dibiarkan utuh bila nanti ingin dipakai kembali.
+
+---
+
+## 12. Yang perlu diganti sebelum go-live
 
 1. Foto: `public/images/*` → fotografi asli klien (ikuti nama file yang ada), lalu jalankan
    `node _tools/optimize-images.mjs --write`.

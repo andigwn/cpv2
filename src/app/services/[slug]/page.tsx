@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ServiceDetailContent } from "@/components/sections/services/ServiceDetailContent";
 import { getServiceBySlug, services } from "@/data/services";
-import { sectionBackgrounds } from "@/data/sectionBackgrounds";
+import { entityBackground } from "@/data/sectionBackgrounds";
 import { SITE } from "@/lib/constants";
 
 type ServiceDetailPageProps = {
@@ -39,6 +39,6 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
   if (!service) notFound();
 
   return (
-    <ServiceDetailContent service={service} heroBackground={sectionBackgrounds.detailPage} />
+    <ServiceDetailContent service={service} heroBackground={entityBackground(service.image)} />
   );
 }

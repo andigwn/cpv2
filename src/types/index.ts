@@ -51,6 +51,25 @@ export type Stat = {
   label: string;
 };
 
+/** Content of the living video band on the home page (the video twin of ImageBand). */
+export type VideoBandContent = {
+  id: string;
+  /** Video path; scrubbed by scroll while the band is pinned (reversible). */
+  src: string;
+  /** Shown before the footage is ready and for reduced-motion visitors. */
+  poster: ImageAsset;
+  eyebrow: string;
+  title: string;
+  description: string;
+  href?: string;
+  ctaLabel?: string;
+  /**
+   * Optional frame crop for footage that carries browser chrome (screen recordings):
+   * the frame is scaled around this origin so only the page area stays visible.
+   */
+  crop?: { scale: number; origin: string };
+};
+
 export type HighlightSlide = {
   id: string;
   /** Short label rendered inside the clickable chip indicator. */
@@ -128,7 +147,8 @@ export type Testimonial = {
   quote: string;
   name: string;
   role: string;
-  image: ImageAsset;
+  /** Optional: real guest portraits are not available yet — omit rather than fake one. */
+  image?: ImageAsset;
 };
 
 export type FacilityShowcase = {

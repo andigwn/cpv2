@@ -24,13 +24,16 @@ export const businessUnits: BusinessUnit[] = [
       "Fasilitas penunjang meliputi kolam dewasa dan kolam anak, pusat kebugaran, ruang serbaguna, serta jalur pejalan kaki beratap menuju QHall dan Paradis Q.",
     ],
     image: {
-      src: "/images/hero-hotel-exterior.jpg",
-      alt: "Fasad Hotel Q dengan taman tropis di siang hari",
+      src: "/images/hotel-q-1.jpeg",
+      alt: "Fasad Hotel Q dengan lapisan kisi geometris merah dan putih",
     },
     gallery: [
-      { src: "/images/about-lobby.jpg", alt: "Lobi Hotel Q dengan sofa dan tanaman hijau" },
-      { src: "/images/work-suite.jpg", alt: "Kamar Hotel Q dengan tempat tidur besar" },
-      { src: "/images/hero-pool-daylight.jpg", alt: "Kolam Hotel Q dengan kursi santai" },
+      {
+        src: "/images/hotel-q-2.jpeg",
+        alt: "Kamar Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
+      },
+      { src: "/images/patio-1.jpeg", alt: "Resto Patio di lantai dasar Hotel Q" },
+      { src: "/images/qubu-resort-3.jpeg", alt: "Gerbang masuk kawasan Qubu Resort" },
     ],
     features: [
       "268 kamar dalam lima tipe",
@@ -64,13 +67,13 @@ export const businessUnits: BusinessUnit[] = [
           "Pada sore hari teras Patio berubah menjadi area makan santai dengan live acoustic tiga kali seminggu.",
         ],
         image: {
-          src: "/images/service-restaurant.jpg",
-          alt: "Resto Patio dengan penataan meja dan cahaya alami",
+          src: "/images/patio-1.jpeg",
+          alt: "Interior Resto Patio dengan meja kayu dan rak tanaman gantung",
         },
         gallery: [
-          { src: "/images/work-restaurant.jpg", alt: "Interior Resto Patio dengan meja kayu" },
-          { src: "/images/service-cabana.jpg", alt: "Meja makan privat di area teras Patio" },
-          { src: "/images/news-summer-promo.jpg", alt: "Suasana makan siang yang terang" },
+          { src: "/images/patio-2.jpeg", alt: "Suasana makan di Resto Patio" },
+          { src: "/images/hotel-q-1.jpeg", alt: "Fasad Hotel Q tempat Resto Patio berada" },
+          { src: "/images/qubu-resort-3.jpeg", alt: "Gerbang kawasan Qubu Resort" },
         ],
         features: [
           "180 kursi dalam ruangan dan 60 kursi teras",
@@ -104,13 +107,16 @@ export const businessUnits: BusinessUnit[] = [
       "Tim event QHall menangani perencanaan teknis, katering hingga 2.000 pax, serta koordinasi akomodasi bagi delegasi yang menginap di Hotel Q dan Hotel Qubu Suites.",
     ],
     image: {
-      src: "/images/work-convention.jpg",
-      alt: "Ballroom QHall yang luas dengan penataan meja",
+      src: "/images/qhall-1.jpeg",
+      alt: "Fasad QHall dengan kanopi kawat dekoratif",
     },
     gallery: [
-      { src: "/images/service-ballroom.jpg", alt: "Ballroom QHall dengan kursi tertata rapi" },
-      { src: "/images/news-mice.jpg", alt: "Suasana konferensi di QHall" },
-      { src: "/images/about-lobby.jpg", alt: "Pre-function lounge QHall" },
+      {
+        src: "/images/qhall-5.jpeg",
+        alt: "Ballroom QHall dengan dekorasi pernikahan dan lampu gantung",
+      },
+      { src: "/images/qhall-2.jpeg", alt: "Ruang QHall dengan penataan kursi acara" },
+      { src: "/images/qhall-3.jpeg", alt: "Interior QHall dengan plafon tinggi" },
     ],
     features: [
       "Ballroom 1.800 m2 bebas pilar, plafon 9 meter",
@@ -144,13 +150,13 @@ export const businessUnits: BusinessUnit[] = [
           "Dapur Mahoni berbagi fasilitas dengan dapur katering QHall sehingga dapat melayani hingga 1.200 pax untuk acara besar.",
         ],
         image: {
-          src: "/images/work-restaurant.jpg",
-          alt: "Interior Restoran Mahoni dengan panel kayu",
+          src: "/images/mahoni-1.jpeg",
+          alt: "Ruang jamuan Restoran Mahoni dengan meja bundar tertata",
         },
         gallery: [
-          { src: "/images/service-restaurant.jpg", alt: "Meja jamuan di Restoran Mahoni" },
-          { src: "/images/service-sunset-deck.jpg", alt: "Area makan luar Restoran Mahoni" },
-          { src: "/images/news-mice.jpg", alt: "Jamuan delegasi di Mahoni" },
+          { src: "/images/mahoni-2.jpeg", alt: "Suasana jamuan di Restoran Mahoni" },
+          { src: "/images/qhall-5.jpeg", alt: "Ballroom QHall dengan dekorasi acara" },
+          { src: "/images/qhall-6.jpeg", alt: "Suasana acara di kawasan QHall" },
         ],
         features: [
           "320 kursi dengan tata letak fleksibel",
@@ -184,8 +190,8 @@ export const businessUnits: BusinessUnit[] = [
       "Fasilitas penunjang meliputi 320 loker, ruang bilas air hangat, ruang laktasi, dan Food Corner yang melayani pengunjung sepanjang jam operasional.",
     ],
     image: {
-      src: "/images/service-waterpark.jpg",
-      alt: "Seluncuran Paradis Q dengan percikan air di siang hari",
+      src: "/images/paradis-q-1.jpeg",
+      alt: "Area makan beratap di kawasan Paradis Q",
     },
     gallery: [
       { src: "/images/hero-waterpark-pool.jpg", alt: "Kolam ombak Paradis Q" },
@@ -263,13 +269,13 @@ export const businessUnits: BusinessUnit[] = [
       "Tamu suite mendapat akses ke Executive Lounge untuk sarapan privat, butler service 24 jam, dan late check-out hingga pukul 15.00. Di dalam gedung ini juga beroperasi Resto Embun, Gym, dan Spa.",
     ],
     image: {
-      src: "/images/work-suite.jpg",
-      alt: "Suite Hotel Qubu dengan tempat tidur besar dan jendela lebar",
+      src: "/images/qubu-suites-1.jpeg",
+      alt: "Suite Hotel Qubu Suites dengan tempat tidur king dan aksen kayu",
     },
     gallery: [
-      { src: "/images/hero-hotel-room.jpg", alt: "Suite dengan pencahayaan alami" },
-      { src: "/images/work-pool-deck.jpg", alt: "Dek kolam privat di depan suite" },
-      { src: "/images/hero-pool-daylight.jpg", alt: "Area kolam Hotel Qubu Suites" },
+      { src: "/images/qubu-suites-2.jpeg", alt: "Suite Hotel Qubu Suites dengan area duduk" },
+      { src: "/images/qubu-suites-3.jpeg", alt: "Kamar suite dengan pencahayaan hangat" },
+      { src: "/images/qubu-suites-4.jpeg", alt: "Detail interior suite Hotel Qubu Suites" },
     ],
     features: [
       "144 suite dalam empat tipe",
@@ -302,13 +308,13 @@ export const businessUnits: BusinessUnit[] = [
           "Mulai pukul 18.00 Resto Embun membuka sesi makan malam dengan menu degustasi lima hidangan.",
         ],
         image: {
-          src: "/images/work-sky-lounge.jpg",
-          alt: "Resto Embun dengan pemandangan taman di siang hari",
+          src: "/images/embun-1.jpeg",
+          alt: "Resto Embun dengan area buffet dan meja marmer hitam",
         },
         gallery: [
-          { src: "/images/service-sunset-deck.jpg", alt: "Area makan Resto Embun menghadap taman" },
-          { src: "/images/work-restaurant.jpg", alt: "Interior Resto Embun" },
-          { src: "/images/hero-pool-daylight.jpg", alt: "Taman di sekitar Resto Embun" },
+          { src: "/images/embun-1.jpeg", alt: "Area buffet Resto Embun" },
+          { src: "/images/qubu-suites-2.jpeg", alt: "Suite di Hotel Qubu Suites tempat Resto Embun berada" },
+          { src: "/images/qubu-suites-4.jpeg", alt: "Interior Hotel Qubu Suites" },
         ],
         features: [
           "140 kursi menghadap taman",
@@ -340,13 +346,13 @@ export const businessUnits: BusinessUnit[] = [
           "Pelatih pribadi tersedia atas permintaan, begitu pula program latihan pagi di area taman.",
         ],
         image: {
-          src: "/images/service-fitness.jpg",
-          alt: "Ruang Gym dengan peralatan modern dan jendela besar",
+          src: "/images/spa-gym-2.jpeg",
+          alt: "Ruang Gym dengan treadmill dan rak dumbbell",
         },
         gallery: [
-          { src: "/images/service-fitness.jpg", alt: "Area cardio Gym" },
-          { src: "/images/about-hospitality-team.jpg", alt: "Pelatih mendampingi tamu di Gym" },
-          { src: "/images/hero-pool-daylight.jpg", alt: "Area taman untuk latihan pagi" },
+          { src: "/images/spa-gym-2.jpeg", alt: "Area cardio Gym dengan jendela besar" },
+          { src: "/images/qubu-suites-3.jpeg", alt: "Suite di Hotel Qubu Suites tempat Gym berada" },
+          { src: "/images/qubu-suites-4.jpeg", alt: "Interior Hotel Qubu Suites" },
         ],
         features: [
           "Akses 24 jam dengan kartu kamar",
@@ -377,13 +383,13 @@ export const businessUnits: BusinessUnit[] = [
           "Fasilitas pendukung meliputi sauna inframerah, kolam hidroterapi air hangat, ruang relaksasi, dan studio yoga dengan kelas pagi harian.",
         ],
         image: {
-          src: "/images/service-spa.jpg",
-          alt: "Ruang perawatan Spa dengan handuk putih dan dekorasi alami",
+          src: "/images/spa-gym-1.jpeg",
+          alt: "Ruang perawatan Spa dengan dua tempat tidur dan tanaman",
         },
         gallery: [
-          { src: "/images/work-spa.jpg", alt: "Interior Spa dengan elemen kayu dan tanaman" },
-          { src: "/images/about-heritage.jpg", alt: "Kebun herbal bahan perawatan Spa" },
-          { src: "/images/about-hospitality-team.jpg", alt: "Terapis Spa menyiapkan perawatan" },
+          { src: "/images/spa-gym-1.jpeg", alt: "Ruang perawatan couple di Spa" },
+          { src: "/images/qubu-suites-1.jpeg", alt: "Suite di Hotel Qubu Suites tempat Spa berada" },
+          { src: "/images/qubu-suites-2.jpeg", alt: "Area suite Hotel Qubu Suites" },
         ],
         features: [
           "Delapan ruang perawatan, enam di antaranya couple",
@@ -417,13 +423,13 @@ export const businessUnits: BusinessUnit[] = [
       "Villa cocok untuk keluarga besar, grup kecil, maupun tamu yang menginap jangka panjang dengan kebutuhan privasi lebih.",
     ],
     image: {
-      src: "/images/hero-beach-resort.jpg",
-      alt: "Villa privat dengan kolam dan taman menghadap pantai",
+      src: "/images/villa-1.jpeg",
+      alt: "Kamar villa dengan panel kayu dan pencahayaan hangat",
     },
     gallery: [
-      { src: "/images/work-cabana-club.jpg", alt: "Area santai villa dengan kursi dan payung" },
-      { src: "/images/work-pool-deck.jpg", alt: "Kolam pribadi villa" },
-      { src: "/images/cta-banner.jpg", alt: "Pemandangan kawasan villa di siang hari" },
+      { src: "/images/villa-2.jpeg", alt: "Ruang keluarga villa dengan tangga kayu" },
+      { src: "/images/villa-3.jpeg", alt: "Interior villa Qubu Resort" },
+      { src: "/images/villa-5.jpeg", alt: "Sudut lain villa dengan sentuhan kayu" },
     ],
     features: [
       "Enam villa privat, 2 sampai 4 kamar tidur",

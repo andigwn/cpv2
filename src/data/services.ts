@@ -23,8 +23,8 @@ export const services: Service[] = [
       "Untuk kenyamanan keluarga, tersedia 320 loker berukuran besar, ruang laktasi, area bilas air hangat, dan delapan food truck bertema nusantara di dalam kawasan.",
     ],
     image: {
-      src: "/images/service-waterpark.jpg",
-      alt: "Seluncuran waterpark dengan percikan air di bawah sinar matahari",
+      src: "/images/paradis-q-1.jpeg",
+      alt: "Area makan beratap di kawasan Paradis Q",
     },
     gallery: [
       {
@@ -74,21 +74,21 @@ export const services: Service[] = [
       "Tamu suite mendapatkan akses ke Executive Lounge untuk sarapan privat, layanan butler 24 jam, dan late check-out hingga pukul 15.00.",
     ],
     image: {
-      src: "/images/work-suite.jpg",
-      alt: "Kamar hotel terang dengan tempat tidur besar dan jendela menghadap taman",
+      src: "/images/qubu-suites-1.jpeg",
+      alt: "Suite Hotel Qubu Suites dengan tempat tidur king dan aksen kayu",
     },
     gallery: [
       {
-        src: "/images/hero-hotel-room.jpg",
-        alt: "Suite dengan tempat tidur king dan pencahayaan alami",
+        src: "/images/qubu-suites-2.jpeg",
+        alt: "Suite dengan area duduk dan pencahayaan alami",
       },
       {
-        src: "/images/work-pool-deck.jpg",
-        alt: "Dek kolam pribadi di depan suite",
+        src: "/images/qubu-suites-3.jpeg",
+        alt: "Kamar suite dengan tempat tidur dan panel kayu",
       },
       {
-        src: "/images/about-lobby.jpg",
-        alt: "Lobi hotel terang dengan sofa dan tanaman",
+        src: "/images/qubu-suites-4.jpeg",
+        alt: "Detail interior suite Hotel Qubu Suites",
       },
     ],
     features: [
@@ -176,21 +176,21 @@ export const services: Service[] = [
       "Fasilitas pendukung meliputi sauna inframerah, kolam hidroterapi air hangat, ruang relaksasi, serta studio yoga dengan kelas pagi setiap hari.",
     ],
     image: {
-      src: "/images/service-spa.jpg",
-      alt: "Ruang perawatan spa dengan handuk putih dan dekorasi alami",
+      src: "/images/spa-gym-1.jpeg",
+      alt: "Ruang perawatan spa dengan dua tempat tidur dan dekorasi alami",
     },
     gallery: [
       {
-        src: "/images/work-spa.jpg",
-        alt: "Interior spa terang dengan elemen kayu dan tanaman",
+        src: "/images/spa-gym-2.jpeg",
+        alt: "Ruang fitness dengan treadmill dan rak dumbbell",
       },
       {
-        src: "/images/service-fitness.jpg",
-        alt: "Ruang fitness dengan peralatan modern dan jendela besar",
+        src: "/images/qubu-suites-3.jpeg",
+        alt: "Suite Hotel Qubu Suites tempat spa berada",
       },
       {
-        src: "/images/about-hospitality-team.jpg",
-        alt: "Terapis spa menyiapkan perawatan",
+        src: "/images/qubu-suites-4.jpeg",
+        alt: "Interior Hotel Qubu Suites",
       },
     ],
     features: [
@@ -227,21 +227,21 @@ export const services: Service[] = [
       "Mahoni di QHall melayani jamuan dan resepsi dengan interior kayu mahoni berkapasitas 320 kursi, sementara Resto Embun di Qubu Suites menghadirkan sarapan buffet dan menu plant-forward dengan 40% hidangan berbasis sayuran.",
     ],
     image: {
-      src: "/images/service-restaurant.jpg",
-      alt: "Restoran terang dengan penataan meja dan cahaya alami",
+      src: "/images/patio-1.jpeg",
+      alt: "Interior Resto Patio dengan meja kayu dan rak tanaman",
     },
     gallery: [
       {
-        src: "/images/work-restaurant.jpg",
-        alt: "Interior restoran hotel dengan meja kayu",
+        src: "/images/mahoni-1.jpeg",
+        alt: "Ruang jamuan Restoran Mahoni dengan meja bundar",
       },
       {
-        src: "/images/service-sunset-deck.jpg",
-        alt: "Area makan luar ruang menghadap laut",
+        src: "/images/embun-1.jpeg",
+        alt: "Resto Embun dengan area buffet dan meja marmer hitam",
       },
       {
-        src: "/images/service-cabana.jpg",
-        alt: "Meja makan privat di cabana tepi kolam",
+        src: "/images/q-rooftop-4-indoor.jpeg",
+        alt: "Ruang makan indoor dengan meja bundar dan buffet",
       },
     ],
     features: [
@@ -278,21 +278,21 @@ export const services: Service[] = [
       "Tim event kami menangani perencanaan teknis, katering untuk hingga 2.000 pax, serta koordinasi akomodasi bagi delegasi yang menginap di properti kami.",
     ],
     image: {
-      src: "/images/work-convention.jpg",
-      alt: "Ballroom konvensi luas dengan penataan meja dan pencahayaan terang",
+      src: "/images/qhall-1.jpeg",
+      alt: "Fasad QHall dengan kanopi kawat dekoratif",
     },
     gallery: [
       {
-        src: "/images/service-ballroom.jpg",
-        alt: "Ballroom dengan kursi tertata rapi untuk acara",
+        src: "/images/qhall-5.jpeg",
+        alt: "Ballroom QHall dengan dekorasi acara dan lampu gantung",
       },
       {
-        src: "/images/news-mice.jpg",
-        alt: "Suasana konferensi dengan peserta dan panggung",
+        src: "/images/qhall-2.jpeg",
+        alt: "Ruang QHall dengan penataan kursi acara",
       },
       {
-        src: "/images/about-lobby.jpg",
-        alt: "Pre-function lounge dengan sofa dan meja",
+        src: "/images/qhall-3.jpeg",
+        alt: "Interior QHall dengan plafon tinggi",
       },
     ],
     features: [

@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { headingReveal, staggerContainer, staggerItem, viewportOnce } from "@/lib/animations";
+import { staggerContainer, staggerItem, viewportOnce } from "@/lib/animations";
+import { AnimatedText } from "@/components/ui/AnimatedText";
 
 type SectionTitleProps = {
   eyebrow?: string;
@@ -16,7 +17,12 @@ type SectionTitleProps = {
   plate?: boolean;
 };
 
-/** Editorial section heading used by every section on the site. */
+/**
+ * Editorial section heading used by every content band.
+ *
+ * The title reveals word by word (AnimatedText) instead of appearing as a static block,
+ * so every band has movement in the type itself, not only in the images.
+ */
 export function SectionTitle({
   eyebrow,
   title,
@@ -28,6 +34,7 @@ export function SectionTitle({
   plate = false,
 }: SectionTitleProps) {
   const centered = align === "center";
+  const light = tone === "light";
 
   return (
     <motion.div
@@ -47,7 +54,7 @@ export function SectionTitle({
           variants={staggerItem}
           className={cn(
             "inline-flex w-fit items-center gap-2 text-[0.7rem] font-semibold tracking-[0.28em] uppercase",
-            tone === "light" ? "text-white/90" : "text-lagoon-700",
+            light ? "text-white/90" : "text-lagoon-700",
             centered && "self-center",
           )}
         >
@@ -56,23 +63,23 @@ export function SectionTitle({
         </motion.span>
       ) : null}
 
-      <motion.h2
-        variants={headingReveal}
+      <AnimatedText
+        as="h2"
+        text={title}
+        stagger={0.05}
         className={cn(
           "max-w-3xl text-3xl leading-[1.05] sm:text-4xl lg:text-5xl",
-          tone === "light" && "text-white drop-shadow-[0_2px_18px_rgba(19,25,34,0.35)]",
+          light && "text-white drop-shadow-[0_2px_18px_rgba(19,25,34,0.35)]",
           titleClassName,
         )}
-      >
-        {title}
-      </motion.h2>
+      />
 
       {description ? (
         <motion.p
           variants={staggerItem}
           className={cn(
             "max-w-2xl text-base leading-relaxed sm:text-lg",
-            tone === "light" ? "text-white/85" : "text-ink-600",
+            light ? "text-white/85" : "text-ink-600",
           )}
         >
           {description}

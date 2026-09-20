@@ -24,7 +24,11 @@ const CSP = [
   "worker-src 'self' blob:",
   // The contact page embeds the keyless Google Maps iframe (output=embed).
   "frame-src https://www.google.com",
-  "upgrade-insecure-requests",
+  // NOTE: "upgrade-insecure-requests" is deliberately NOT set. When the site is reached
+  // over plain HTTP (a staging box, a LAN IP, or a container addressed by hostname), that
+  // directive rewrites the CSS and JS requests to https://, which then fail and the page
+  // renders with no stylesheet at all. Only enable it once the deployment is guaranteed
+  // to be HTTPS-only.
 ].join("; ");
 
 const securityHeaders: { key: string; value: string }[] =
@@ -49,6 +53,11 @@ const nextConfig: NextConfig = {
 
   // Do not advertise the framework in every response.
   poweredByHeader: false,
+
+  // Development-only: allow the dev server to be reached through a container hostname
+  // (e.g. the Playwright browser at host.docker.internal). Without this, Next blocks its
+  // own dev resources as cross-origin and the dev client reloads the page repeatedly.
+  allowedDevOrigins: ["host.docker.internal"],
 
   // Inside Docker (DOCKER_BUILD=1) emit a self-contained server bundle so the
   // runtime image only ships the traced production files — see `Dockerfile`.
@@ -93,9 +102,7 @@ const nextConfig: NextConfig = {
       // "headers" array is empty ("Invalid header found"), and in development
       // securityHeaders is intentionally empty because the dev server needs eval and
       // websockets for hot reload.
-      ...(securityHeaders.length > 0
-        ? [{ source: "/(.*)", headers: securityHeaders }]
-        : []),
+      ...(securityHeaders.length > 0 ? [{ source: "/(.*)", headers: securityHeaders }] : []),
       { source: "/images/:path*", headers: [{ key: "Cache-Control", value: assetCache }] },
       { source: "/videos/:path*", headers: [{ key: "Cache-Control", value: assetCache }] },
     ];

@@ -107,10 +107,7 @@ export function Navbar() {
                     {isActive ? (
                       <motion.span
                         layoutId="nav-active"
-                        className={cn(
-                          "absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full",
-                          overHero ? "bg-white" : "bg-lagoon-600",
-                        )}
+                        className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-linear-to-r from-[#FFE52C] to-[#EF723D]"
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                       />
                     ) : null}
@@ -121,17 +118,7 @@ export function Navbar() {
           </ul>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <a
-              href={`tel:${SITE.contact.phone.replace(/[^+\d]/g, "")}`}
-              className={cn(
-                "hidden items-center gap-2 text-sm font-medium transition-colors duration-300 xl:inline-flex",
-                overHero ? "text-white/85 hover:text-white" : "text-ink-600 hover:text-ink-900",
-              )}
-            >
-              <Phone className="h-4 w-4" aria-hidden />
-              {SITE.contact.phone}
-            </a>
-            <Button href="/contact" size="sm" variant={overHero ? "primary" : "primary"}>
+            <Button href="/contact" size="sm" variant="primary">
               Reservasi
             </Button>
           </div>
@@ -162,7 +149,7 @@ export function Navbar() {
           aria-hidden
           className={cn(
             "absolute inset-x-0 bottom-0 h-0.5 origin-left",
-            overHero ? "bg-white/70" : "from-lagoon-500 to-leaf-500 bg-linear-to-r",
+            overHero ? "bg-white/70" : "from-[#FFE52C] to-[#EF723D] bg-linear-to-r",
           )}
           style={{ scaleX: progress }}
         />

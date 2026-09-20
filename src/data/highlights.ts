@@ -13,8 +13,8 @@ export const highlightSlides: HighlightSlide[] = [
     description:
       "Dari kolam balita bersuhu hangat sampai seluncuran racer 22 meter, waterpark kami menjadi pusat liburan keluarga di Bali selatan.",
     image: {
-      src: "/images/hero-waterpark-pool.jpg",
-      alt: "Kolam waterpark biru dengan seluncuran dan pengunjung di siang hari",
+      src: "/images/paradis-q-1.jpeg",
+      alt: "Area beratap di kawasan Paradis Q",
     },
     href: "/services/paradis-q",
     ctaLabel: "Lihat Waterpark",
@@ -27,8 +27,8 @@ export const highlightSlides: HighlightSlide[] = [
     description:
       "Interior bernuansa tropis modern, linen katun organik, dan balkon privat untuk menikmati matahari terbit di atas Teluk Benoa.",
     image: {
-      src: "/images/hero-hotel-room.jpg",
-      alt: "Kamar hotel terang dengan tempat tidur besar dan jendela besar",
+      src: "/images/qubu-suites-1.jpeg",
+      alt: "Suite Hotel Qubu Suites dengan tempat tidur king",
     },
     href: "/services/qubu-suites",
     ctaLabel: "Lihat Kamar",
@@ -55,8 +55,8 @@ export const highlightSlides: HighlightSlide[] = [
     description:
       "Delapan ruang perawatan, sauna inframerah, dan kolam hidroterapi dengan pemandangan taman tropis.",
     image: {
-      src: "/images/service-spa.jpg",
-      alt: "Ruang perawatan spa terang dengan handuk putih dan tanaman hijau",
+      src: "/images/spa-gym-1.jpeg",
+      alt: "Ruang perawatan spa dengan dua tempat tidur",
     },
     href: "/services/q-spa-wellness",
     ctaLabel: "Lihat Spa",
@@ -69,8 +69,8 @@ export const highlightSlides: HighlightSlide[] = [
     description:
       "Didukung pre-function lounge, delapan ruang breakout, dan tim event teknis yang siaga penuh selama acara berlangsung.",
     image: {
-      src: "/images/service-ballroom.jpg",
-      alt: "Ballroom luas dengan penataan meja dan pencahayaan terang",
+      src: "/images/qhall-1.jpeg",
+      alt: "Fasad QHall dengan kanopi kawat dekoratif",
     },
     href: "/services/qhall",
     ctaLabel: "Lihat Convention Centre",

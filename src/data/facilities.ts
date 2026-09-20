@@ -22,8 +22,8 @@ export const facilityShowcase: Facility[] = [
     description:
       "18 seluncuran, kolam ombak, dan lazy river dengan pengawasan lifeguard bersertifikat.",
     image: {
-      src: "/images/service-waterpark.jpg",
-      alt: "Seluncuran waterpark dengan air biru dan pengunjung",
+      src: "/images/paradis-q-1.jpeg",
+      alt: "Area beratap di kawasan Paradis Q",
     },
     icon: "waves",
     iconKey: "waves",
@@ -46,8 +46,8 @@ export const facilityShowcase: Facility[] = [
     title: "Spa & Wellness",
     description: "Delapan ruang perawatan, sauna inframerah, hidroterapi, dan studio yoga.",
     image: {
-      src: "/images/service-spa.jpg",
-      alt: "Ruang perawatan spa dengan tempat tidur putih",
+      src: "/images/spa-gym-1.jpeg",
+      alt: "Ruang perawatan spa dengan dua tempat tidur dan tanaman",
     },
     icon: "flower",
     iconKey: "flower",
@@ -59,8 +59,8 @@ export const facilityShowcase: Facility[] = [
     description:
       "Dari all-day dining dan seafood grill sampai omakase counter dan pastry lounge.",
     image: {
-      src: "/images/service-restaurant.jpg",
-      alt: "Teras restoran dengan tanaman dan pemandangan laut",
+      src: "/images/patio-1.jpeg",
+      alt: "Interior Resto Patio dengan meja kayu dan rak tanaman",
     },
     icon: "utensils",
     iconKey: "utensils",
@@ -72,8 +72,8 @@ export const facilityShowcase: Facility[] = [
     description:
       "Ballroom bebas pilar 1.800 m², delapan ruang breakout, katering hingga 2.000 pax.",
     image: {
-      src: "/images/service-ballroom.jpg",
-      alt: "Ruang konferensi dengan deretan kursi dan panggung",
+      src: "/images/qhall-1.jpeg",
+      alt: "Fasad QHall dengan kanopi kawat dekoratif",
     },
     icon: "presentation",
     iconKey: "presentation",

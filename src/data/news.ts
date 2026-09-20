@@ -17,8 +17,8 @@ export const newsPosts: NewsPost[] = [
     readingMinutes: 3,
     author: "Marketing Qubu Resort",
     image: {
-      src: "/images/news-summer-promo.jpg",
-      alt: "Pemandangan pantai cerah dengan kursi santai menghadap laut biru",
+      src: "/images/qubu-suites-2.jpeg",
+      alt: "Suite Hotel Qubu Suites untuk paket liburan sekolah",
     },
     featured: true,
     tags: ["promo", "keluarga", "waterpark"],
@@ -38,8 +38,8 @@ export const newsPosts: NewsPost[] = [
     readingMinutes: 4,
     author: "Tim Paradis Q",
     image: {
-      src: "/images/news-waterpark-event.jpg",
-      alt: "Pengunjung bermain di seluncuran waterpark dengan percikan air",
+      src: "/images/paradis-q-1.jpeg",
+      alt: "Area beratap di kawasan Paradis Q tempat karnival air digelar",
     },
     featured: true,
     tags: ["event", "waterpark", "festival"],
@@ -59,8 +59,8 @@ export const newsPosts: NewsPost[] = [
     readingMinutes: 3,
     author: "Divisi Operasional",
     image: {
-      src: "/images/news-renovation.jpg",
-      alt: "Bangunan hotel dengan jalur taman hijau dan pepohonan",
+      src: "/images/qubu-suites-1.jpeg",
+      alt: "Suite yang direnovasi di Qubu Suites sayap timur",
     },
     featured: false,
     tags: ["renovasi", "hotel", "efisiensi"],
@@ -80,8 +80,8 @@ export const newsPosts: NewsPost[] = [
     readingMinutes: 4,
     author: "QHall",
     image: {
-      src: "/images/news-mice.jpg",
-      alt: "Ruang konferensi dengan peserta dan panggung utama",
+      src: "/images/qhall-1.jpeg",
+      alt: "Fasad QHall tempat konferensi regional berlangsung",
     },
     featured: false,
     tags: ["mice", "konferensi", "event"],

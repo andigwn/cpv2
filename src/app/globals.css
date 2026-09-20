@@ -1,61 +1,66 @@
 @import "tailwindcss";
 
 /* Self-hosted variable fonts (no external font requests, zero layout shift).
-   Archivo = bold editorial display, Inter = body copy. */
-@import "@fontsource-variable/archivo/wght.css";
-@import "@fontsource-variable/inter/wght.css";
+   Fraunces = warm soft-serif display with optical sizing, Plus Jakarta Sans = body copy. */
+@import "@fontsource-variable/fraunces/standard.css";
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
 
 /* ------------------------------------------------------------------------- */
-/* Design tokens — bright hospitality palette (light theme, prd.md section 6) */
+/* Design tokens — hospitality palette: signature yellow-orange gradient,     */
+/* brand green and lime leaf (klien: #FFE52C→#EF723D, #0B6C3C, #8BC91B)       */
 /* ------------------------------------------------------------------------- */
 @theme {
-  --font-display: "Archivo Variable", "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans:
+    "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Primary accent: clear lagoon water */
-  --color-lagoon-50: #eff9ff;
-  --color-lagoon-100: #dbf0fe;
-  --color-lagoon-200: #bfe5fd;
-  --color-lagoon-300: #92d5fb;
-  --color-lagoon-400: #5fbff6;
-  --color-lagoon-500: #38a5ea;
-  --color-lagoon-600: #2287cd;
-  --color-lagoon-700: #1c6ba6;
-  --color-lagoon-800: #1d5a88;
-  --color-lagoon-900: #1d4b70;
+  /* Primary accent: brand green (#0B6C3C) */
+  --color-lagoon-50: #eef8f2;
+  --color-lagoon-100: #d6f0e0;
+  --color-lagoon-200: #b0e0c5;
+  --color-lagoon-300: #7fcba3;
+  --color-lagoon-400: #4cb07d;
+  --color-lagoon-500: #2a9260;
+  --color-lagoon-600: #0b6c3c;
+  --color-lagoon-700: #095a33;
+  --color-lagoon-800: #0a482a;
+  --color-lagoon-900: #093c24;
 
-  /* Secondary accent: tropical leaf */
-  --color-leaf-50: #f0fdf4;
-  --color-leaf-100: #dcfce7;
-  --color-leaf-200: #bbf7d0;
-  --color-leaf-300: #86efac;
-  --color-leaf-400: #4ade80;
-  --color-leaf-500: #22c55e;
-  --color-leaf-600: #16a34a;
-  --color-leaf-700: #15803d;
-  --color-leaf-800: #166534;
-  --color-leaf-900: #14532d;
+  /* Secondary accent: lime leaf (#8BC91B) */
+  --color-leaf-50: #f8fce9;
+  --color-leaf-100: #eff8cd;
+  --color-leaf-200: #def1a1;
+  --color-leaf-300: #c6e66b;
+  --color-leaf-400: #aed93f;
+  --color-leaf-500: #8bc91b;
+  --color-leaf-600: #6ba20f;
+  --color-leaf-700: #517c10;
+  --color-leaf-800: #426214;
+  --color-leaf-900: #385315;
 
-  /* Highlight accent: morning sun */
+  /* Highlight accent: signature yellow (#FFE52C) */
   --color-sunshine-50: #fffbeb;
-  --color-sunshine-100: #fef3c7;
-  --color-sunshine-200: #fde68a;
-  --color-sunshine-300: #fcd34d;
-  --color-sunshine-400: #fbbf24;
-  --color-sunshine-500: #f59e0b;
-  --color-sunshine-600: #d97706;
-  --color-sunshine-700: #b45309;
-  --color-sunshine-800: #92400e;
-  --color-sunshine-900: #78350f;
+  --color-sunshine-100: #fff5c2;
+  --color-sunshine-200: #ffeb85;
+  --color-sunshine-300: #ffe250;
+  --color-sunshine-400: #ffe52c;
+  --color-sunshine-500: #ffd514;
+  --color-sunshine-600: #e0ac08;
+  --color-sunshine-700: #b98305;
+  --color-sunshine-800: #96610b;
+  --color-sunshine-900: #7b4f0d;
 
-  /* Warm accent: sunset coral (reserved for promotions) */
-  --color-coral-50: #fff5f2;
-  --color-coral-100: #ffe6df;
-  --color-coral-200: #ffcdc0;
-  --color-coral-300: #ffa78f;
-  --color-coral-400: #fb7c5c;
-  --color-coral-500: #ef5b38;
-  --color-coral-600: #d84421;
+  /* Warm accent: sunset orange (#EF723D) — gradient end + promotions */
+  --color-coral-50: #fff5f0;
+  --color-coral-100: #ffe9de;
+  --color-coral-200: #ffd1ba;
+  --color-coral-300: #ffb28c;
+  --color-coral-400: #f98f5d;
+  --color-coral-500: #ef723d;
+  --color-coral-600: #d85a26;
+  --color-coral-700: #b34519;
+  --color-coral-800: #913a17;
+  --color-coral-900: #753217;
 
   /* Neutrals: sand & ink tuned for a light, warm UI */
   --color-sand-50: #fdfcf9;
@@ -132,7 +137,7 @@
   h5 {
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: -0.02em;
+    font-optical-sizing: auto;
     line-height: 1.05;
     color: var(--color-ink-900);
     text-wrap: balance;

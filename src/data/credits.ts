@@ -1,23 +1,26 @@
 /**
- * Attribution for the placeholder photography shipped in `public/images`.
+ * Attribution for the photography shipped in `public/images`.
  *
- * All photos were sourced from the Unsplash library (free to use under the Unsplash
- * License) and Wikimedia Commons (CC0 / CC BY-SA where noted), then center-cropped to
- * 16:9 at 1600×900. They are PLACEHOLDERS: replace them with the client's real hotel and
- * waterpark photography before launch, then update this file.
+ * The property photos (qubu-resort-*, hotel-q-*, qhall-*, mahoni-*, paradis-q-*,
+ * patio-*, embun-*, qubu-suites-*, spa-gym-*, q-rooftop-*, villa-*) are client
+ * assets supplied by Qubu Resort. The remaining files are Unsplash / Wikimedia
+ * placeholders that are still used for units without client photography.
  *
- * The raw downloads and the candidate review sheets live in `_tools/`.
+ * The raw imports live in the repository's `Assets Qubu Resort` folder; the
+ * optimized originals are kept in `_tools/`.
  */
 export const imageCredits = {
-  provider: "Unsplash (unsplash.com) & Wikimedia Commons",
-  license: "Unsplash License / CC0 / CC BY-SA 4.0",
-  note: "Placeholder assets — not for redistribution as-is in a commercial launch without verification.",
+  provider: "Qubu Resort (aset klien) & Unsplash / Wikimedia Commons (placeholder)",
+  license: "Milik klien — placeholder di bawah Unsplash License / CC0 / CC BY-SA 4.0",
+  note: "Foto properti adalah aset klien. Placeholder hanya dipakai untuk unit yang belum punya foto resmi.",
   replaceBeforeLaunch: true,
 };
 
 /** Human readable checklist surfaced in the README. */
 export const assetChecklist = [
-  "Ganti seluruh foto di public/images dengan fotografi properti klien.",
-  "Jalankan `node _tools/fetch-images.mjs` hanya bila ingin memakai placeholder lagi.",
+  "Foto yang masih kurang: Pemancingan, Food Corner, Beach Club, Kids Club, dan Airport Transfer.",
+  "Foto tim hospitality dan portrait tamu untuk testimoni belum tersedia — UI memakai avatar monogram.",
+  "Foto berita penghargaan dan sustainability masih memakai placeholder Unsplash.",
+  "Citra luar properti (Nusa Dua, Labuan Bajo, Bogor) masih memakai placeholder.",
   "Tambahkan video loop ke public/videos dan ubah data/sectionBackgrounds.ts ke type: \"video\".",
 ];

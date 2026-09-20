@@ -4,7 +4,7 @@ import { businessUnitMenu } from "@/data/units";
 /** Single source of truth for brand identity + static site configuration. */
 export const SITE = {
   name: "Qubu Resort",
-  legalName: "PT Qubu Resort",
+  legalName: "PT.Rezeki Wahana Gembira",
   tagline: "Hotel, Convention & Recreation",
   description:
     "Qubu Resort mengelola hotel, waterpark, convention centre, dan destinasi rekreasi keluarga melalui enam unit bisnis: Hotel Q, QHall, Paradis Q, Hotel Qubu Suites, Villa, dan Pemancingan.",
@@ -32,10 +32,6 @@ export const MAIN_NAV: NavItem[] = [
   { label: "Tentang", href: "/about" },
   // Dropdown entries are derived from src/data/units.ts (single source of truth).
   { label: "Unit Bisnis", href: "/unit-bisnis", children: businessUnitMenu },
-  { label: "Layanan", href: "/services" },
-  // { label: "Portfolio", href: "/works" },
-  { label: "Berita", href: "/news" },
-  // { label: "Karir", href: "/careers" },
   { label: "Kontak", href: "/contact" },
 ];
 
@@ -55,9 +51,6 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
     title: "Perusahaan",
     items: [
       { label: "Tentang Kami", href: "/about" },
-      { label: "Portfolio Proyek", href: "/works" },
-      { label: "Karir", href: "/careers" },
-      { label: "Berita & Promo", href: "/news" },
       { label: "Kontak", href: "/contact" },
     ],
   },

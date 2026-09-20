@@ -85,7 +85,7 @@ export function Preloader({ duration = 1500, onFinish }: PreloaderProps) {
             </p>
             <div className="relative h-[3px] w-56 overflow-hidden rounded-full bg-ink-200 sm:w-72">
               <motion.span
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-lagoon-500 via-lagoon-600 to-leaf-500"
+                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#0B6C3C] via-[#8BC91B] to-[#FFE52C]"
                 style={{ width: `${progress}%` }}
               />
             </div>

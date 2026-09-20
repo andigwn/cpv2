@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { OutletDetailContent } from "@/components/sections/units/OutletDetailContent";
 import { businessUnits, getOutlet, getUnitBySlug } from "@/data/units";
-import { sectionBackgrounds } from "@/data/sectionBackgrounds";
+import { entityBackground } from "@/data/sectionBackgrounds";
 import { SITE } from "@/lib/constants";
 
 type OutletPageProps = {
@@ -46,7 +46,7 @@ export default async function OutletPage({ params }: OutletPageProps) {
     <OutletDetailContent
       unit={unit}
       outlet={outlet}
-      heroBackground={sectionBackgrounds.detailPage}
+      heroBackground={entityBackground(outlet.image)}
     />
   );
 }

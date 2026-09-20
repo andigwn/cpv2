@@ -12,8 +12,8 @@ export const works: Work[] = [
     summary:
       "Kawasan terpadu 11,4 hektar berisi hotel 412 kamar, waterpark tujuh zona, beach club, spa, dan convention centre.",
     image: {
-      src: "/images/work-lagoon-pool.jpg",
-      alt: "Kolam laguna dengan taman tropis di kawasan resort",
+      src: "/images/qubu-resort-1.jpeg",
+      alt: "Gerbang masuk kawasan Qubu Resort dengan logo Q",
     },
     metrics: [
       { label: "Luas kawasan", value: "11,4 ha" },
@@ -37,8 +37,8 @@ export const works: Work[] = [
     summary:
       "Renovasi 158 kamar dengan jendela panorama, sistem pendingin inverter, dan material interior ramah lingkungan.",
     image: {
-      src: "/images/work-suite.jpg",
-      alt: "Suite hotel dengan tempat tidur besar dan pencahayaan terang",
+      src: "/images/qubu-suites-1.jpeg",
+      alt: "Suite dengan tempat tidur king dan panel kayu",
     },
     metrics: [
       { label: "Kamar direnovasi", value: "158" },
@@ -62,8 +62,8 @@ export const works: Work[] = [
     summary:
       "Penambahan menara racer slide 22 meter, kolam ombak 1.100 m², dan lazy river sepanjang 260 meter.",
     image: {
-      src: "/images/work-aquapark.jpg",
-      alt: "Menara seluncuran waterpark dengan struktur berwarna cerah",
+      src: "/images/paradis-q-1.jpeg",
+      alt: "Area beratap di kawasan Paradis Q",
     },
     metrics: [
       { label: "Seluncuran baru", value: "9 unit" },
@@ -112,8 +112,8 @@ export const works: Work[] = [
     summary:
       "Pusat konvensi dengan ballroom bebas pilar 1.800 m², delapan ruang breakout, dan pre-function lounge 620 m².",
     image: {
-      src: "/images/work-convention.jpg",
-      alt: "Ballroom konvensi dengan penataan kursi dan pencahayaan terang",
+      src: "/images/qhall-1.jpeg",
+      alt: "Fasad QHall dengan kanopi kawat dekoratif",
     },
     metrics: [
       { label: "Ballroom", value: "1.800 m²" },
@@ -137,8 +137,8 @@ export const works: Work[] = [
     summary:
       "Delapan ruang perawatan, sauna inframerah, kolam hidroterapi, dan studio yoga dengan pemandangan taman.",
     image: {
-      src: "/images/work-spa.jpg",
-      alt: "Ruang perawatan spa dengan tempat tidur dan rak kayu",
+      src: "/images/spa-gym-1.jpeg",
+      alt: "Ruang perawatan spa dengan dua tempat tidur dan tanaman",
     },
     metrics: [
       { label: "Ruang perawatan", value: "8 ruang" },
@@ -162,8 +162,8 @@ export const works: Work[] = [
     summary:
       "Empat outlet kuliner terintegrasi: all-day dining, seafood grill, plant-forward restaurant, dan pastry lounge.",
     image: {
-      src: "/images/work-restaurant.jpg",
-      alt: "Restoran tepi laut dengan meja dan kursi kayu",
+      src: "/images/q-rooftop-2.jpeg",
+      alt: "Rooftop dengan penataan meja jamuan dan dekorasi acara",
     },
     metrics: [
       { label: "Outlet", value: "4 restoran" },
@@ -187,8 +187,8 @@ export const works: Work[] = [
     summary:
       "Rooftop lounge dengan pemandangan Teluk Benoa, bar koktail, dan area lounge terbuka berkapasitas 180 orang.",
     image: {
-      src: "/images/work-sky-lounge.jpg",
-      alt: "Lounge dengan meja dan pemandangan laut di siang hari",
+      src: "/images/q-rooftop-1.jpeg",
+      alt: "Rooftop Qubu Resort dengan dekorasi bunga dan meja bundar",
     },
     metrics: [
       { label: "Kapasitas", value: "180 orang" },
@@ -262,8 +262,8 @@ export const works: Work[] = [
     summary:
       "Resort keluarga 168 kamar dengan mini waterpark, kids club, dan akses langsung ke pantai granit.",
     image: {
-      src: "/images/work-cabana-club.jpg",
-      alt: "Daybed dan kursi santai di pantai berpasir putih",
+      src: "/images/qubu-resort-4.jpeg",
+      alt: "Monumen gerbang Qubu Resort saat matahari terbit",
     },
     metrics: [
       { label: "Kamar", value: "168" },

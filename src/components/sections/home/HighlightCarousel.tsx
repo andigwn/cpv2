@@ -164,7 +164,7 @@ export function HighlightCarousel() {
                   <div className="bg-ink-200 h-1 flex-1 overflow-hidden rounded-full">
                     <motion.span
                       key={`${active.id}-progress`}
-                      className="from-lagoon-500 to-leaf-500 block h-full rounded-full bg-linear-to-r"
+                      className="from-[#FFE52C] to-[#EF723D] block h-full rounded-full bg-linear-to-r"
                       initial={{ width: "0%" }}
                       animate={{ width: isPaused ? "45%" : "100%" }}
                       transition={{

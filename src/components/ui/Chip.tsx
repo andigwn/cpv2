@@ -27,7 +27,7 @@ export function Chip({ label, isActive = false, onClick, className, withDot = tr
       className={cn(
         "relative inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase transition-colors duration-300",
         isActive
-          ? "border-lagoon-600 bg-lagoon-600 text-white shadow-[0_10px_26px_-14px_rgba(34,135,205,0.9)]"
+          ? "border-lagoon-600 bg-lagoon-600 text-white shadow-[0_10px_26px_-14px_rgba(11,108,60,0.9)]"
           : "border-ink-200 bg-white/75 text-ink-600 hover:border-lagoon-300 hover:text-lagoon-700",
         !interactive && "cursor-default",
         className,

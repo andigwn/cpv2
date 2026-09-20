@@ -28,7 +28,7 @@ export default function ContactPage() {
       postalCode: "80361",
       addressCountry: "ID",
     },
-    image: `${SITE.url}/images/og-cover.jpg`,
+    image: `${SITE.url}/images/qubu-resort-1.jpeg`,
     priceRange: "Rp 275.000 - Rp 42.000.000",
   };
 

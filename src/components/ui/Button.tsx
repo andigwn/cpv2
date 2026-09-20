@@ -53,14 +53,38 @@ export function Button({
     <>
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 -translate-y-full bg-white/25 transition-transform duration-500 ease-out group-hover/btn:translate-y-0"
+        className={cn(
+          "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover/btn:opacity-100",
+          variant === "primary"
+            ? "bg-linear-to-r from-[#FFE52C] to-[#EF723D]"
+            : "bg-white/25",
+        )}
       />
       {icon && iconPosition === "left" ? (
-        <span className="relative z-10 shrink-0">{icon}</span>
+        <span
+          className={cn(
+            "relative z-10 shrink-0 transition-colors duration-300",
+            variant === "primary" && "group-hover/btn:text-ink-900",
+          )}
+        >
+          {icon}
+        </span>
       ) : null}
-      <span className="relative z-10">{children}</span>
+      <span
+        className={cn(
+          "relative z-10 transition-colors duration-300",
+          variant === "primary" && "group-hover/btn:text-ink-900",
+        )}
+      >
+        {children}
+      </span>
       {icon && iconPosition === "right" ? (
-        <span className="relative z-10 shrink-0 transition-transform duration-300 group-hover/btn:translate-x-1">
+        <span
+          className={cn(
+            "relative z-10 shrink-0 transition-transform duration-300 group-hover/btn:translate-x-1",
+            variant === "primary" && "group-hover/btn:text-ink-900 transition-colors",
+          )}
+        >
           {icon}
         </span>
       ) : null}
@@ -102,9 +126,9 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-lagoon-600 text-white shadow-[0_14px_34px_-16px_rgba(34,135,205,0.9)] hover:bg-lagoon-700 hover:shadow-[0_20px_44px_-18px_rgba(34,135,205,0.95)]",
+    "bg-lagoon-600 text-white shadow-[0_14px_34px_-16px_rgba(11,108,60,0.9)] hover:shadow-[0_20px_44px_-18px_rgba(11,108,60,0.95)]",
   secondary:
-    "bg-sunshine-400 text-ink-900 shadow-[0_14px_34px_-18px_rgba(245,158,11,0.9)] hover:bg-sunshine-300",
+    "bg-sunshine-400 text-ink-900 shadow-[0_14px_34px_-18px_rgba(255,229,44,0.9)] hover:bg-sunshine-300",
   outline: "border border-ink-300 bg-white/70 text-ink-800 hover:border-lagoon-500 hover:text-lagoon-700",
   ghost: "text-ink-700 hover:bg-ink-100 hover:text-ink-900",
   light:

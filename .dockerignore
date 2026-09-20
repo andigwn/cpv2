@@ -20,6 +20,11 @@ build
 .env.local
 .env.production
 
+# Reference videos kept at the project root (38 MB of screen recordings). Only
+# /public/videos is meant to ship, so root-level clips stay out of the build context.
+/*.mp4
+/*.mov
+
 # Dev-only tooling and asset scratch space (never needed inside the image).
 # This also covers _tools/originals (image backups) and _tools/logo-source.png.
 _tools

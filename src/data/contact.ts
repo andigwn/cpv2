@@ -109,8 +109,8 @@ export const officeLocations = [
     address: "Jl. Pantai Q No. 88, Tanjung Benoa, Badung, Bali 80361",
     mapsUrl: "https://maps.google.com/?q=Tanjung+Benoa+Badung+Bali",
     image: {
-      src: "/images/about-lobby.jpg",
-      alt: "Lobi kantor pusat Qubu Resort",
+      src: "/images/qubu-resort-1.jpeg",
+      alt: "Gerbang masuk kawasan Qubu Resort",
     },
   },
   {
@@ -118,8 +118,8 @@ export const officeLocations = [
     address: "Kawasan Qubu Resort, Tanjung Benoa, Badung, Bali 80361",
     mapsUrl: "https://maps.google.com/?q=Tanjung+Benoa+Waterpark+Bali",
     image: {
-      src: "/images/service-waterpark.jpg",
-      alt: "Area waterpark Qubu Resort",
+      src: "/images/paradis-q-1.jpeg",
+      alt: "Area beratap di kawasan Paradis Q",
     },
   },
   {
@@ -127,8 +127,8 @@ export const officeLocations = [
     address: "Menara Q, Lantai 18, Jl. Jend. Sudirman Kav. 52, Jakarta 12190",
     mapsUrl: "https://maps.google.com/?q=Sudirman+Jakarta",
     image: {
-      src: "/images/work-lobby.jpg",
-      alt: "Lobi kantor regional Jakarta",
+      src: "/images/hotel-q-1.jpeg",
+      alt: "Gedung Hotel Q di kawasan Qubu Resort",
     },
   },
 ];

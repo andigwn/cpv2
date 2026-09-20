@@ -1,4 +1,5 @@
 import type { Stat, Testimonial } from "@/types";
+import { businessUnits } from "./units";
 
 /** Home hero copy — used by the typewriter headline. */
 export const heroContent = {
@@ -16,29 +17,20 @@ export const heroContent = {
   scrollHint: "Gulir untuk menjelajah",
 } as const;
 
-/** Rotating hero background — bright, sunny hospitality photography only. */
+/**
+ * Rotating hero background — one general resort shot plus one photo from every
+ * business unit, so the opening frame represents the whole destination.
+ */
 export const heroBackgrounds = [
   {
-    src: "/images/hero-resort-pool.jpg",
-    alt: "Kolam renang resort dengan air biru jernih di bawah langit cerah",
+    src: "/images/qubu-resort-1.jpeg",
+    alt: "Gerbang masuk kawasan Qubu Resort dengan logo Q dan bendera",
   },
-  {
-    src: "/images/hero-waterpark-pool.jpg",
-    alt: "Area waterpark dengan kolam biru dan seluncuran di siang hari",
-  },
-  {
-    src: "/images/hero-hotel-exterior.jpg",
-    alt: "Fasad hotel Qubu Resort dengan taman tropis dan pencahayaan alami",
-  },
-  {
-    src: "/images/hero-beach-resort.jpg",
-    alt: "Pantai berpasir putih di depan resort dengan air laut toska",
-  },
-  {
-    src: "/images/hero-pool-daylight.jpg",
-    alt: "Dek kolam dengan kursi santai dan payung di bawah sinar matahari",
-  },
-] as const;
+  ...businessUnits.map((unit) => ({
+    src: unit.image.src,
+    alt: unit.image.alt,
+  })),
+];
 
 export const companyStats: Stat[] = [
   { value: "16", label: "Tahun pengalaman hospitality" },
@@ -53,21 +45,18 @@ export const testimonials: Testimonial[] = [
       "Qubu Resort memahami arti liburan keluarga. Anak-anak menghabiskan seharian di waterpark, kami menikmati spa dan sunset deck. Semua berjalan tanpa hambatan.",
     name: "Rani Kusuma",
     role: "Tamu keluarga · Jakarta",
-    image: { src: "/images/team-4.jpg", alt: "Potret tamu Qubu Resort" },
   },
   {
     quote:
       "Kami menyelenggarakan konferensi regional untuk 900 peserta. Tim Qubu Resort menangani teknis, katering, dan akomodasi dengan sangat profesional.",
     name: "Bagas Prasetyo",
     role: "Head of Events · Nusantara Tech",
-    image: { src: "/images/team-3.jpg", alt: "Potret penyelenggara acara" },
   },
   {
     quote:
       "Standar housekeeping dan keramahan stafnya konsisten di semua properti. Itu alasan kami mempercayakan managed operations ke Qubu Resort.",
     name: "Sarah Lim",
     role: "Asset Manager · Q Capital",
-    image: { src: "/images/team-2.jpg", alt: "Potret mitra bisnis" },
   },
 ];
 

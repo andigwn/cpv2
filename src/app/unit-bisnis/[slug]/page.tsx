@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { UnitDetailContent } from "@/components/sections/units/UnitDetailContent";
 import { businessUnits, getUnitBySlug } from "@/data/units";
-import { sectionBackgrounds } from "@/data/sectionBackgrounds";
+import { entityBackground } from "@/data/sectionBackgrounds";
 import { SITE } from "@/lib/constants";
 
 type UnitPageProps = {
@@ -38,7 +38,5 @@ export default async function UnitPage({ params }: UnitPageProps) {
 
   if (!unit) notFound();
 
-  return (
-    <UnitDetailContent unit={unit} heroBackground={sectionBackgrounds.detailPage} />
-  );
+  return <UnitDetailContent unit={unit} heroBackground={entityBackground(unit.image)} />;
 }

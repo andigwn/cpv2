@@ -18,23 +18,28 @@ export function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "success">("idle");
 
+  // No top border and no background of its own: the footer continues the same
+  // broken-white canvas as the bands above it, so the page ends without a seam.
   return (
-    <footer className="relative overflow-hidden border-t border-ink-200/70 bg-white">
-      <div aria-hidden className="pointer-events-none absolute inset-0 texture-grid opacity-[0.35]" />
+    <footer className="relative overflow-hidden bg-sand-100">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 right-0 h-80 w-80 rounded-full bg-lagoon-100/70 blur-3xl"
+        className="texture-grid pointer-events-none absolute inset-0 opacity-[0.35]"
+      />
+      <div
+        aria-hidden
+        className="bg-lagoon-100/70 pointer-events-none absolute -top-32 right-0 h-80 w-80 rounded-full blur-3xl"
       />
 
       <div className="shell relative py-16 lg:py-20">
         {/* Newsletter band */}
-        <FadeIn className="mb-14 overflow-hidden rounded-3xl border border-lagoon-100 bg-gradient-to-r from-lagoon-50 via-white to-sunshine-50 p-6 sm:p-10">
+        <FadeIn className="border-lagoon-100 from-lagoon-50 to-sunshine-50 mb-14 overflow-hidden rounded-3xl border bg-linear-to-r via-white p-6 sm:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-xl">
               <h2 className="text-2xl sm:text-3xl">Dapatkan promo & info event lebih dulu</h2>
-              <p className="mt-2 text-sm leading-relaxed text-ink-600">
-                Buletin bulanan berisi paket menginap, jadwal event waterpark, dan penawaran
-                khusus MICE. Tanpa spam, bisa berhenti kapan saja.
+              <p className="text-ink-600 mt-2 text-sm leading-relaxed">
+                Buletin bulanan berisi paket menginap, jadwal event waterpark, dan penawaran khusus
+                MICE. Tanpa spam, bisa berhenti kapan saja.
               </p>
             </div>
 
@@ -58,7 +63,7 @@ export function Footer() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="nama@email.com"
-                  className="h-12 flex-1 rounded-full border border-ink-200 bg-white px-5 text-sm text-ink-800 placeholder:text-ink-400 focus:border-lagoon-500 focus:outline-none"
+                  className="border-ink-200 text-ink-800 placeholder:text-ink-400 focus:border-lagoon-500 h-12 flex-1 rounded-full border bg-white px-5 text-sm focus:outline-none"
                 />
                 <Button type="submit" size="md" icon={<Send className="h-4 w-4" aria-hidden />}>
                   Berlangganan
@@ -68,12 +73,12 @@ export function Footer() {
                 <motion.p
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-3 text-sm font-medium text-leaf-700"
+                  className="text-leaf-700 mt-3 text-sm font-medium"
                 >
                   Terima kasih! Konfirmasi langganan dikirim ke email Anda.
                 </motion.p>
               ) : (
-                <p className="mt-3 text-xs text-ink-500">
+                <p className="text-ink-500 mt-3 text-xs">
                   Dengan berlangganan Anda menyetujui kebijakan privasi kami.
                 </p>
               )}
@@ -97,33 +102,33 @@ export function Footer() {
               />
             </Link>
 
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-600">{SITE.description}</p>
+            <p className="text-ink-600 mt-5 max-w-sm text-sm leading-relaxed">{SITE.description}</p>
 
-            <ul className="mt-6 flex flex-col gap-3 text-sm text-ink-600">
+            <ul className="text-ink-600 mt-6 flex flex-col gap-3 text-sm">
               <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-lagoon-600" aria-hidden />
+                <MapPin className="text-lagoon-600 mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                 <span>{SITE.contact.address}</span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 shrink-0 text-lagoon-600" aria-hidden />
+                <Phone className="text-lagoon-600 h-4 w-4 shrink-0" aria-hidden />
                 <a
                   href={`tel:${SITE.contact.phone.replace(/[^+\d]/g, "")}`}
-                  className="transition-colors hover:text-lagoon-700"
+                  className="hover:text-lagoon-700 transition-colors"
                 >
                   {SITE.contact.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="h-4 w-4 shrink-0 text-lagoon-600" aria-hidden />
+                <Mail className="text-lagoon-600 h-4 w-4 shrink-0" aria-hidden />
                 <a
                   href={`mailto:${SITE.contact.email}`}
-                  className="transition-colors hover:text-lagoon-700"
+                  className="hover:text-lagoon-700 transition-colors"
                 >
                   {SITE.contact.email}
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Clock className="h-4 w-4 shrink-0 text-lagoon-600" aria-hidden />
+                <Clock className="text-lagoon-600 h-4 w-4 shrink-0" aria-hidden />
                 <span>{SITE.hours.waterpark}</span>
               </li>
             </ul>
@@ -136,7 +141,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={social.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 bg-white text-ink-600 transition-colors hover:border-lagoon-400 hover:text-lagoon-700"
+                  className="border-ink-200 text-ink-600 hover:border-lagoon-400 hover:text-lagoon-700 flex h-10 w-10 items-center justify-center rounded-full border bg-white transition-colors"
                 >
                   <SocialIcon name={social.icon} className="h-4 w-4" />
                 </a>
@@ -147,7 +152,7 @@ export function Footer() {
           <div className="grid gap-10 sm:grid-cols-3">
             {FOOTER_NAV.map((column) => (
               <div key={column.title}>
-                <h3 className="text-sm font-semibold tracking-[0.16em] text-ink-900 uppercase">
+                <h3 className="text-ink-900 text-sm font-semibold tracking-[0.16em] uppercase">
                   {column.title}
                 </h3>
                 <ul className="mt-4 flex flex-col gap-3">
@@ -155,7 +160,7 @@ export function Footer() {
                     <li key={`${column.title}-${item.href}`}>
                       <Link
                         href={item.href}
-                        className="group inline-flex items-center gap-1.5 text-sm text-ink-600 transition-colors hover:text-lagoon-700"
+                        className="group text-ink-600 hover:text-lagoon-700 inline-flex items-center gap-1.5 text-sm transition-colors"
                       >
                         {item.label}
                         <ArrowRight
@@ -171,15 +176,15 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-ink-200/70 pt-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="border-ink-200/70 text-ink-500 mt-14 flex flex-col gap-4 border-t pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {SITE.legalName}. Seluruh hak cipta dilindungi.
           </p>
           <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <Link href="/contact#privasi" className="transition-colors hover:text-lagoon-700">
+            <Link href="/contact#privasi" className="hover:text-lagoon-700 transition-colors">
               Kebijakan Privasi
             </Link>
-            <Link href="/contact#bantuan" className="transition-colors hover:text-lagoon-700">
+            <Link href="/contact#bantuan" className="hover:text-lagoon-700 transition-colors">
               Pusat Bantuan
             </Link>
             <span>Placeholder fotografi: Unsplash & Wikimedia Commons</span>
