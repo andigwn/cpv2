@@ -8,6 +8,7 @@ import { CalendarDays, ChevronDown, Menu, Phone, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/types";
+import { businessUnits, unitHref } from "@/data/units";
 import { MAIN_NAV, SITE, SOCIAL_LINKS } from "@/lib/constants";
 import { NavDropdown } from "@/components/layout/NavDropdown";
 import { mobileMenuVariants } from "@/lib/animations";
@@ -16,6 +17,9 @@ import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { Button } from "@/components/ui/Button";
 import { SocialIcon } from "@/components/ui/SocialIcon";
+
+/** Look up the building metadata (room types) for a menu entry. */
+const unitByHref = new Map(businessUnits.map((unit) => [unitHref(unit), unit]));
 
 /**
  * Fixed navbar with hide-on-scroll-down behaviour, a scroll progress bar and a
@@ -149,7 +153,7 @@ export function Navbar() {
           aria-hidden
           className={cn(
             "absolute inset-x-0 bottom-0 h-0.5 origin-left",
-            overHero ? "bg-white/70" : "from-[#FFE52C] to-[#EF723D] bg-linear-to-r",
+            overHero ? "bg-white/70" : "bg-linear-to-r from-[#FFE52C] to-[#EF723D]",
           )}
           style={{ scaleX: progress }}
         />
@@ -284,32 +288,54 @@ function MobileNavItem({
                 Semua unit bisnis
               </Link>
             </li>
-            {children.map((child) => (
-              <li key={child.href}>
-                <Link
-                  href={child.href}
-                  onClick={onNavigate}
-                  className="text-ink-700 block py-3 text-base font-medium"
-                >
-                  {child.label}
-                </Link>
-                {child.children?.length ? (
-                  <ul className="border-ink-200 mb-2 flex flex-col gap-1 border-l pl-4">
-                    {child.children.map((outlet) => (
-                      <li key={outlet.href}>
-                        <Link
-                          href={outlet.href}
-                          onClick={onNavigate}
-                          className="text-ink-500 block py-2 text-sm"
-                        >
-                          {outlet.label}
-                        </Link>
+            {children.map((child) => {
+              const unit = unitByHref.get(child.href);
+
+              return (
+                <li key={child.href}>
+                  <Link
+                    href={child.href}
+                    onClick={onNavigate}
+                    className="text-ink-700 block py-3 text-base font-medium"
+                  >
+                    {child.label}
+                  </Link>
+                  {unit?.roomTypes?.length ? (
+                    <ul className="border-ink-200 mb-2 flex flex-col gap-1 border-l pl-4">
+                      <li className="text-ink-400 pt-1 text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
+                        Tipe kamar
                       </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </li>
-            ))}
+                      {unit.roomTypes.map((roomType) => (
+                        <li key={roomType.slug}>
+                          <Link
+                            href={unitHref(unit) + "#" + roomType.slug}
+                            onClick={onNavigate}
+                            className="text-ink-500 block py-2 text-sm"
+                          >
+                            {roomType.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {child.children?.length ? (
+                    <ul className="border-ink-200 mb-2 flex flex-col gap-1 border-l pl-4">
+                      {child.children.map((outlet) => (
+                        <li key={outlet.href}>
+                          <Link
+                            href={outlet.href}
+                            onClick={onNavigate}
+                            className="text-ink-500 block py-2 text-sm"
+                          >
+                            {outlet.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </li>
+              );
+            })}
           </motion.ul>
         ) : null}
       </AnimatePresence>

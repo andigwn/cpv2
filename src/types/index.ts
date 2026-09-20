@@ -177,6 +177,25 @@ export type UnitOutlet = {
   priceFrom?: string;
 };
 
+/** A room category offered by a lodging business unit. */
+export type RoomType = {
+  slug: string;
+  name: string;
+  description: string;
+  /** Lead photo for the room card. Falls back to the unit photo when omitted. */
+  image?: ImageAsset;
+  /** Floor area, e.g. "28 m2". */
+  size?: string;
+  /** Bed configuration, e.g. "1 King atau 2 Single". */
+  bed?: string;
+  /** Occupancy, e.g. "2 tamu". */
+  capacity?: string;
+  /** Main outlook, e.g. "Garden view". */
+  view?: string;
+  /** Short selling points shown as chips on the card. */
+  features?: string[];
+};
+
 /** A building owned by the group, plus the business units operating inside it. */
 export type BusinessUnit = {
   slug: string;
@@ -191,6 +210,8 @@ export type BusinessUnit = {
   features: string[];
   specs: { label: string; value: string }[];
   hours: string;
+  /** Room categories for lodging units; shown in the nav menu and the detail page. */
+  roomTypes?: RoomType[];
   /** Business units inside this building. May be empty for single-purpose sites. */
   outlets: UnitOutlet[];
 };

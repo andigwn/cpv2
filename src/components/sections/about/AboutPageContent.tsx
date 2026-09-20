@@ -141,7 +141,7 @@ export function AboutPageContent({ heroBackground }: AboutPageContentProps) {
       />
 
       <ContentBand>
-        <SectionTitle
+        <SectionTitlegit s
           eyebrow="Bekerja bersama kami"
           title="Tumbuh bersama tim dan destinasi lokal"
           description="78% karyawan kami berasal dari kabupaten tempat properti beroperasi."

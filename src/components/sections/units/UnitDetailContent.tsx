@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, BedDouble, Check, Clock } from "lucide-react";
 import type { BusinessUnit } from "@/types";
 import { businessUnits, outletHref, unitHref } from "@/data/units";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
@@ -9,6 +9,7 @@ import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { InfoCard } from "@/components/ui/InfoCard";
+import { RoomTypeCard } from "@/components/ui/RoomTypeCard";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContentBand } from "@/components/sections/ContentBand";
@@ -45,8 +46,8 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
           <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
             Hubungi unit ini
           </Button>
-          <span className="inline-flex items-center gap-2 rounded-full border border-lagoon-200 bg-white/80 px-4 py-2 text-sm text-ink-700 backdrop-blur-md">
-            <Clock className="h-4 w-4 text-lagoon-600" aria-hidden />
+          <span className="border-lagoon-200 text-ink-700 inline-flex items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-sm backdrop-blur-md">
+            <Clock className="text-lagoon-600 h-4 w-4" aria-hidden />
             {unit.hours}
           </span>
         </div>
@@ -71,7 +72,11 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
       <ImageBand image={first ?? unit.image} caption={"Suasana " + unit.name} />
 
       <ContentBand>
-        <SectionTitle eyebrow="Fasilitas" title="Yang tersedia di gedung ini" className="max-w-2xl" />
+        <SectionTitle
+          eyebrow="Fasilitas"
+          title="Yang tersedia di gedung ini"
+          className="max-w-2xl"
+        />
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <motion.div key={feature} variants={staggerItem} className="h-full">
@@ -80,6 +85,36 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
           ))}
         </StaggerContainer>
       </ContentBand>
+
+      {unit.roomTypes?.length ? (
+        <ContentBand>
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <SectionTitle
+              eyebrow="Tipe kamar"
+              title={"Pilihan kamar di " + unit.name}
+              description="Setiap tipe memiliki ukuran, pemandangan, dan fasilitas yang berbeda."
+              className="max-w-2xl"
+            />
+            <span className="border-lagoon-200 text-ink-700 inline-flex w-fit items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-sm backdrop-blur-md">
+              <BedDouble className="text-lagoon-600 h-4 w-4" aria-hidden />
+              {unit.roomTypes.length} tipe kamar
+            </span>
+          </div>
+
+          <StaggerContainer className="mt-10 grid gap-6 lg:grid-cols-2">
+            {unit.roomTypes.map((roomType, index) => (
+              <motion.div
+                key={roomType.slug}
+                id={roomType.slug}
+                variants={staggerItem}
+                className="h-full scroll-mt-32"
+              >
+                <RoomTypeCard roomType={roomType} index={index} fallbackImage={unit.image} />
+              </motion.div>
+            ))}
+          </StaggerContainer>
+        </ContentBand>
+      ) : null}
 
       <ImageBand image={second ?? unit.image} caption={"Kawasan " + unit.name} />
 
@@ -111,7 +146,7 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
           </StaggerContainer>
         ) : (
           <FadeIn className="mt-8 max-w-2xl rounded-3xl bg-white/70 p-6 backdrop-blur-sm">
-            <p className="text-sm leading-relaxed text-ink-600">
+            <p className="text-ink-600 text-sm leading-relaxed">
               {unit.tagline}. Seluruh layanan {unit.name} ditangani langsung oleh tim unit ini.
             </p>
           </FadeIn>

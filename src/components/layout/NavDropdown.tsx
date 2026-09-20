@@ -135,6 +135,26 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
                       />
                     </Link>
 
+                    {unit?.roomTypes?.length ? (
+                      <div className="border-ink-100 mt-3 border-t pt-3">
+                        <p className="text-ink-400 text-[0.6rem] font-semibold tracking-[0.18em] uppercase">
+                          Tipe kamar
+                        </p>
+                        <ul className="mt-2 flex flex-wrap gap-1.5">
+                          {unit.roomTypes.map((roomType) => (
+                            <li key={roomType.slug}>
+                              <Link
+                                href={unitHref(unit) + "#" + roomType.slug}
+                                className="border-ink-100 text-ink-600 hover:border-lagoon-300 hover:text-lagoon-700 inline-flex items-center rounded-full border bg-white px-2.5 py-1 text-xs transition-colors duration-300"
+                              >
+                                {roomType.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+
                     {child.children?.length ? (
                       <ul className="border-ink-100 mt-3 flex flex-col gap-2 border-t pt-3">
                         {child.children.map((outlet) => (

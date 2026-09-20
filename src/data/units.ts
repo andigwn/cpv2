@@ -19,7 +19,7 @@ export const businessUnits: BusinessUnit[] = [
     summary:
       "Bangunan utama kawasan Q dengan kamar garden view dan pool view, kolam dewasa serta kolam anak, dan akses pejalan kaki ke QHall dan Paradis Q.",
     description: [
-      "Hotel Q adalah bangunan utama kawasan Q dan pintu masuk bagi sebagian besar tamu. Tersedia 268 kamar dalam lima tipe, mulai dari Deluxe Garden View hingga Executive Suite dengan balkon privat.",
+      "Hotel Q adalah bangunan utama kawasan Q dan pintu masuk bagi sebagian besar tamu. Tersedia 268 kamar yang terbagi ke dalam dua tipe: Superior dan Premier Plus.",
       "Lobby berkonsep atrium menghubungkan resepsionis, lobby lounge, pusat informasi wisata, dan Resto Patio yang melayani sarapan hingga makan malam.",
       "Fasilitas penunjang meliputi kolam dewasa dan kolam anak, pusat kebugaran, ruang serbaguna, serta jalur pejalan kaki beratap menuju QHall dan Paradis Q.",
     ],
@@ -28,15 +28,15 @@ export const businessUnits: BusinessUnit[] = [
       alt: "Fasad Hotel Q dengan lapisan kisi geometris merah dan putih",
     },
     gallery: [
+      { src: "/images/patio-1.jpeg", alt: "Resto Patio di lantai dasar Hotel Q" },
+      { src: "/images/qubu-resort-3.jpeg", alt: "Gerbang masuk kawasan Qubu Resort" },
       {
         src: "/images/hotel-q-2.jpeg",
         alt: "Kamar Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
       },
-      { src: "/images/patio-1.jpeg", alt: "Resto Patio di lantai dasar Hotel Q" },
-      { src: "/images/qubu-resort-3.jpeg", alt: "Gerbang masuk kawasan Qubu Resort" },
     ],
     features: [
-      "268 kamar dalam lima tipe",
+      "268 kamar dalam dua tipe",
       "Resto Patio di lantai dasar",
       "Kolam dewasa dan kolam anak",
       "Pusat kebugaran 24 jam",
@@ -46,13 +46,55 @@ export const businessUnits: BusinessUnit[] = [
     ],
     specs: [
       { label: "Jumlah kamar", value: "268 kamar & suite" },
-      { label: "Tipe kamar", value: "5 kategori" },
+      { label: "Tipe kamar", value: "2 kategori" },
       { label: "Lantai", value: "9 lantai" },
       { label: "Check-in / out", value: "14.00 / 12.00 WITA" },
       { label: "Unit bisnis di dalam", value: "Resto Patio" },
       { label: "Lokasi", value: "Kawasan Q, Tanjung Benoa" },
     ],
     hours: "Resepsionis 24 jam",
+    roomTypes: [
+      {
+        slug: "superior",
+        name: "Superior",
+        description:
+          "Tipe kamar dasar Hotel Q dengan fasilitas lengkap untuk dua tamu dan akses ke seluruh area kawasan Q.",
+        image: {
+          src: "/images/hotel-q-2.jpeg",
+          alt: "Kamar Superior Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
+        },
+        size: "28 m2",
+        bed: "1 King atau 2 Single",
+        capacity: "2 tamu",
+        view: "Garden view",
+        features: [
+          "AC dan smart TV",
+          "Kamar mandi shower",
+          "Mini bar dan safety box",
+          "Akses kolam dewasa & kolam anak",
+        ],
+      },
+      {
+        slug: "premier-plus",
+        name: "Premier Plus",
+        description:
+          "Tipe kamar yang lebih luas dengan area duduk tambahan serta pemandangan kolam atau taman kawasan Q.",
+        image: {
+          src: "/images/hero-hotel-room.jpg",
+          alt: "Kamar Premier Plus dengan area duduk dan jendela besar",
+        },
+        size: "36 m2",
+        bed: "1 King",
+        capacity: "2 tamu + 1 anak",
+        view: "Pool & garden view",
+        features: [
+          "Area duduk tambahan",
+          "Balkon privat",
+          "Coffee maker dan mini bar",
+          "Akses kolam dewasa & kolam anak",
+        ],
+      },
+    ],
     outlets: [
       {
         slug: "resto-patio",
@@ -235,7 +277,10 @@ export const businessUnits: BusinessUnit[] = [
         gallery: [
           { src: "/images/service-cabana.jpg", alt: "Meja makan di area beratap Food Corner" },
           { src: "/images/news-summer-promo.jpg", alt: "Pengunjung menikmati makan siang" },
-          { src: "/images/service-waterpark-alt.jpg", alt: "Suasana waterpark di sekitar Food Corner" },
+          {
+            src: "/images/service-waterpark-alt.jpg",
+            alt: "Suasana waterpark di sekitar Food Corner",
+          },
         ],
         features: [
           "Delapan tenant kuliner nusantara",
@@ -264,7 +309,7 @@ export const businessUnits: BusinessUnit[] = [
     summary:
       "Sayap suite dengan balkon privat, butler service 24 jam, serta tiga unit bisnis di dalamnya: Resto Embun, Gym, dan Spa.",
     description: [
-      "Hotel Qubu Suites menempati sayap barat kawasan Q dengan 144 suite dalam empat tipe, mulai dari Qubu Suite hingga tiga-bedroom Presidential Q Villa dengan kolam privat.",
+      "Hotel Qubu Suites menempati sayap barat kawasan Q dengan 144 suite dalam empat tipe: Suite, Deluxe, Family Suites, dan Grand Suites.",
       "Semua suite memakai kasur pocket-spring, linen katun organik 400 thread count, dan balkon privat menghadap taman atau Teluk Benoa.",
       "Tamu suite mendapat akses ke Executive Lounge untuk sarapan privat, butler service 24 jam, dan late check-out hingga pukul 15.00. Di dalam gedung ini juga beroperasi Resto Embun, Gym, dan Spa.",
     ],
@@ -283,7 +328,7 @@ export const businessUnits: BusinessUnit[] = [
       "Butler service 24 jam",
       "Akses Executive Lounge untuk sarapan privat",
       "Tiga unit bisnis: Resto Embun, Gym, dan Spa",
-      "Kolam privat pada tipe Presidential Q Villa",
+      "Linen katun organik 400 thread count",
     ],
     specs: [
       { label: "Jumlah suite", value: "144 suite" },
@@ -294,6 +339,88 @@ export const businessUnits: BusinessUnit[] = [
       { label: "Lokasi", value: "Kawasan Q, sayap barat" },
     ],
     hours: "Resepsionis 24 jam",
+    roomTypes: [
+      {
+        slug: "suite",
+        name: "Suite",
+        description:
+          "Suite satu kamar dengan ruang tamu terpisah, balkon privat, dan akses Executive Lounge.",
+        image: {
+          src: "/images/qubu-suites-1.jpeg",
+          alt: "Suite Hotel Qubu Suites dengan tempat tidur king dan kursi santai",
+        },
+        size: "64 m2",
+        bed: "1 King",
+        capacity: "2 tamu",
+        view: "Garden view",
+        features: [
+          "Ruang tamu terpisah",
+          "Balkon privat",
+          "Akses Executive Lounge",
+          "Butler service 24 jam",
+        ],
+      },
+      {
+        slug: "deluxe",
+        name: "Deluxe",
+        description:
+          "Kamar deluxe dengan area duduk dan balkon yang menghadap taman tropis atau Teluk Benoa.",
+        image: {
+          src: "/images/qubu-suites-2.jpeg",
+          alt: "Kamar Deluxe dengan tempat tidur king, meja kerja, dan jendela besar",
+        },
+        size: "72 m2",
+        bed: "1 King",
+        capacity: "2 tamu + 1 anak",
+        view: "Taman atau Teluk Benoa",
+        features: [
+          "Area duduk dan meja kerja",
+          "Balkon privat",
+          "Akses Executive Lounge",
+          "Butler service 24 jam",
+        ],
+      },
+      {
+        slug: "family-suites",
+        name: "Family Suites",
+        description:
+          "Suite keluarga berkapasitas hingga empat tamu dengan ruang tamu bersama dan balkon privat.",
+        image: {
+          src: "/images/villa-7.jpeg",
+          alt: "Kamar Family Suites dengan tempat tidur tingkat dan area bermain anak",
+        },
+        size: "96 m2",
+        bed: "1 King + 2 Single",
+        capacity: "4 tamu",
+        view: "Garden view",
+        features: [
+          "Ruang tamu bersama",
+          "Balkon privat",
+          "Peralatan anak tersedia",
+          "Akses Executive Lounge",
+        ],
+      },
+      {
+        slug: "grand-suites",
+        name: "Grand Suites",
+        description:
+          "Suite terluas dengan ruang tamu dan ruang makan terpisah serta balkon dengan pemandangan panorama.",
+        image: {
+          src: "/images/qubu-suites-4.jpeg",
+          alt: "Ruang tamu Grand Suites dengan sofa, meja makan, dan TV",
+        },
+        size: "Hingga 310 m2",
+        bed: "1 King",
+        capacity: "2 – 4 tamu",
+        view: "Panorama Teluk Benoa",
+        features: [
+          "Ruang tamu dan ruang makan terpisah",
+          "Balkon panorama",
+          "Dapur kecil",
+          "Butler service 24 jam",
+        ],
+      },
+    ],
     outlets: [
       {
         slug: "resto-embun",
@@ -313,7 +440,10 @@ export const businessUnits: BusinessUnit[] = [
         },
         gallery: [
           { src: "/images/embun-1.jpeg", alt: "Area buffet Resto Embun" },
-          { src: "/images/qubu-suites-2.jpeg", alt: "Suite di Hotel Qubu Suites tempat Resto Embun berada" },
+          {
+            src: "/images/qubu-suites-2.jpeg",
+            alt: "Suite di Hotel Qubu Suites tempat Resto Embun berada",
+          },
           { src: "/images/qubu-suites-4.jpeg", alt: "Interior Hotel Qubu Suites" },
         ],
         features: [
@@ -351,7 +481,10 @@ export const businessUnits: BusinessUnit[] = [
         },
         gallery: [
           { src: "/images/spa-gym-2.jpeg", alt: "Area cardio Gym dengan jendela besar" },
-          { src: "/images/qubu-suites-3.jpeg", alt: "Suite di Hotel Qubu Suites tempat Gym berada" },
+          {
+            src: "/images/qubu-suites-3.jpeg",
+            alt: "Suite di Hotel Qubu Suites tempat Gym berada",
+          },
           { src: "/images/qubu-suites-4.jpeg", alt: "Interior Hotel Qubu Suites" },
         ],
         features: [
@@ -388,7 +521,10 @@ export const businessUnits: BusinessUnit[] = [
         },
         gallery: [
           { src: "/images/spa-gym-1.jpeg", alt: "Ruang perawatan couple di Spa" },
-          { src: "/images/qubu-suites-1.jpeg", alt: "Suite di Hotel Qubu Suites tempat Spa berada" },
+          {
+            src: "/images/qubu-suites-1.jpeg",
+            alt: "Suite di Hotel Qubu Suites tempat Spa berada",
+          },
           { src: "/images/qubu-suites-2.jpeg", alt: "Area suite Hotel Qubu Suites" },
         ],
         features: [
