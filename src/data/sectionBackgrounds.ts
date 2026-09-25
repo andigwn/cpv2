@@ -1,8 +1,8 @@
 import type { ImageAsset, SectionBackgroundConfig } from "@/types";
 
 /**
- * Hero background for unit/outlet/service detail pages: always the entity's own
- * photo (`unit.image` / `outlet.image` / `service.image`), never a shared stock band.
+ * Hero background for unit/service detail pages: always the entity's own photo
+ * (`unit.image` / `service.image`), never a shared stock band.
  */
 export function entityBackground(
   image: ImageAsset,
@@ -144,5 +144,3 @@ export const sectionBackgrounds: Record<string, SectionBackgroundConfig> = {
     overlayClassName: "bg-gradient-to-t from-white/94 via-white/78 to-white/45",
   },
 };
-
-export type SectionBackgroundKey = keyof typeof sectionBackgrounds;

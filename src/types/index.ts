@@ -51,37 +51,6 @@ export type Stat = {
   label: string;
 };
 
-/** Content of the living video band on the home page (the video twin of ImageBand). */
-export type VideoBandContent = {
-  id: string;
-  /** Video path; scrubbed by scroll while the band is pinned (reversible). */
-  src: string;
-  /** Shown before the footage is ready and for reduced-motion visitors. */
-  poster: ImageAsset;
-  eyebrow: string;
-  title: string;
-  description: string;
-  href?: string;
-  ctaLabel?: string;
-  /**
-   * Optional frame crop for footage that carries browser chrome (screen recordings):
-   * the frame is scaled around this origin so only the page area stays visible.
-   */
-  crop?: { scale: number; origin: string };
-};
-
-export type HighlightSlide = {
-  id: string;
-  /** Short label rendered inside the clickable chip indicator. */
-  chip: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  image: ImageAsset;
-  href: string;
-  ctaLabel: string;
-};
-
 export type ServiceCategory = "hotel" | "waterpark" | "wellness" | "events" | "dining";
 
 export type Service = {
@@ -128,15 +97,6 @@ export type NewsPost = {
   tags: string[];
 };
 
-export type TeamMember = {
-  name: string;
-  role: string;
-  bio: string;
-  /** Optional: falls back to a branded monogram avatar when omitted. */
-  image?: ImageAsset;
-  linkedin?: string;
-};
-
 export type TimelineEntry = {
   year: string;
   title: string;
@@ -151,30 +111,15 @@ export type Testimonial = {
   image?: ImageAsset;
 };
 
-export type FacilityShowcase = {
-  slug: string;
-  title: string;
-  description: string;
-  image: ImageAsset;
-  icon: string;
-  hours: string;
-};
-
-/** A business unit (outlet) that operates inside a building. */
-export type UnitOutlet = {
+/** A supporting facility shown on a business-unit page (no separate route). */
+export type UnitFacility = {
   slug: string;
   name: string;
-  /** Short type label, e.g. "Restoran", "Gym", "Spa". */
+  /** Short type label, e.g. "Restoran", "Bar", "Meeting Room". */
   type: string;
-  tagline: string;
-  summary: string;
-  description: string[];
-  image: ImageAsset;
-  gallery: ImageAsset[];
-  features: string[];
-  specs: { label: string; value: string }[];
-  hours: string;
-  priceFrom?: string;
+  description: string;
+  /** Optional: text-only cards are valid for facilities without official photography. */
+  image?: ImageAsset;
 };
 
 /** A room category offered by a lodging business unit. */
@@ -196,7 +141,7 @@ export type RoomType = {
   features?: string[];
 };
 
-/** A building owned by the group, plus the business units operating inside it. */
+/** A business unit owned by the group, with its rooms, facilities and gallery. */
 export type BusinessUnit = {
   slug: string;
   name: string;
@@ -210,10 +155,12 @@ export type BusinessUnit = {
   features: string[];
   specs: { label: string; value: string }[];
   hours: string;
-  /** Room categories for lodging units; shown in the nav menu and the detail page. */
+  /** Room/venue/pool categories; shown in the unit page and the nav menu. */
   roomTypes?: RoomType[];
-  /** Business units inside this building. May be empty for single-purpose sites. */
-  outlets: UnitOutlet[];
+  /** Section label for `roomTypes`: "Jenis Kamar", "Jenis Ruangan" or "Jenis Kolam". */
+  roomTypesLabel?: string;
+  /** Supporting facilities shown on the page (restaurants, spa, meeting rooms, ...). */
+  facilities: UnitFacility[];
 };
 
 export type JobOpening = {

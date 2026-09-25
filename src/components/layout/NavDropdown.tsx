@@ -5,11 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { navPanelItem, navPanelVariants } from "@/lib/animations";
 import type { NavItem } from "@/types";
-import { businessUnits, outletCount, unitHref } from "@/data/units";
-
-/** Look up the building metadata (type label) for a menu entry. */
-const unitByHref = new Map(businessUnits.map((unit) => [unitHref(unit), unit]));
 
 type NavDropdownProps = {
   item: NavItem;
@@ -20,11 +17,12 @@ type NavDropdownProps = {
 };
 
 /**
- * Desktop dropdown for a nav item that has children (the "Unit Bisnis" menu).
+ * Desktop dropdown for a nav item that has children (the "Destinasi" menu).
  *
- * The panel is positioned against the surrounding <nav> element, so it always
- * spans the content shell instead of overflowing at narrow viewports. It opens
- * on hover, on click and on keyboard focus, and closes with Escape.
+ * The panel only lists the business-unit names — no descriptions, category chips or
+ * sub-menus — as requested in the revision brief. It is positioned against the
+ * surrounding <nav> element so it always spans the content shell, opens on hover,
+ * click and keyboard focus, and closes with Escape.
  */
 export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: NavDropdownProps) {
   const [open, setOpen] = useState(false);
@@ -79,13 +77,18 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
         className={cn(
           "relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium transition-colors duration-300 xl:px-4",
           isActive ? activeTone : linkTone,
+          open && (overHero ? "bg-white/15" : "bg-ink-100/80"),
         )}
       >
         {item.label}
-        <ChevronDown
-          className={cn("h-3.5 w-3.5 transition-transform duration-300", open && "rotate-180")}
+        <motion.span
           aria-hidden
-        />
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ type: "spring", stiffness: 340, damping: 22 }}
+          className="inline-flex"
+        >
+          <ChevronDown className="h-3.5 w-3.5" />
+        </motion.span>
         {isActive ? (
           <motion.span
             layoutId="nav-active"
@@ -102,101 +105,42 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
         {open ? (
           <motion.div
             id={panelId}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full z-50 mt-3 rounded-3xl border border-white/70 bg-white/95 p-5 shadow-[0_40px_90px_-50px_rgba(19,25,34,0.55)] backdrop-blur-xl"
+            variants={navPanelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="absolute inset-x-0 top-full z-50 mt-3 overflow-hidden rounded-3xl border border-white/70 bg-white/95 p-4 shadow-[0_40px_90px_-50px_rgba(19,25,34,0.55)] backdrop-blur-xl sm:p-5"
           >
-            <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-              {children.map((child) => {
-                const unit = unitByHref.get(child.href);
+            <motion.span
+              aria-hidden
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+              className="absolute inset-x-8 top-0 h-px origin-left bg-linear-to-r from-transparent via-[#FFE52C] to-transparent"
+            />
 
-                return (
-                  <div
-                    key={child.href}
-                    className="border-ink-100 hover:border-lagoon-200 rounded-2xl border bg-white/70 p-4 transition-colors duration-300 hover:bg-white"
+            <ul className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+              {children.map((child) => (
+                <motion.li key={child.href} variants={navPanelItem}>
+                  <Link
+                    href={child.href}
+                    className="group/unit border-ink-100 relative flex items-center justify-between gap-3 overflow-hidden rounded-2xl border bg-white/70 px-4 py-3 transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_18px_34px_-26px_rgba(11,108,60,0.7)]"
                   >
-                    <Link
-                      href={child.href}
-                      className="group/unit flex items-start justify-between gap-3"
-                    >
-                      <span>
-                        <span className="font-display text-ink-900 group-hover/unit:text-lagoon-700 block text-sm font-bold transition-colors">
-                          {child.label}
-                        </span>
-                        <span className="text-ink-400 mt-1 block text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
-                          {unit ? unit.type : "Unit bisnis"}
-                        </span>
-                      </span>
-                      <ArrowRight
-                        className="text-ink-300 group-hover/unit:text-lagoon-600 mt-0.5 h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover/unit:translate-x-0.5"
-                        aria-hidden
-                      />
-                    </Link>
-
-                    {unit?.roomTypes?.length ? (
-                      <div className="border-ink-100 mt-3 border-t pt-3">
-                        <p className="text-ink-400 text-[0.6rem] font-semibold tracking-[0.18em] uppercase">
-                          Tipe kamar
-                        </p>
-                        <ul className="mt-2 flex flex-wrap gap-1.5">
-                          {unit.roomTypes.map((roomType) => (
-                            <li key={roomType.slug}>
-                              <Link
-                                href={unitHref(unit) + "#" + roomType.slug}
-                                className="border-ink-100 text-ink-600 hover:border-lagoon-300 hover:text-lagoon-700 inline-flex items-center rounded-full border bg-white px-2.5 py-1 text-xs transition-colors duration-300"
-                              >
-                                {roomType.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ) : null}
-
-                    {child.children?.length ? (
-                      <ul className="border-ink-100 mt-3 flex flex-col gap-2 border-t pt-3">
-                        {child.children.map((outlet) => (
-                          <li key={outlet.href}>
-                            <Link
-                              href={outlet.href}
-                              className="group/outlet text-ink-600 hover:text-lagoon-700 inline-flex items-center gap-2 text-xs transition-colors"
-                            >
-                              <span
-                                aria-hidden
-                                className="bg-lagoon-300 group-hover/outlet:bg-lagoon-600 h-1 w-1 rounded-full transition-colors"
-                              />
-                              {outlet.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="border-ink-100 text-ink-400 mt-3 border-t pt-3 text-xs">
-                        Unit tunggal tanpa outlet
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="border-ink-100 mt-4 flex flex-col gap-3 border-t pt-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-ink-500 text-xs">
-                {businessUnits.length} bangunan dengan {outletCount} unit bisnis di dalamnya.
-              </p>
-              <Link
-                href={item.href}
-                className="group/all text-lagoon-700 hover:text-lagoon-800 inline-flex items-center gap-2 text-sm font-semibold"
-              >
-                Lihat semua unit bisnis
-                <ArrowRight
-                  className="h-4 w-4 transition-transform duration-300 group-hover/all:translate-x-1"
-                  aria-hidden
-                />
-              </Link>
-            </div>
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-linear-to-r from-[#FFE52C] to-[#EF723D] opacity-0 transition-opacity duration-500 ease-out group-hover/unit:opacity-100"
+                    />
+                    <span className="font-display text-ink-900 relative z-10 text-sm font-bold transition-colors duration-300">
+                      {child.label}
+                    </span>
+                    <ArrowRight
+                      className="text-ink-300 group-hover/unit:text-ink-900 relative z-10 h-3.5 w-3.5 shrink-0 transition-[transform,color] duration-300 group-hover/unit:translate-x-0.5 group-hover/unit:-rotate-45"
+                      aria-hidden
+                    />
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
           </motion.div>
         ) : null}
       </AnimatePresence>

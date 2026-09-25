@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: UnitPageProps): Promise<Metad
   const { slug } = await params;
   const unit = getUnitBySlug(slug);
 
-  if (!unit) return { title: "Unit bisnis tidak ditemukan" };
+  if (!unit) return { title: "Destinasi tidak ditemukan" };
 
   return {
     title: unit.name,

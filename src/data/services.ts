@@ -260,7 +260,7 @@ export const services: Service[] = [
       { label: "Jam operasional", value: "06.00 – 23.00 WITA" },
       { label: "Sarapan", value: "Buffet 06.00 – 10.30" },
       { label: "In-room dining", value: "24 jam" },
-      { label: "Lokasi", value: "Tersebar di 4 unit bisnis" },
+      { label: "Lokasi", value: "Tersebar di 4 destinasi" },
     ],
     priceFrom: "Rp 185.000 / orang",
     featured: false,

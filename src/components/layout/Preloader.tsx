@@ -89,7 +89,7 @@ export function Preloader({ duration = 1500, onFinish }: PreloaderProps) {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <span className="font-mono text-sm tracking-[0.3em] text-ink-500 tabular-nums">
+            <span className="text-ink-500 text-sm font-semibold tracking-[0.3em] tabular-nums">
               {String(progress).padStart(3, "0")}%
             </span>
           </motion.div>

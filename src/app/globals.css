@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 /* Self-hosted variable fonts (no external font requests, zero layout shift).
-   Fraunces = warm soft-serif display with optical sizing, Plus Jakarta Sans = body copy. */
-@import "@fontsource-variable/fraunces/standard.css";
-@import "@fontsource-variable/plus-jakarta-sans/wght.css";
+   The site uses exactly two families: Cormorant for headings/display and
+   Montserrat for body copy and every UI element. */
+@import "@fontsource-variable/cormorant/wght.css";
+@import "@fontsource-variable/montserrat/wght.css";
 
 /* ------------------------------------------------------------------------- */
 /* Design tokens — hospitality palette: signature yellow-orange gradient,     */
 /* brand green and lime leaf (klien: #FFE52C→#EF723D, #0B6C3C, #8BC91B)       */
 /* ------------------------------------------------------------------------- */
 @theme {
-  --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
-  --font-sans:
-    "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Variable", "Cormorant", "Times New Roman", serif;
+  --font-sans: "Montserrat Variable", "Montserrat", ui-sans-serif, system-ui, sans-serif;
 
   /* Primary accent: brand green (#0B6C3C) */
   --color-lagoon-50: #eef8f2;
@@ -107,10 +107,12 @@
     scroll-behavior: smooth;
   }
 
-  /* Lenis drives scrolling; native smooth behaviour must stand down. */
+  /* Lenis drives scrolling; native smooth behaviour must stand down the whole time
+     Lenis is active, otherwise CSS smooth scroll fights Lenis' own animation. */
   html.lenis,
   html.lenis body {
     height: auto;
+    scroll-behavior: auto !important;
   }
 
   .lenis.lenis-smooth {

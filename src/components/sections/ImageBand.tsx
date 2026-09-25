@@ -10,7 +10,6 @@ import {
   BAND_COVER_START,
   BAND_PIN_WINDOW,
   EASE_IN_OUT,
-  MEDIA,
   SCRUB_SPRING,
 } from "@/lib/animations";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
@@ -33,11 +32,10 @@ type ImageBandProps = {
  * the photo a moment on its own. The photo itself lives in a sticky, exactly-viewport
  * box, so:
  *
- * 1. it rises with the page while the previous content sheet is still on screen — and
- *    stays INVISIBLE the whole time, so the visitor reads the sheet without the next
- *    photo peeking in from the bottom;
- * 2. the moment the sheet has scrolled past the top (the navbar zone) the band pins and
- *    the photo fades in — always sharp, no blur dissolve;
+ * 1. it rises with the page and is visible from the first pixel, so the band always
+ *    shows its OWN photo instead of the sticky hero behind the page showing through;
+ * 2. once the band reaches the top (the navbar zone) it pins — always sharp, no blur
+ *    dissolve;
  * 3. the following ContentBand — pulled up by `bandOverlapStyle` — then rises from the
  *    bottom while the photo is STILL pinned and covers it completely. The photo
  *    never fades out on its own: it is hidden by an opaque sheet, exactly like the
@@ -65,21 +63,17 @@ export function ImageBand({
 
   const [pinStart, pinEnd] = BAND_PIN_WINDOW;
 
-  // Invisible while the previous content sheet is still on screen: the photo only fades
-  // in once that sheet has scrolled past the top (the navbar zone) and the band itself
-  // pins. A fade-out at the end would ghost the incoming section (the old bug) — the
-  // following sheet hides it instead.
-  const opacity = useTransform(scrollYProgress, [...MEDIA.fadeWindow], [0, 1], {
-    clamp: true,
-  });
-
+  // The photo is visible from the moment the band enters the viewport — no fade-in.
+  // Hiding it until the pin made the sticky hero behind the page show through the band
+  // area (the "hero image covers the ImageBand" bug).
+  //
   // Downwards while the page scrolls up: the layers move in opposite directions. The
   // springs give the pinned frame the reference's scrub lag — it trails the scroll
   // slightly instead of being welded to it, so the camera feels heavy and physical.
   const rawY = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);
   const y = useSpring(rawY, SCRUB_SPRING);
-  // Push in while the photo rises into view (still hidden), settle at 1 for the pin,
-  // hold while the photo is alone, then dolly back out while the content sheet covers it.
+  // Push in while the photo rises into view, settle at 1 for the pin, hold while the
+  // photo is alone, then dolly back out while the content sheet covers it.
   const rawScale = useTransform(
     scrollYProgress,
     [0, pinStart, BAND_COVER_START, pinEnd],
@@ -87,7 +81,7 @@ export function ImageBand({
   );
   const scale = useSpring(rawScale, SCRUB_SPRING);
 
-  // Caption follows the same rule: it rises in shortly after the photo itself appears.
+  // Caption follows the same rule: it rises in shortly after the band pins.
   const captionOpacity = useTransform(
     scrollYProgress,
     [pinStart + 0.06, pinStart + 0.2],
@@ -110,10 +104,7 @@ export function ImageBand({
       style={{ height: `${BAND.photoHeightSvh}svh` }}
       className={cn("relative w-full", className)}
     >
-      <motion.div
-        style={prefersReducedMotion ? undefined : { opacity }}
-        className="sticky top-0 isolate h-svh w-full overflow-hidden"
-      >
+      <div className="sticky top-0 isolate h-svh w-full overflow-hidden">
         {/* Oversized so the counter-drift has room and never exposes an edge. */}
         <motion.div
           style={prefersReducedMotion ? undefined : { y, scale }}
@@ -160,14 +151,14 @@ export function ImageBand({
             <div className="shell">
               <motion.p
                 style={prefersReducedMotion ? undefined : { opacity: captionOpacity, y: captionY }}
-                className="font-display bg-sand-50/85 text-ink-800 max-w-md rounded-3xl px-6 py-5 text-lg leading-snug backdrop-blur-md sm:text-xl"
+                className="font-display bg-sand-50/95 text-ink-800 max-w-md rounded-3xl px-6 py-5 text-lg leading-snug shadow-[0_18px_50px_-34px_rgba(19,25,34,0.45)] sm:text-xl"
               >
                 {caption}
               </motion.p>
             </div>
           </div>
         ) : null}
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -6,8 +6,6 @@ import { ServicesGrid } from "@/components/sections/home/ServicesGrid";
 import { NewsPreview } from "@/components/sections/home/NewsPreview";
 import { CtaBanner } from "@/components/sections/home/CtaBanner";
 import { ImageBand } from "@/components/sections/ImageBand";
-import { VideoBand } from "@/components/sections/VideoBand";
-import { resortTourVideo } from "@/data/media";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -17,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Home rhythm: hero, then the living video band, then a short content sheet, then photo
+ * Home rhythm: hero, then a photo band, then a short content sheet, then more photo
  * bands, and so on. Every band shares the same broken-white canvas and the sheets slide
  * over the pinned media, so the page never shows a hard section divider; the closing sheet
  * is the photo + message finale.
@@ -29,9 +27,15 @@ export default function HomePage() {
 
       <AboutPreview />
 
-      {/* Living video band: plays like a photograph that happens to move, with the same
-          pin/counter-drift/push-in rhythm as the photo bands around it. */}
-      <VideoBand {...resortTourVideo} />
+      {/* Photo band: pins and dollies back the same way as the other bands, with the
+          next content sheet sliding over it. */}
+      <ImageBand
+        image={{
+          src: "/images/qubu-resort-2.jpeg",
+          alt: "Gerbang kawasan Qubu Resort dengan patung burung",
+        }}
+        caption="Satu kawasan, lima destinasi"
+      />
 
       <HomeUnits />
 

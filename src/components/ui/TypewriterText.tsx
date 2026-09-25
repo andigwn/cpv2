@@ -2,13 +2,20 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useSequentialTypewriter, useTypewriter } from "@/hooks/useTypewriter";
+import { EASE_SOFT } from "@/lib/animations";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useSequentialTypewriter, useTypewriter, useTypewriterWords } from "@/hooks/useTypewriter";
 
 type TypewriterTextProps = {
-  /** Single-line mode. Ignored when `lines` is provided. */
+  /** Single-line mode. Ignored when `lines` or `words` is provided. */
   text?: string;
   /** Sequential multi-line mode: each line starts after the previous one finished. */
   lines?: string[];
+  /**
+   * Cycling mode: types a word, holds it, deletes it, then moves to the next one —
+   * forever. Ignored when `lines` is provided.
+   */
+  words?: readonly string[];
   /** Milliseconds per character. */
   speed?: number;
   /** Delay before the first character, in milliseconds. */
@@ -30,6 +37,10 @@ type TypewriterTextProps = {
   pauseBeforeRestart?: number;
   /** Render as an inline run of text (e.g. one word inside a sentence) instead of a block-level line. */
   inline?: boolean;
+  /** Human typing rhythm: jitter per key and a beat after spaces/punctuation. */
+  organic?: boolean;
+  /** Each freshly typed character eases in instead of appearing all at once. */
+  animateChars?: boolean;
   as?: "h1" | "h2" | "h3" | "p" | "span";
 };
 
@@ -43,6 +54,30 @@ const MOTION_TAGS = {
 } as const;
 
 /**
+ * Renders the revealed text character by character, easing each new character in.
+ * Existing characters keep their identity, so only the freshly typed one animates.
+ */
+function TypedLine({ text, animated }: { text: string; animated: boolean }) {
+  if (!animated) return <>{text}</>;
+
+  return (
+    <>
+      {Array.from(text).map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 8, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.26, ease: EASE_SOFT }}
+          className="inline-block whitespace-pre"
+        >
+          {char}
+        </motion.span>
+      ))}
+    </>
+  );
+}
+
+/**
  * Headline that types itself character by character with a blinking cursor.
  * Only used by the Home hero (prd.md section 13a); the timing logic itself lives in
  * `hooks/useTypewriter.ts` so this file stays presentational.
@@ -50,6 +85,7 @@ const MOTION_TAGS = {
 export function TypewriterText({
   text,
   lines,
+  words,
   speed = 50,
   startDelay = 0,
   className,
@@ -62,36 +98,57 @@ export function TypewriterText({
   deleteSpeed,
   pauseBeforeRestart,
   inline = false,
+  organic = true,
+  animateChars = true,
   as: Tag = "span",
 }: TypewriterTextProps) {
   const Wrapper = MOTION_TAGS[Tag] ?? MOTION_TAGS.span;
+  const prefersReducedMotion = usePrefersReducedMotion();
   const multi = Array.isArray(lines) && lines.length > 0;
+  const cycling = Array.isArray(words) && words.length > 0;
   const displayClass = inline ? "inline" : "block";
+  const animateCharacters = animateChars && !prefersReducedMotion;
 
   const single = useTypewriter(text ?? "", {
     speed,
     startDelay,
     onComplete,
-    disabled: multi,
+    disabled: multi || cycling,
     loop,
     holdDuration,
     deleteSpeed,
     pauseBeforeRestart,
+    organic,
   });
   const sequential = useSequentialTypewriter(lines ?? [], {
     speed,
     startDelay,
     onComplete,
-    disabled: !multi,
+    disabled: !multi || cycling,
     loop,
     holdDuration,
     deleteSpeed,
     pauseBeforeRestart,
+    organic,
+  });
+  const wordCycle = useTypewriterWords(words ?? [], {
+    speed,
+    startDelay,
+    onComplete,
+    disabled: !cycling,
+    holdDuration,
+    deleteSpeed,
+    pauseBeforeRestart,
+    organic,
   });
 
-  const renderedLines = multi ? sequential.lines : [single.displayedText];
-  const done = multi ? sequential.isDone : single.isDone;
-  const activeLine = multi ? sequential.activeLine : 0;
+  const renderedLines = cycling
+    ? [wordCycle.displayedText]
+    : multi
+      ? sequential.lines
+      : [single.displayedText];
+  const done = cycling ? wordCycle.isDone : multi ? sequential.isDone : single.isDone;
+  const activeLine = cycling ? 0 : multi ? sequential.activeLine : 0;
   const showCursor = keepCursor || !done;
 
   return (
@@ -100,20 +157,18 @@ export function TypewriterText({
         const isActiveLine = multi ? activeLine === index : true;
         return (
           <span key={index} className={cn(displayClass, lineClassName)}>
-            {line}
+            <TypedLine text={line} animated={animateCharacters} />
             {showCursor && isActiveLine ? (
               <motion.span
                 aria-hidden
                 className={cn(
-                  "bg-lagoon-600 ml-1 inline-block h-[0.95em] w-0.75 translate-y-[0.08em] rounded-full align-middle",
+                  "from-sunshine-300 to-[#EF723D] ml-1 inline-block h-[0.95em] w-0.75 translate-y-[0.08em] rounded-full bg-linear-to-b align-middle shadow-[0_0_14px_rgba(255,229,44,0.6)]",
                   cursorClassName,
                 )}
-                animate={{ opacity: done ? [1, 0.85, 1] : [1, 0] }}
-                transition={
-                  done
-                    ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" }
-                    : { duration: 0.8, repeat: Infinity, ease: "linear" }
+                animate={
+                  done ? { opacity: [1, 0.2, 1], scaleY: [1, 0.8, 1] } : { opacity: 1, scaleY: [1, 0.82, 1] }
                 }
+                transition={{ duration: 1.15, repeat: Infinity, ease: "easeInOut" }}
               />
             ) : null}
           </span>

@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BedDouble, Check, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, BedDouble, Check, Clock, LayoutGrid } from "lucide-react";
 import type { BusinessUnit } from "@/types";
-import { businessUnits, outletHref, unitHref } from "@/data/units";
+import { businessUnits, unitHref } from "@/data/units";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
@@ -14,7 +14,7 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContentBand } from "@/components/sections/ContentBand";
 import { ImageBand } from "@/components/sections/ImageBand";
-import { FadeIn } from "@/components/animations/FadeIn";
+import { UnitGallery } from "@/components/sections/units/UnitGallery";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
 
 type UnitDetailContentProps = {
@@ -22,12 +22,27 @@ type UnitDetailContentProps = {
   heroBackground: (typeof sectionBackgrounds)[keyof typeof sectionBackgrounds];
 };
 
-/** Detail page for one building: a short intro, features, outlets and related links. */
+/** "Jenis Kamar" → "kamar", "Jenis Ruangan" → "ruangan", "Jenis Kolam" → "kolam". */
+function groupNoun(label?: string) {
+  if (!label) return "kamar";
+  return label.replace(/^Jenis\s+/i, "").toLowerCase();
+}
+
+/** Call-to-action copy differs between lodging, venues and the waterpark. */
+function roomCtaLabel(unit: BusinessUnit) {
+  if (unit.slug === "qhall") return "Diskusikan acara Anda";
+  if (unit.slug === "paradis-q") return "Tanya tiket & jadwal";
+  return "Tanya ketersediaan";
+}
+
+/**
+ * Detail page for one business unit. The rhythm follows the brief:
+ * profile → room/venue/pool categories → supporting facilities → photo gallery.
+ */
 export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentProps) {
   const others = businessUnits.filter((item) => item.slug !== unit.slug).slice(0, 3);
-  const specs = unit.specs.slice(0, 4);
-  const features = unit.features.slice(0, 6);
   const [first, second, third] = unit.gallery;
+  const noun = groupNoun(unit.roomTypesLabel);
 
   return (
     <>
@@ -38,7 +53,7 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
         background={heroBackground}
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "Unit Bisnis", href: "/unit-bisnis" },
+          { label: "Destinasi", href: "/unit-bisnis" },
           { label: unit.name },
         ]}
       >
@@ -53,15 +68,25 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
         </div>
       </PageHero>
 
+      {/* Profil */}
       <ContentBand>
         <SectionTitle
-          eyebrow="Tentang"
+          eyebrow="Profil"
           title={"Sekilas " + unit.name}
           description={unit.description[0]}
           className="max-w-2xl"
         />
+
+        {unit.description.length > 1 ? (
+          <div className="text-ink-600 mt-6 flex max-w-3xl flex-col gap-4 text-sm leading-relaxed sm:text-base">
+            {unit.description.slice(1).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        ) : null}
+
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {specs.map((spec) => (
+          {unit.specs.map((spec) => (
             <motion.div key={spec.label} variants={staggerItem} className="h-full">
               <InfoCard eyebrow={spec.label} title={spec.value} />
             </motion.div>
@@ -71,33 +96,21 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
 
       <ImageBand image={first ?? unit.image} caption={"Suasana " + unit.name} />
 
-      <ContentBand>
-        <SectionTitle
-          eyebrow="Fasilitas"
-          title="Yang tersedia di gedung ini"
-          className="max-w-2xl"
-        />
-        <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
-            <motion.div key={feature} variants={staggerItem} className="h-full">
-              <InfoCard title={feature} icon={<Check className="h-5 w-5" aria-hidden />} />
-            </motion.div>
-          ))}
-        </StaggerContainer>
-      </ContentBand>
-
+      {/* Jenis kamar / ruangan / kolam */}
       {unit.roomTypes?.length ? (
         <ContentBand>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionTitle
-              eyebrow="Tipe kamar"
-              title={"Pilihan kamar di " + unit.name}
-              description="Setiap tipe memiliki ukuran, pemandangan, dan fasilitas yang berbeda."
+              eyebrow={unit.roomTypesLabel ?? "Tipe kamar"}
+              title={"Pilihan " + noun + " di " + unit.name}
+              description={
+                "Setiap pilihan memiliki ukuran, kapasitas, dan fasilitas yang berbeda."
+              }
               className="max-w-2xl"
             />
             <span className="border-lagoon-200 text-ink-700 inline-flex w-fit items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-sm backdrop-blur-md">
               <BedDouble className="text-lagoon-600 h-4 w-4" aria-hidden />
-              {unit.roomTypes.length} tipe kamar
+              {unit.roomTypes.length + " " + noun}
             </span>
           </div>
 
@@ -109,57 +122,91 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
                 variants={staggerItem}
                 className="h-full scroll-mt-32"
               >
-                <RoomTypeCard roomType={roomType} index={index} fallbackImage={unit.image} />
+                <RoomTypeCard
+                  roomType={roomType}
+                  index={index}
+                  fallbackImage={unit.image}
+                  ctaLabel={roomCtaLabel(unit)}
+                />
               </motion.div>
             ))}
           </StaggerContainer>
         </ContentBand>
       ) : null}
 
-      <ImageBand image={second ?? unit.image} caption={"Kawasan " + unit.name} />
+      {/* Fasilitas pendukung */}
+      <ImageBand image={second ?? first ?? unit.image} caption={"Kawasan " + unit.name} />
 
       <ContentBand>
         <SectionTitle
-          eyebrow="Unit bisnis di dalam"
-          title={unit.outlets.length ? "Yang beroperasi di gedung ini" : "Unit tunggal"}
+          eyebrow="Fasilitas Pendukung"
+          title={
+            unit.facilities.length
+              ? "Yang melengkapi kunjungan Anda"
+              : "Yang tersedia di " + unit.name
+          }
           description={
-            unit.outlets.length
-              ? "Setiap outlet memiliki halaman sendiri."
-              : "Bangunan ini dijalankan sebagai satu unit bisnis."
+            unit.facilities.length
+              ? "Fasilitas yang beroperasi di dalam dan sekitar " + unit.name + "."
+              : "Fasilitas utama yang bisa dinikmati tamu " + unit.name + "."
           }
           className="max-w-2xl"
         />
-        {unit.outlets.length ? (
+
+        {unit.facilities.length ? (
           <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {unit.outlets.map((outlet) => (
-              <Card
-                key={outlet.slug}
-                variants={staggerItem}
-                image={outlet.image}
-                eyebrow={outlet.type}
-                title={outlet.name}
-                description={outlet.tagline}
-                href={outletHref(unit, outlet)}
-                ctaLabel={"Lihat " + outlet.name}
-              />
-            ))}
+            {unit.facilities.map((facility) =>
+              facility.image ? (
+                <Card
+                  key={facility.slug}
+                  variants={staggerItem}
+                  image={facility.image}
+                  eyebrow={facility.type}
+                  title={facility.name}
+                  description={facility.description}
+                />
+              ) : (
+                <motion.div key={facility.slug} variants={staggerItem} className="h-full">
+                  <InfoCard
+                    eyebrow={facility.type}
+                    title={facility.name}
+                    body={facility.description}
+                    icon={<LayoutGrid className="h-5 w-5" aria-hidden />}
+                  />
+                </motion.div>
+              ),
+            )}
           </StaggerContainer>
         ) : (
-          <FadeIn className="mt-8 max-w-2xl rounded-3xl bg-white/70 p-6 backdrop-blur-sm">
-            <p className="text-ink-600 text-sm leading-relaxed">
-              {unit.tagline}. Seluruh layanan {unit.name} ditangani langsung oleh tim unit ini.
-            </p>
-          </FadeIn>
+          <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {unit.features.map((feature) => (
+              <motion.div key={feature} variants={staggerItem} className="h-full">
+                <InfoCard title={feature} icon={<Check className="h-5 w-5" aria-hidden />} />
+              </motion.div>
+            ))}
+          </StaggerContainer>
         )}
       </ContentBand>
 
-      <ImageBand image={third ?? unit.image} caption={"Sudut lain " + unit.name} />
+      {/* Galeri */}
+      <ImageBand image={third ?? second ?? first ?? unit.image} caption={"Sudut lain " + unit.name} />
 
+      <ContentBand id="galeri">
+        <SectionTitle
+          eyebrow="Galeri"
+          title={"Galeri foto " + unit.name}
+          description="Foto berganti otomatis setiap 2,5 detik — gunakan tombol panah atau geser foto untuk berpindah."
+          className="max-w-2xl"
+        />
+        <UnitGallery slides={unit.gallery} label={"Galeri foto " + unit.name} />
+      </ContentBand>
+
+      {/* Destinasi lain */}
       <ContentBand>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionTitle
-            eyebrow="Unit bisnis lain"
-            title="Bangunan lain di kawasan Q"
+            eyebrow="Destinasi lain"
+            title="Destinasi lain di kawasan Q"
             className="max-w-xl"
             titleClassName="text-2xl sm:text-3xl"
           />
@@ -169,7 +216,7 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
             icon={<ArrowLeft className="h-4 w-4" aria-hidden />}
             iconPosition="left"
           >
-            Semua unit bisnis
+            Semua destinasi
           </Button>
         </div>
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

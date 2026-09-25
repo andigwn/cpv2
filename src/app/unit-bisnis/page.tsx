@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { UnitsPageContent } from "@/components/sections/units/UnitsPageContent";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
-import { businessUnits, outletHref, unitHref } from "@/data/units";
+import { businessUnits, unitHref } from "@/data/units";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Unit Bisnis",
+  title: "Destinasi",
   description:
-    "Enam unit bisnis " +
+    "Lima destinasi " +
     SITE.name +
-    ": Hotel Q, QHall, Paradis Q, Hotel Qubu Suites, Villa, dan Pemancingan — lengkap dengan outlet yang beroperasi di dalamnya.",
+    ": Hotel Qubu Suites, Hotel Q, The Q Hall Convention Center, Paradis-Q Waterpark, dan Villa Town House.",
   alternates: { canonical: "/unit-bisnis" },
 };
 
@@ -17,21 +17,12 @@ export default function UnitsPage() {
   return (
     <>
       <UnitsPageContent heroBackground={sectionBackgrounds.servicesIntro} />
-      {/* Hidden structured list keeps every building and outlet discoverable by crawlers. */}
-      <nav aria-label="Daftar unit bisnis" className="sr-only">
+      {/* Hidden structured list keeps every destination discoverable by crawlers. */}
+      <nav aria-label="Daftar destinasi" className="sr-only">
         <ul>
           {businessUnits.map((unit) => (
             <li key={unit.slug}>
               <a href={unitHref(unit)}>{unit.name}</a>
-              {unit.outlets.length ? (
-                <ul>
-                  {unit.outlets.map((outlet) => (
-                    <li key={outlet.slug}>
-                      <a href={outletHref(unit, outlet)}>{outlet.name}</a>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
             </li>
           ))}
         </ul>

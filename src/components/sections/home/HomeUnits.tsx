@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import type { BusinessUnit } from "@/types";
 import { businessUnits, unitHref } from "@/data/units";
 import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
@@ -11,13 +12,23 @@ import { ContentBand } from "@/components/sections/ContentBand";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
 
-/** The six buildings, as cards with their opening line. */
+/** Short footer summary for a unit card: facilities, room/venue count, or unit size. */
+function unitFooter(unit: BusinessUnit) {
+  if (unit.facilities.length) return unit.facilities.length + " fasilitas pendukung";
+  if (unit.roomTypes?.length) {
+    const noun = (unit.roomTypesLabel?.replace(/^Jenis\s+/i, "") ?? "kamar").toLowerCase();
+    return unit.roomTypes.length + " " + noun;
+  }
+  return unit.specs[0] ? unit.specs[0].value : unit.type;
+}
+
+/** The five business units, as cards with their opening line. */
 export function HomeUnits() {
   return (
     <ContentBand id="unit-bisnis" overlap>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <SectionTitle
-          eyebrow="Unit Bisnis"
+          eyebrow="Destinasi"
           title="Yang ada di kawasan ini"
           className="max-w-xl"
           titleClassName="text-3xl sm:text-4xl"
@@ -50,11 +61,7 @@ export function HomeUnits() {
                 />
               }
               footer={
-                <span className="text-xs text-ink-500">
-                  {unit.outlets.length
-                    ? unit.outlets.length + " unit bisnis di dalam"
-                    : "Unit tunggal"}
-                </span>
+                <span className="text-ink-500 text-xs">{unitFooter(unit)}</span>
               }
             />
           </motion.div>

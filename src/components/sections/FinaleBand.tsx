@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef, type ReactNode } from "react";
-import { motion, useMotionTemplate, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
 import { FINALE, SCRUB_SPRING } from "@/lib/animations";
@@ -35,10 +35,6 @@ export function FinaleBand({
   const ref = useRef<HTMLElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const { scrollYProgress: journey } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
   // Pin progress as `["start start", "end end"]`, written with explicit insets so Framer
   // Motion does not accelerate it onto a native ViewTimeline: that path anchors the range
   // to the animated element, which never moves while pinned, so derived values freeze.
@@ -47,9 +43,8 @@ export function FinaleBand({
     offset: ["start 0%", "end 100%"],
   });
 
-  // Hidden while the previous content sheet is still on screen; the closing photo only
-  // fades in once that sheet has passed the top — the same rule as the media bands.
-  const opacity = useTransform(journey, [...FINALE.fadeWindow], [0, 1], { clamp: true });
+  // The closing photo is visible from the first pixel (no fade-in), so the band always
+  // shows its OWN photo instead of the sticky hero behind the page showing through.
   // Continuous, gentle push-in for the whole pin: the frame is never static. The springs
   // give the closing beat the reference's scrubbed feel — the veil, the push and the
   // rising message all trail the scroll like a camera settling on its subject.
@@ -67,10 +62,6 @@ export function FinaleBand({
     [...FINALE.messageScale] as number[],
   );
   const messageScale = useSpring(rawMessageScale, SCRUB_SPRING);
-  // The frame defocuses as the veil deepens: the closing message lands on a soft photo.
-  const rawPhotoBlurPx = useTransform(pin, [...FINALE.veilWindow], [0, FINALE.photoBlurPx]);
-  const photoBlurPx = useSpring(rawPhotoBlurPx, SCRUB_SPRING);
-  const photoBlur = useMotionTemplate`blur(${photoBlurPx}px)`;
 
   return (
     <section
@@ -79,15 +70,9 @@ export function FinaleBand({
       style={{ height: `${heightSvh}svh` }}
       className={cn("relative w-full", className)}
     >
-      <motion.div
-        // Explicit resting values for reduced motion: the motion values may have written a
-        // mid-animation opacity before the OS preference was picked up on hydration, and a
-        // removed style prop would leave that stale value in place.
-        style={prefersReducedMotion ? { opacity: 1 } : { opacity }}
-        className="sticky top-0 isolate h-svh w-full overflow-hidden"
-      >
+      <div className="sticky top-0 isolate h-svh w-full overflow-hidden">
         <motion.div
-          style={prefersReducedMotion ? { scale: 1 } : { scale, filter: photoBlur }}
+          style={prefersReducedMotion ? { scale: 1 } : { scale }}
           className="absolute inset-[-4%]"
         >
           <Image
@@ -118,7 +103,7 @@ export function FinaleBand({
             {children}
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

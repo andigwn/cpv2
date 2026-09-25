@@ -66,7 +66,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="id" className="h-full antialiased">
+    <html lang="id" className="h-full antialiased" data-scroll-behavior="smooth">
       <head>
         {/* Warm the connection for the largest hero photo. */}
         <link rel="preload" as="image" href="/images/qubu-resort-1.jpeg" fetchPriority="high" />

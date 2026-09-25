@@ -8,18 +8,14 @@ import { CalendarDays, ChevronDown, Menu, Phone, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/types";
-import { businessUnits, unitHref } from "@/data/units";
 import { MAIN_NAV, SITE, SOCIAL_LINKS } from "@/lib/constants";
 import { NavDropdown } from "@/components/layout/NavDropdown";
-import { mobileMenuVariants } from "@/lib/animations";
+import { mobileMenuVariants, mobileSubmenuItem } from "@/lib/animations";
 import { useMenuStore } from "@/store/useMenuStore";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { Button } from "@/components/ui/Button";
 import { SocialIcon } from "@/components/ui/SocialIcon";
-
-/** Look up the building metadata (room types) for a menu entry. */
-const unitByHref = new Map(businessUnits.map((unit) => [unitHref(unit), unit]));
 
 /**
  * Fixed navbar with hide-on-scroll-down behaviour, a scroll progress bar and a
@@ -214,7 +210,8 @@ export function Navbar() {
 
 /**
  * One row of the mobile drawer. Items with children expand into an accordion so
- * every business unit and its outlets stay reachable on a phone.
+ * every business unit stays reachable on a phone; the child list stays a plain
+ * list of names — no descriptions and no sub-menus.
  */
 function MobileNavItem({
   item,
@@ -277,65 +274,36 @@ function MobileNavItem({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
+            className="overflow-hidden pb-3"
           >
-            <li>
-              <Link
-                href={item.href}
-                onClick={onNavigate}
-                className="text-lagoon-700 block py-3 text-sm font-semibold"
+            {children.map((child, childIndex) => (
+              <motion.li
+                key={child.href}
+                custom={childIndex}
+                variants={mobileSubmenuItem}
+                initial="hidden"
+                animate="visible"
+                className="pt-2"
               >
-                Semua unit bisnis
-              </Link>
-            </li>
-            {children.map((child) => {
-              const unit = unitByHref.get(child.href);
-
-              return (
-                <li key={child.href}>
-                  <Link
-                    href={child.href}
-                    onClick={onNavigate}
-                    className="text-ink-700 block py-3 text-base font-medium"
-                  >
+                <Link
+                  href={child.href}
+                  onClick={onNavigate}
+                  className="group/mobile border-ink-100 text-ink-700 relative flex items-center gap-3 overflow-hidden rounded-2xl border bg-white/70 px-4 py-3 text-base font-medium transition-transform duration-300 ease-out active:scale-[0.99]"
+                >
+                  <span
+                    aria-hidden
+                    className="group-active/mobile:opacity-100 pointer-events-none absolute inset-0 bg-linear-to-r from-[#FFE52C] to-[#EF723D] opacity-0 transition-opacity duration-500 ease-out group-hover/mobile:opacity-100"
+                  />
+                  <span
+                    aria-hidden
+                    className="bg-ink-300 group-hover/mobile:bg-ink-900 relative z-10 h-1.5 w-1.5 rounded-full transition-colors duration-300"
+                  />
+                  <span className="group-hover/mobile:text-ink-900 relative z-10 transition-colors duration-300">
                     {child.label}
-                  </Link>
-                  {unit?.roomTypes?.length ? (
-                    <ul className="border-ink-200 mb-2 flex flex-col gap-1 border-l pl-4">
-                      <li className="text-ink-400 pt-1 text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
-                        Tipe kamar
-                      </li>
-                      {unit.roomTypes.map((roomType) => (
-                        <li key={roomType.slug}>
-                          <Link
-                            href={unitHref(unit) + "#" + roomType.slug}
-                            onClick={onNavigate}
-                            className="text-ink-500 block py-2 text-sm"
-                          >
-                            {roomType.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {child.children?.length ? (
-                    <ul className="border-ink-200 mb-2 flex flex-col gap-1 border-l pl-4">
-                      {child.children.map((outlet) => (
-                        <li key={outlet.href}>
-                          <Link
-                            href={outlet.href}
-                            onClick={onNavigate}
-                            className="text-ink-500 block py-2 text-sm"
-                          >
-                            {outlet.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </li>
-              );
-            })}
+                  </span>
+                </Link>
+              </motion.li>
+            ))}
           </motion.ul>
         ) : null}
       </AnimatePresence>

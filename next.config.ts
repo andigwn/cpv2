@@ -104,7 +104,6 @@ const nextConfig: NextConfig = {
       // websockets for hot reload.
       ...(securityHeaders.length > 0 ? [{ source: "/(.*)", headers: securityHeaders }] : []),
       { source: "/images/:path*", headers: [{ key: "Cache-Control", value: assetCache }] },
-      { source: "/videos/:path*", headers: [{ key: "Cache-Control", value: assetCache }] },
     ];
   },
 

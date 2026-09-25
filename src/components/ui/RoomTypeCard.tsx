@@ -17,6 +17,8 @@ type RoomTypeCardProps = {
   fallbackImage?: ImageAsset;
   /** Where the availability link points. */
   href?: string;
+  /** Label for the availability link (room, venue and pool pages differ). */
+  ctaLabel?: string;
   className?: string;
 };
 
@@ -38,6 +40,7 @@ export function RoomTypeCard({
   index,
   fallbackImage,
   href = "/contact",
+  ctaLabel = "Tanya ketersediaan",
   className,
 }: RoomTypeCardProps) {
   const image = roomType.image ?? fallbackImage;
@@ -165,7 +168,7 @@ export function RoomTypeCard({
             href={href}
             className="group/cta text-lagoon-700 hover:text-lagoon-800 inline-flex items-center gap-2 text-sm font-semibold"
           >
-            Tanya ketersediaan
+            {ctaLabel}
             <ArrowRight
               className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1"
               aria-hidden

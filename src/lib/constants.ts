@@ -7,7 +7,7 @@ export const SITE = {
   legalName: "PT.Rezeki Wahana Gembira",
   tagline: "Hotel, Convention & Recreation",
   description:
-    "Qubu Resort mengelola hotel, waterpark, convention centre, dan destinasi rekreasi keluarga melalui enam unit bisnis: Hotel Q, QHall, Paradis Q, Hotel Qubu Suites, Villa, dan Pemancingan.",
+    "Qubu Resort mengelola hotel, waterpark, convention centre, dan destinasi rekreasi keluarga melalui lima destinasi: Hotel Qubu Suites, Hotel Q, The Q Hall Convention Center, Paradis-Q Waterpark, dan Villa Town House.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   foundedYear: 2009,
   contact: {
@@ -31,20 +31,21 @@ export const MAIN_NAV: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Tentang", href: "/about" },
   // Dropdown entries are derived from src/data/units.ts (single source of truth).
-  { label: "Unit Bisnis", href: "/unit-bisnis", children: businessUnitMenu },
+  { label: "Destinasi", href: "/unit-bisnis", children: businessUnitMenu },
   { label: "Kontak", href: "/contact" },
+  { label: "Karir", href: "/careers" },
 ];
 
 export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
   {
-    title: "Unit Bisnis",
+    title: "Destinasi",
     items: [
-      { label: "Hotel Q", href: "/unit-bisnis/hotel-q" },
-      { label: "QHall Convention Center", href: "/unit-bisnis/qhall" },
-      { label: "Paradis Q Waterpark", href: "/unit-bisnis/paradis-q" },
       { label: "Hotel Qubu Suites", href: "/unit-bisnis/qubu-suites" },
-      { label: "Villa", href: "/unit-bisnis/villa" },
-      { label: "Pemancingan", href: "/unit-bisnis/pemancingan" },
+      { label: "Hotel Q", href: "/unit-bisnis/hotel-q" },
+      { label: "The Q Hall Convention Center", href: "/unit-bisnis/qhall" },
+      { label: "Paradis-Q Waterpark", href: "/unit-bisnis/paradis-q" },
+      { label: "Villa Town House", href: "/unit-bisnis/villa" },
+      { label: "Semua Destinasi", href: "/unit-bisnis" },
     ],
   },
   {

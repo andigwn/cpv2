@@ -34,15 +34,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const outletRoutes: MetadataRoute.Sitemap = businessUnits.flatMap((unit) =>
-    unit.outlets.map((outlet) => ({
-      url: `${base}/unit-bisnis/${unit.slug}/${outlet.slug}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    })),
-  );
-
   const newsRoutes: MetadataRoute.Sitemap = newsPosts.map((post) => ({
     url: `${base}/news/${post.slug}`,
     lastModified: new Date(post.publishedAt),
@@ -50,5 +41,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...unitRoutes, ...outletRoutes, ...newsRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...unitRoutes, ...newsRoutes];
 }

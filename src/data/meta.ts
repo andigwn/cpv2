@@ -6,10 +6,26 @@ export const heroContent = {
   eyebrow: "Qubu Resort · Sejak 2009",
   /** Each entry is typed sequentially by `useSequentialTypewriter`. */
   headlineLines: ["Liburan Tak Terlupakan", "di Qubu Resort"],
-  /** Static text that opens the second headline line; the loop word is typed right after it. */
+  /** Static text that opens the second headline line; the business-unit names cycle after it. */
   headlineLine2Prefix: "di ",
-  /** Only this word types-deletes-retypes in a loop; the rest of the headline is typed once. */
-  headlineLoopWord: "Qubu Resort",
+  /**
+   * The business units of Qubu Resort, in display order. The hero types each name,
+   * holds it, deletes it and moves to the next one — forever — via `useTypewriterWords`.
+   */
+  headlineLoopWords: [
+    "Hotel Qubu Suites",
+    "Embun Signature Restaurant",
+    "Spa & Wellness Center",
+    "Entertainment Room",
+    "Kids Club",
+    "Qubiq Bar",
+    "Hotel Q",
+    "Patio Bistro",
+    "The Q Hall Convention Center",
+    "Paradis-Q Waterpark",
+    "Food Corner",
+    "Villa Town House",
+  ],
   subheadline:
     "Hotel resort tepi pantai, waterpark keluarga, dan convention centre dalam satu kawasan terpadu — dirancang untuk liburan yang cerah, hangat, dan sulit dilupakan.",
   primaryCta: { label: "Reservasi Sekarang", href: "/contact" },

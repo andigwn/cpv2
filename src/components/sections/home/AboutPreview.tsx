@@ -17,7 +17,7 @@ export function AboutPreview() {
     <ContentBand id="about">
       <SectionTitle
         eyebrow="Tentang Qubu Resort"
-        title="Enam unit bisnis, satu kawasan"
+        title="Lima destinasi, satu kawasan"
         description="Hotel, convention centre, waterpark, dan rekreasi keluarga dalam satu lokasi di Tanjung Benoa."
         className="max-w-2xl"
       />

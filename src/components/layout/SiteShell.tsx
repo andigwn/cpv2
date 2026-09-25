@@ -7,6 +7,7 @@ import { Preloader } from "@/components/layout/Preloader";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { SmoothScrollProvider } from "@/components/animations/SmoothScrollProvider";
 import { ScrollProgressBar } from "@/components/layout/ScrollProgressBar";
+import { BackToTop } from "@/components/layout/BackToTop";
 import { useLoaderStore } from "@/store/useLoaderStore";
 import { useIsHydrated } from "@/hooks/useIsHydrated";
 
@@ -36,6 +37,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
+      <BackToTop />
     </SmoothScrollProvider>
   );
 }

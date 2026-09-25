@@ -24,7 +24,28 @@ type TypewriterOptions = {
   deleteSpeed?: number;
   /** Blank pause after everything is deleted, before typing starts again. Only used when `loop` is true. */
   pauseBeforeRestart?: number;
+  /**
+   * Human cadence: every key gets a little jitter and the pace eases after a space or
+   * punctuation. Turn off for a metronome-steady type.
+   */
+  organic?: boolean;
 };
+
+/**
+ * Human typing rhythm: jitter on every key, a beat after a space and a longer one after
+ * punctuation, so the text does not tick like a machine.
+ */
+function typingDelay(base: number, char: string, organic: boolean) {
+  if (!organic) return base;
+  const jitter = 0.72 + Math.random() * 0.62;
+  const beat = char === " " ? 1.45 : /[.,!?;:—–]/.test(char) ? 2.3 : 1;
+  return Math.round(base * jitter * beat);
+}
+
+function deletingDelay(base: number, organic: boolean) {
+  if (!organic) return base;
+  return Math.round(base * (0.78 + Math.random() * 0.44));
+}
 
 type TypewriterResult = {
   displayedText: string;
@@ -51,6 +72,7 @@ export function useTypewriter(text: string, options: TypewriterOptions = {}): Ty
     holdDuration = 1800,
     deleteSpeed = Math.max(20, Math.round(speed / 2)),
     pauseBeforeRestart = 500,
+    organic = true,
   } = options;
   const prefersReducedMotion = usePrefersReducedMotion();
   const skip = disabled || prefersReducedMotion;
@@ -97,13 +119,13 @@ export function useTypewriter(text: string, options: TypewriterOptions = {}): Ty
           timeoutId = setTimeout(run, holdDuration);
           return;
         }
-        timeoutId = setTimeout(run, speed);
+        timeoutId = setTimeout(run, typingDelay(speed, text.charAt(index - 1), organic));
         return;
       }
 
       if (phase === "holding") {
         phase = "deleting";
-        timeoutId = setTimeout(run, deleteSpeed);
+        timeoutId = setTimeout(run, deletingDelay(deleteSpeed, organic));
         return;
       }
 
@@ -116,7 +138,7 @@ export function useTypewriter(text: string, options: TypewriterOptions = {}): Ty
           timeoutId = setTimeout(run, pauseBeforeRestart);
           return;
         }
-        timeoutId = setTimeout(run, deleteSpeed);
+        timeoutId = setTimeout(run, deletingDelay(deleteSpeed, organic));
         return;
       }
 
@@ -132,7 +154,18 @@ export function useTypewriter(text: string, options: TypewriterOptions = {}): Ty
       cancelled = true;
       clearTimeout(timeoutId);
     };
-  }, [text, speed, startDelay, skip, resetKey, loop, holdDuration, deleteSpeed, pauseBeforeRestart]);
+  }, [
+    text,
+    speed,
+    startDelay,
+    skip,
+    resetKey,
+    loop,
+    holdDuration,
+    deleteSpeed,
+    pauseBeforeRestart,
+    organic,
+  ]);
 
   return { displayedText, isDone };
 }
@@ -145,9 +178,7 @@ type SequentialResult = {
   /** Index of the line currently being typed/deleted (`lines.length` when finished and not looping). */
   activeLine: number;
   isDone: boolean;
-};
-
-/**
+};/**
  * Types several lines one after another: line 2 starts only after line 1 finished.
  * Used by the Home hero headline (prd.md section 13a).
  *
@@ -169,6 +200,7 @@ export function useSequentialTypewriter(
     holdDuration = 1800,
     deleteSpeed = Math.max(20, Math.round(speed / 2)),
     pauseBeforeRestart = 500,
+    organic = true,
   } = options;
   const prefersReducedMotion = usePrefersReducedMotion();
   const skip = disabled || prefersReducedMotion;
@@ -234,7 +266,7 @@ export function useSequentialTypewriter(
           lineIndex += 1;
           charIndex = 0;
         }
-        timeoutId = setTimeout(run, speed);
+        timeoutId = setTimeout(run, typingDelay(speed, currentLine.charAt(charIndex - 1), organic));
         return;
       }
 
@@ -242,7 +274,7 @@ export function useSequentialTypewriter(
         // Start deleting from the last line backward.
         phase = "deleting";
         charIndex = currentLine.length;
-        timeoutId = setTimeout(run, deleteSpeed);
+        timeoutId = setTimeout(run, deletingDelay(deleteSpeed, organic));
         return;
       }
 
@@ -260,12 +292,12 @@ export function useSequentialTypewriter(
 
           lineIndex -= 1;
           charIndex = (linesSource[lineIndex] ?? "").length;
-          timeoutId = setTimeout(run, deleteSpeed);
+          timeoutId = setTimeout(run, deletingDelay(deleteSpeed, organic));
           return;
         }
 
         applyLineText(currentLine.slice(0, charIndex), false);
-        timeoutId = setTimeout(run, deleteSpeed);
+        timeoutId = setTimeout(run, deletingDelay(deleteSpeed, organic));
         return;
       }
 
@@ -283,7 +315,18 @@ export function useSequentialTypewriter(
       cancelled = true;
       clearTimeout(timeoutId);
     };
-  }, [linesKey, speed, startDelay, skip, resetKey, loop, holdDuration, deleteSpeed, pauseBeforeRestart]);
+  }, [
+    linesKey,
+    speed,
+    startDelay,
+    skip,
+    resetKey,
+    loop,
+    holdDuration,
+    deleteSpeed,
+    pauseBeforeRestart,
+    organic,
+  ]);
 
   return {
     lines: state.lines,
@@ -291,4 +334,123 @@ export function useSequentialTypewriter(
     activeLine: state.activeLine,
     isDone: state.isDone,
   };
+}
+
+/**
+ * Cycles through a list of words: type, hold, delete, then move to the next word —
+ * forever. Used by the Home hero to alternate the Qubu Resort business-unit names
+ * under the static headline.
+ *
+ * Like the other hooks it honours `prefers-reduced-motion` by rendering the first
+ * word immediately with no looping.
+ */
+export function useTypewriterWords(
+  sourceWords: readonly string[],
+  options: TypewriterOptions = {},
+): TypewriterResult {
+  const {
+    speed = 70,
+    startDelay = 0,
+    onComplete,
+    disabled = false,
+    resetKey,
+    holdDuration = 2000,
+    deleteSpeed = 32,
+    pauseBeforeRestart = 500,
+    organic = true,
+  } = options;
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const skip = disabled || prefersReducedMotion;
+  const wordsKey = sourceWords.join("\u0000");
+  const firstWord = sourceWords[0] ?? "";
+
+  const [displayedText, setDisplayedText] = useState(skip ? firstWord : "");
+  const [isDone, setIsDone] = useState(skip);
+
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
+    const words = wordsKey.split("\u0000");
+
+    if (skip || !words.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing with an external system (the OS motion preference)
+      setDisplayedText(words[0] ?? "");
+      setIsDone(true);
+      return;
+    }
+
+    setDisplayedText("");
+    setIsDone(false);
+
+    let cancelled = false;
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let wordIndex = 0;
+    let charIndex = 0;
+    let phase: Phase = "typing";
+
+    const run = () => {
+      if (cancelled) return;
+      const currentWord = words[wordIndex] ?? "";
+
+      if (phase === "typing") {
+        charIndex += 1;
+        setDisplayedText(currentWord.slice(0, charIndex));
+
+        if (charIndex >= currentWord.length) {
+          onCompleteRef.current?.();
+          phase = "holding";
+          timeoutId = setTimeout(run, holdDuration);
+          return;
+        }
+        timeoutId = setTimeout(run, typingDelay(speed, currentWord.charAt(charIndex - 1), organic));
+        return;
+      }
+
+      if (phase === "holding") {
+        phase = "deleting";
+        timeoutId = setTimeout(run, deletingDelay(deleteSpeed, organic));
+        return;
+      }
+
+      if (phase === "deleting") {
+        charIndex -= 1;
+        setDisplayedText(currentWord.slice(0, Math.max(charIndex, 0)));
+
+        if (charIndex <= 0) {
+          wordIndex = words.length > 1 ? (wordIndex + 1) % words.length : 0;
+          phase = "waiting";
+          timeoutId = setTimeout(run, pauseBeforeRestart);
+          return;
+        }
+        timeoutId = setTimeout(run, deletingDelay(deleteSpeed, organic));
+        return;
+      }
+
+      // phase === "waiting": jump straight into the next word.
+      phase = "typing";
+      timeoutId = setTimeout(run, speed);
+    };
+
+    timeoutId = setTimeout(run, startDelay);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, [
+    wordsKey,
+    speed,
+    startDelay,
+    skip,
+    resetKey,
+    holdDuration,
+    deleteSpeed,
+    pauseBeforeRestart,
+    organic,
+  ]);
+
+  return { displayedText, isDone };
 }

@@ -56,14 +56,7 @@ for (const [route, expectedStatus, expectations] of ROUTES) {
 }
 
 // Sanity-check that the hero background images referenced by the data layer exist.
-const ASSETS = [
-  "/images/hero-resort-pool.jpg",
-  "/images/hero-waterpark-pool.jpg",
-  "/images/hero-hotel-exterior.jpg",
-  "/images/hero-beach-resort.jpg",
-  "/images/hero-pool-daylight.jpg",
-  "/images/og-cover.jpg",
-];
+const ASSETS = ["/images/qubu-resort-1.jpeg", "/images/logo.png"];
 
 for (const asset of ASSETS) {
   try {

@@ -3,7 +3,7 @@
  * prd.md section 6 requires every animation object to live here instead of being
  * re-declared inside components.
  */
-import type { TargetAndTransition, Transition, Variants } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 /** "easeInOutExpo"-style curve used for smooth crossfades (prd.md section 12). */
 export const EASE_CINEMATIC = [0.43, 0.13, 0.23, 0.96] as const;
@@ -69,9 +69,6 @@ export const BAND = {
  * Pin window derived from the band geometry: the sticky frame pins from the moment the
  * band top reaches the viewport top until its bottom reaches the viewport bottom.
  * With `photoHeightSvh` = 240: start = 100/340, end = 240/340.
- *
- * The scrubbed video advances only inside this window, like the reference pins a video
- * and plays it across its pinned span.
  */
 export const BAND_PIN_WINDOW = [
   100 / (BAND.photoHeightSvh + 100),
@@ -88,26 +85,11 @@ export const BAND_COVER_START =
   (BAND.photoHeightSvh - BAND.overlapSvh) / (BAND.photoHeightSvh + 100);
 
 /**
- * Media band reveal envelope.
- *
- * The photo/video stays INVISIBLE while the previous content sheet is still on screen
- * and only fades in once that sheet has scrolled past the top (the navbar zone) — the
- * moment the band itself pins. It appears out of focus first and sharpens while the
- * frame holds, then defocuses again as the following sheet covers it. All windows are
- * journey fractions of the band's own scroll.
+ * Image bands show their own photo from the first
+ * pixel — no reveal fade — so the sticky hero behind the page can never show through
+ * the band area. Backgrounds stay fully sharp at every scroll position (the crisp,
+ * cinematic look requested for the divider bands).
  */
-export const MEDIA = {
-  /** Journey window where the media fades in (starts exactly when the band pins). */
-  fadeWindow: [BAND_PIN_WINDOW[0], BAND_PIN_WINDOW[0] + 0.08] as const,
-  /** Blur strength while the media first appears. */
-  revealBlurPx: 20,
-  /** Journey window where the reveal blur sharpens to zero. */
-  sharpenWindow: [BAND_PIN_WINDOW[0], BAND_PIN_WINDOW[0] + 0.16] as const,
-  /** Journey window where the media defocuses again under the incoming sheet. */
-  defocusWindow: [BAND_COVER_START - 0.02, BAND_COVER_START + 0.2] as const,
-  /** Blur strength once the following sheet has covered the media. */
-  coverBlurPx: 16,
-} as const;
 
 /** Inline style for a sheet that overlaps the photo band above it. */
 export const bandOverlapStyle = { marginTop: `-${BAND.overlapSvh}svh` } as const;
@@ -117,29 +99,14 @@ export const bandOverlapStyle = { marginTop: `-${BAND.overlapSvh}svh` } as const
  *
  * The reference scrubs its timelines (`scrub: 2`), so its pinned media trails the
  * scroll slightly instead of being welded to it. A soft spring on the continuous
- * transforms (scale, drift, blur, veil) reproduces that trailing, heavy-camera feel
+ * transforms (scale, drift, veil) reproduces that trailing, heavy-camera feel
  * with Framer Motion; entrance fades stay unsmoothed so arrivals stay crisp.
  */
 export const SCRUB_SPRING = { stiffness: 90, damping: 24, mass: 0.6 } as const;
 
 /**
- * Blur dissolve for the content sheets themselves.
- *
- * The sheet content is out of focus while it rises into place and sharpens the moment it
- * lands, then softens again as the whole sheet leaves the top of the viewport — the same
- * focus-pull language as the media bands. All values are scroll linked, so scrolling
- * back up plays the same dissolve in reverse.
- */
-export const BLUR = {
-  /** Sheet content: blurred while it rises into place, sharp the moment it lands. */
-  sheetEnterPx: 12,
-  /** Sheet content: soft defocus as the whole sheet leaves the top of the viewport. */
-  sheetExitPx: 6,
-} as const;
-
-/**
  * Hero brand reveal (the reference's entrance-message mask): after the intro copy clears,
- * a dark brand card is unmasked by a circle growing out of the lower half of the frame,
+ * the official logo is unmasked by a circle growing out of the lower half of the frame,
  * while the photograph eases back from its starting push-in.
  */
 export const HERO_REVEAL = {
@@ -157,15 +124,8 @@ export const HERO_REVEAL = {
  */
 export const FINALE = {
   heightSvh: 220,
-  /**
-   * Journey window where the closing photo fades in — kept hidden while the previous
-   * content sheet is still on screen, same rule as the media bands.
-   */
-  fadeWindow: [0.3, 0.38] as const,
   /** Pin window where the veil fades to its darkest. */
   veilWindow: [0.2, 0.6] as const,
-  /** Photo defocus (px) reached with the veil, so the message sits in front of a soft frame. */
-  photoBlurPx: 9,
   /** Pin window where the closing message rises in. */
   messageWindow: [0.52, 0.88] as const,
   messageTravel: 40,
@@ -211,8 +171,13 @@ export const staggerFastContainer: Variants = {
 };
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: DURATION.base, ease: EASE_SOFT } },
+  hidden: { opacity: 0, y: 28, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: DURATION.base, ease: EASE_SOFT },
+  },
 };
 
 /** Section heading reveal: clip-path wipe, editorial feel. */
@@ -252,21 +217,6 @@ export const pageTransition: Variants = {
   exit: { opacity: 0, y: -12, transition: { duration: DURATION.fast, ease: EASE_IN_OUT } },
 };
 
-/** Background image loop variants driven by `data/sectionBackgrounds.ts`. */
-export const sectionLoopVariants: Record<
-  "pan" | "zoom",
-  { animate: TargetAndTransition; transition: Transition }
-> = {
-  pan: {
-    animate: { x: ["0%", "-3%", "0%"] },
-    transition: { duration: 20, repeat: Infinity, ease: EASE_IN_OUT },
-  },
-  zoom: {
-    animate: { scale: [1, 1.06, 1] },
-    transition: { duration: 12, repeat: Infinity, ease: EASE_IN_OUT },
-  },
-};
-
 export const navbarVariants: Variants = {
   top: { y: 0, backgroundColor: "rgba(255,255,255,0)" },
   scrolled: { y: 0, backgroundColor: "rgba(255,255,255,0.86)" },
@@ -276,6 +226,43 @@ export const navbarVariants: Variants = {
 export const mobileMenuVariants: Variants = {
   closed: { opacity: 0, y: "-100%", transition: { duration: 0.4, ease: EASE_IN_OUT } },
   open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_SOFT } },
+};
+
+/**
+ * Desktop "Destinasi" dropdown: the panel eases in, then its unit links stagger
+ * upward behind it so the menu unfolds instead of appearing all at once.
+ */
+export const navPanelVariants: Variants = {
+  hidden: { opacity: 0, y: 14, scale: 0.985 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.3,
+      ease: EASE_SOFT,
+      when: "beforeChildren",
+      staggerChildren: 0.04,
+      delayChildren: 0.05,
+    },
+  },
+  exit: { opacity: 0, y: 8, scale: 0.985, transition: { duration: 0.16, ease: EASE_SOFT } },
+};
+
+/** One unit link inside the dropdown panel. */
+export const navPanelItem: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.34, ease: EASE_SOFT } },
+};
+
+/** One child link inside the mobile drawer accordion; `custom` is the item index. */
+export const mobileSubmenuItem: Variants = {
+  hidden: { opacity: 0, x: -14 },
+  visible: (index: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.32, ease: EASE_SOFT, delay: 0.05 + index * 0.04 },
+  }),
 };
 
 export const preloaderVariants: Variants = {

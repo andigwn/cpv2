@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useMotionTemplate, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, ChevronDown, PlayCircle } from "lucide-react";
@@ -90,9 +91,10 @@ export function HeroSection() {
           />
         </motion.div>
 
-        {/* Brand reveal: the dark card is masked by a growing circle, so the wordmark appears
-          as if the camera iris opened on it. Decorative — the brand is already named in the
-          header and footer, so the layer is hidden from assistive tech. */}
+        {/* Brand reveal: the official logo is unmasked by a growing circle, so the
+          wordmark appears as if the camera iris opened on it. No dark card — the white
+          logo sits directly on the photograph with a soft shadow for legibility.
+          Decorative — the brand is already named in the header and footer. */}
         {!prefersReducedMotion ? (
           <motion.div
             aria-hidden
@@ -101,23 +103,22 @@ export function HeroSection() {
               WebkitMaskImage: revealMask,
               maskImage: revealMask,
             }}
-            className="bg-ink-900/90 pointer-events-none absolute inset-0 z-20 overflow-hidden"
+            className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
           >
             <motion.div
               style={{ scale: wordmarkScale }}
               className="flex h-full flex-col items-center justify-center gap-5 px-6 text-center"
             >
-              <span className="text-sunshine-300 text-[0.68rem] font-semibold tracking-[0.44em] uppercase">
+              <span className="text-sunshine-300 text-[0.68rem] font-semibold tracking-[0.44em] uppercase drop-shadow-[0_2px_14px_rgba(19,25,34,0.8)]">
                 Tanjung Benoa · Bali
               </span>
-              <p className="font-display text-[24vw] leading-[0.82] font-bold tracking-[-0.01em] text-white sm:text-[11rem] lg:text-[15rem]">
-                QUBU
-              </p>
-              <span className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-white/70 uppercase">
-                <span className="h-px w-10 bg-white/40" />
-                Hotel · Convention · Recreation
-                <span className="h-px w-10 bg-white/40" />
-              </span>
+              <Image
+                src="/images/logo.png"
+                alt="Qubu Resort"
+                width={800}
+                height={145}
+                className="h-auto w-[min(82vw,42rem)] brightness-0 invert drop-shadow-[0_8px_32px_rgba(19,25,34,0.75)]"
+              />
             </motion.div>
           </motion.div>
         ) : null}
@@ -149,25 +150,23 @@ export function HeroSection() {
                   startDelay={320}
                   onComplete={() => setLine1Typed(true)}
                   keepCursor={false}
-                  cursorClassName="bg-sunshine-300"
                 />
               </span>
 
-              {/* Line 2: "di " is static; only "Qubu Resort" types → holds → deletes → retypes, forever. */}
+              {/* Line 2: "di " is static; the business-unit names type → hold → delete → cycle, forever. */}
               {line1Typed && (
                 <span aria-hidden className="block">
                   {heroContent.headlineLine2Prefix}
                   <TypewriterText
-                    key={`word-${generation}`}
-                    text={heroContent.headlineLoopWord}
-                    speed={52}
+                    key={`units-${generation}`}
+                    words={heroContent.headlineLoopWords}
+                    speed={70}
                     startDelay={200}
                     onComplete={() => setTypingDone(true)}
-                    cursorClassName="bg-sunshine-300"
-                    loop
-                    holdDuration={2200}
-                    deleteSpeed={28}
+                    holdDuration={2000}
+                    deleteSpeed={32}
                     pauseBeforeRestart={500}
+                    className="from-sunshine-300 via-[#FFD34E] to-[#EF723D] bg-linear-to-r bg-clip-text text-transparent [text-shadow:none] drop-shadow-[0_3px_16px_rgba(19,25,34,0.6)]"
                     inline
                   />
                 </span>

@@ -1,69 +1,102 @@
-import type { BusinessUnit, NavItem, UnitOutlet } from "@/types";
+import type { BusinessUnit, NavItem } from "@/types";
 
 /**
  * Business units owned by Qubu Resort.
  *
- * Each entry represents one building; `outlets` lists the business units that
- * operate inside it. This file is the single source of truth for the "Unit
- * Bisnis" navigation dropdown, the /unit-bisnis pages and the sitemap.
- *
- * Copy and photography are still placeholder drafts — replace with the real
- * property details and photos before go-live.
+ * Each entry is one business unit. The page rhythm for every unit is:
+ * profile → room/venue/pool categories (`roomTypes`) → supporting facilities
+ * (`facilities`) → photo gallery (`gallery`). This file is the single source of
+ * truth for the "Destinasi" navigation dropdown, the /unit-bisnis pages and
+ * the sitemap.
  */
 export const businessUnits: BusinessUnit[] = [
   {
-    slug: "hotel-q",
-    name: "Hotel Q",
-    type: "Hotel",
-    tagline: "268 kamar, lobby atrium, dan Resto Patio di lantai dasar",
+    slug: "qubu-suites",
+    name: "Hotel Qubu Suites",
+    type: "Hotel & Suites",
+    tagline: "Suite dengan balkon privat, restoran signature, dan spa",
     summary:
-      "Bangunan utama kawasan Q dengan kamar garden view dan pool view, kolam dewasa serta kolam anak, dan akses pejalan kaki ke QHall dan Paradis Q.",
+      "Sayap suite kawasan Q dengan balkon privat, butler service 24 jam, serta Embun Signature Restaurant, spa, dan fasilitas keluarga di dalam satu gedung.",
     description: [
-      "Hotel Q adalah bangunan utama kawasan Q dan pintu masuk bagi sebagian besar tamu. Tersedia 268 kamar yang terbagi ke dalam dua tipe: Superior dan Premier Plus.",
-      "Lobby berkonsep atrium menghubungkan resepsionis, lobby lounge, pusat informasi wisata, dan Resto Patio yang melayani sarapan hingga makan malam.",
-      "Fasilitas penunjang meliputi kolam dewasa dan kolam anak, pusat kebugaran, ruang serbaguna, serta jalur pejalan kaki beratap menuju QHall dan Paradis Q.",
+      "Hotel Qubu Suites menempati sayap barat kawasan Q dengan 144 suite yang terbagi ke dalam lima tipe: Deluxe, Deluxe with View, Suite Room, Family Suite, dan Qubu Grand Suite.",
+      "Semua suite memakai kasur pocket-spring, linen katun organik, dan balkon privat menghadap taman tropis atau Teluk Benoa. Tamu suite mendapat akses Executive Lounge untuk sarapan privat dan butler service 24 jam.",
+      "Di dalam gedung ini juga beroperasi Embun Signature Restaurant, Qubiq Bar, Meeting Room, Spa & Wellness Center, Entertainment Room, dan Kids Club, sehingga tamu tidak perlu meninggalkan sayap suite untuk makan, bersantai, atau membawa anak bermain.",
     ],
     image: {
-      src: "/images/hotel-q-1.jpeg",
-      alt: "Fasad Hotel Q dengan lapisan kisi geometris merah dan putih",
+      src: "/images/qubu-suites-1.jpeg",
+      alt: "Kamar Hotel Qubu Suites dengan tempat tidur king dan panel kayu ukir",
     },
     gallery: [
-      { src: "/images/patio-1.jpeg", alt: "Resto Patio di lantai dasar Hotel Q" },
-      { src: "/images/qubu-resort-3.jpeg", alt: "Gerbang masuk kawasan Qubu Resort" },
       {
-        src: "/images/hotel-q-2.jpeg",
-        alt: "Kamar Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
+        src: "/images/qubu-suites-1.jpeg",
+        alt: "Kamar Hotel Qubu Suites dengan tempat tidur king dan panel kayu ukir",
+      },
+      {
+        src: "/images/qubu-suites-2.jpeg",
+        alt: "Kamar suite dengan meja kerja, kursi santai, dan jendela besar",
+      },
+      {
+        src: "/images/qubu-suites-3.jpeg",
+        alt: "Dapur kecil dan area minibar di dalam suite Hotel Qubu Suites",
+      },
+      {
+        src: "/images/qubu-suites-4.jpeg",
+        alt: "Ruang tamu suite dengan sofa, meja makan, dan televisi",
+      },
+      {
+        src: "/images/embun-1.jpeg",
+        alt: "Embun Signature Restaurant dengan area buffet dan meja marmer hitam",
+      },
+      {
+        src: "/images/spa-gym-1.jpeg",
+        alt: "Dua tempat tidur perawatan di Spa & Wellness Center Qubu",
+      },
+      {
+        src: "/images/work-sky-lounge.jpg",
+        alt: "Bar lounge dengan area duduk dan rak botol menghadap laut",
+      },
+      {
+        src: "/images/service-ballroom.jpg",
+        alt: "Ruang rapat dengan barisan kursi dan plafon tinggi",
+      },
+      {
+        src: "/images/work-lobby.jpg",
+        alt: "Ruang santai dengan sofa merah dan meja kayu",
+      },
+      {
+        src: "/images/service-kids-club.jpg",
+        alt: "Area bermain anak dengan perosotan dan rangka warna-warni",
       },
     ],
     features: [
-      "268 kamar dalam dua tipe",
-      "Resto Patio di lantai dasar",
-      "Kolam dewasa dan kolam anak",
-      "Pusat kebugaran 24 jam",
-      "Lobby lounge dan pusat informasi wisata",
-      "Jalur pejalan kaki beratap ke QHall dan Paradis Q",
-      "Parkir bawah tanah 180 kendaraan",
+      "144 suite dalam lima tipe",
+      "Balkon privat di sebagian besar suite",
+      "Butler service 24 jam",
+      "Akses Executive Lounge untuk sarapan privat",
+      "Embun Signature Restaurant dan Qubiq Bar",
+      "Spa & Wellness Center, Entertainment Room, dan Kids Club",
     ],
     specs: [
-      { label: "Jumlah kamar", value: "268 kamar & suite" },
-      { label: "Tipe kamar", value: "2 kategori" },
-      { label: "Lantai", value: "9 lantai" },
+      { label: "Jumlah suite", value: "144 suite" },
+      { label: "Tipe kamar", value: "5 kategori" },
+      { label: "Luas kamar", value: "48 – 160 m2" },
       { label: "Check-in / out", value: "14.00 / 12.00 WITA" },
-      { label: "Unit bisnis di dalam", value: "Resto Patio" },
-      { label: "Lokasi", value: "Kawasan Q, Tanjung Benoa" },
+      { label: "Fasilitas unggulan", value: "Embun, Qubiq Bar, Spa" },
+      { label: "Lokasi", value: "Kawasan Q, sayap barat" },
     ],
     hours: "Resepsionis 24 jam",
+    roomTypesLabel: "Jenis Kamar",
     roomTypes: [
       {
-        slug: "superior",
-        name: "Superior",
+        slug: "deluxe",
+        name: "Deluxe",
         description:
-          "Tipe kamar dasar Hotel Q dengan fasilitas lengkap untuk dua tamu dan akses ke seluruh area kawasan Q.",
+          "Kamar deluxe dengan tempat tidur king, meja kerja, dan pencahayaan hangat untuk dua tamu.",
         image: {
-          src: "/images/hotel-q-2.jpeg",
-          alt: "Kamar Superior Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
+          src: "/images/qubu-suites-2.jpeg",
+          alt: "Kamar Deluxe dengan tempat tidur king dan meja kerja menghadap jendela",
         },
-        size: "28 m2",
+        size: "48 m2",
         bed: "1 King atau 2 Single",
         capacity: "2 tamu",
         view: "Garden view",
@@ -71,283 +104,37 @@ export const businessUnits: BusinessUnit[] = [
           "AC dan smart TV",
           "Kamar mandi shower",
           "Mini bar dan safety box",
-          "Akses kolam dewasa & kolam anak",
-        ],
-      },
-      {
-        slug: "premier-plus",
-        name: "Premier Plus",
-        description:
-          "Tipe kamar yang lebih luas dengan area duduk tambahan serta pemandangan kolam atau taman kawasan Q.",
-        image: {
-          src: "/images/hero-hotel-room.jpg",
-          alt: "Kamar Premier Plus dengan area duduk dan jendela besar",
-        },
-        size: "36 m2",
-        bed: "1 King",
-        capacity: "2 tamu + 1 anak",
-        view: "Pool & garden view",
-        features: [
-          "Area duduk tambahan",
           "Balkon privat",
-          "Coffee maker dan mini bar",
-          "Akses kolam dewasa & kolam anak",
         ],
       },
-    ],
-    outlets: [
       {
-        slug: "resto-patio",
-        name: "Resto Patio",
-        type: "Restoran",
-        tagline: "All-day dining dengan teras taman",
-        summary:
-          "Restoran utama Hotel Q dengan 240 kursi, live station nusantara, Asia, dan Western, serta teras yang menghadap taman.",
-        description: [
-          "Resto Patio adalah restoran utama Hotel Q dengan 180 kursi di dalam ruangan dan 60 kursi di teras taman. Dapur buka pukul 06.00 untuk sarapan dan tutup pukul 23.00.",
-          "Menu harian disajikan dalam format live station yang menggabungkan masakan nusantara, Asia, dan Western, lengkap dengan menu anak serta opsi bebas gluten.",
-          "Pada sore hari teras Patio berubah menjadi area makan santai dengan live acoustic tiga kali seminggu.",
-        ],
-        image: {
-          src: "/images/patio-1.jpeg",
-          alt: "Interior Resto Patio dengan meja kayu dan rak tanaman gantung",
-        },
-        gallery: [
-          { src: "/images/patio-2.jpeg", alt: "Suasana makan di Resto Patio" },
-          { src: "/images/hotel-q-1.jpeg", alt: "Fasad Hotel Q tempat Resto Patio berada" },
-          { src: "/images/qubu-resort-3.jpeg", alt: "Gerbang kawasan Qubu Resort" },
-        ],
-        features: [
-          "180 kursi dalam ruangan dan 60 kursi teras",
-          "Live station nusantara, Asia, dan Western",
-          "Menu anak dan opsi bebas gluten",
-          "Live acoustic tiga kali seminggu",
-          "In-room dining 24 jam untuk tamu Hotel Q",
-        ],
-        specs: [
-          { label: "Kapasitas", value: "240 kursi" },
-          { label: "Jam operasional", value: "06.00 – 23.00 WITA" },
-          { label: "Sarapan", value: "Buffet 06.00 – 10.30" },
-          { label: "Berada di", value: "Hotel Q, lantai dasar" },
-          { label: "Dress code", value: "Smart casual" },
-        ],
-        hours: "06.00 – 23.00 WITA",
-        priceFrom: "Rp 145.000 / orang",
-      },
-    ],
-  },
-  {
-    slug: "qhall",
-    name: "QHall",
-    type: "Convention Center",
-    tagline: "Ballroom 1.800 m2 bebas pilar dan 8 ruang breakout",
-    summary:
-      "Pusat konvensi dengan ballroom bebas pilar, pre-function lounge 620 m2, dan tim event teknis bersertifikat.",
-    description: [
-      "QHall dirancang untuk konferensi, pameran, dan pernikahan berskala besar. Ballroom utamanya seluas 1.800 m2 tanpa pilar dengan tinggi plafon 9 meter dan dapat dibagi menjadi tiga ruang independen.",
-      "Delapan ruang breakout berkapasitas 40 sampai 180 orang tersedia untuk sesi paralel, dilengkapi layar LED dan sistem audio terintegrasi.",
-      "Tim event QHall menangani perencanaan teknis, katering hingga 2.000 pax, serta koordinasi akomodasi bagi delegasi yang menginap di Hotel Q dan Hotel Qubu Suites.",
-    ],
-    image: {
-      src: "/images/qhall-1.jpeg",
-      alt: "Fasad QHall dengan kanopi kawat dekoratif",
-    },
-    gallery: [
-      {
-        src: "/images/qhall-5.jpeg",
-        alt: "Ballroom QHall dengan dekorasi pernikahan dan lampu gantung",
-      },
-      { src: "/images/qhall-2.jpeg", alt: "Ruang QHall dengan penataan kursi acara" },
-      { src: "/images/qhall-3.jpeg", alt: "Interior QHall dengan plafon tinggi" },
-    ],
-    features: [
-      "Ballroom 1.800 m2 bebas pilar, plafon 9 meter",
-      "Dapat dibagi menjadi tiga ruang independen",
-      "Delapan ruang breakout (40 – 180 orang)",
-      "Pre-function lounge 620 m2",
-      "Layar LED, sistem audio, dan rigging terintegrasi",
-      "Katering hingga 2.000 pax dengan dapur halal",
-      "Dock bongkar-muat khusus pameran",
-    ],
-    specs: [
-      { label: "Ballroom", value: "1.800 m2 (1.500 delegasi)" },
-      { label: "Breakout room", value: "8 ruang" },
-      { label: "Plafon", value: "9 meter, bebas pilar" },
-      { label: "Kapasitas banquet", value: "1.200 pax" },
-      { label: "Unit bisnis di dalam", value: "Mahoni" },
-      { label: "Lokasi", value: "Kawasan Q, sayap timur" },
-    ],
-    hours: "Fleksibel sesuai jadwal acara",
-    outlets: [
-      {
-        slug: "mahoni",
-        name: "Mahoni",
-        type: "Restoran",
-        tagline: "Restoran kayu mahoni untuk jamuan dan resepsi",
-        summary:
-          "Restoran dan venue jamuan berkapasitas 320 kursi dengan interior kayu mahoni, cocok untuk resepsi, gala dinner, dan makan siang delegasi.",
-        description: [
-          "Mahoni berada di sisi barat QHall dengan interior panel kayu mahoni dan jendela setinggi ruangan yang menghadap taman.",
-          "Kapasitas 320 kursi dapat ditata untuk gala dinner, resepsi pernikahan, maupun makan siang delegasi konferensi dengan buffet atau set menu.",
-          "Dapur Mahoni berbagi fasilitas dengan dapur katering QHall sehingga dapat melayani hingga 1.200 pax untuk acara besar.",
-        ],
-        image: {
-          src: "/images/mahoni-1.jpeg",
-          alt: "Ruang jamuan Restoran Mahoni dengan meja bundar tertata",
-        },
-        gallery: [
-          { src: "/images/mahoni-2.jpeg", alt: "Suasana jamuan di Restoran Mahoni" },
-          { src: "/images/qhall-5.jpeg", alt: "Ballroom QHall dengan dekorasi acara" },
-          { src: "/images/qhall-6.jpeg", alt: "Suasana acara di kawasan QHall" },
-        ],
-        features: [
-          "320 kursi dengan tata letak fleksibel",
-          "Interior panel kayu mahoni dan jendela tinggi",
-          "Gala dinner, resepsi, dan set menu delegasi",
-          "Dapur terhubung dengan katering QHall",
-          "Ruang privat 40 kursi untuk jamuan tertutup",
-        ],
-        specs: [
-          { label: "Kapasitas", value: "320 kursi" },
-          { label: "Jam operasional", value: "Mengikuti jadwal acara" },
-          { label: "Ruang privat", value: "40 kursi" },
-          { label: "Berada di", value: "QHall, sayap barat" },
-          { label: "Dress code", value: "Formal / sesuai acara" },
-        ],
-        hours: "Mengikuti jadwal acara",
-        priceFrom: "Rp 235.000 / orang",
-      },
-    ],
-  },
-  {
-    slug: "paradis-q",
-    name: "Paradis Q",
-    type: "Waterpark",
-    tagline: "18 seluncuran, kolam ombak, dan lazy river",
-    summary:
-      "Waterpark keluarga seluas 3,4 hektar dengan tujuh zona tematik, 24 lifeguard bersertifikat, dan Food Corner di dalam kawasan.",
-    description: [
-      "Paradis Q adalah waterpark keluarga dengan tujuh zona tematik, mulai dari kolam balita berkedalaman 20 cm hingga menara seluncuran setinggi 22 meter.",
-      "Seluruh area memakai sistem filtrasi sirkulasi tertutup dengan pemantauan kualitas air setiap dua jam, serta dijaga 24 lifeguard bersertifikat Bronze Medallion.",
-      "Fasilitas penunjang meliputi 320 loker, ruang bilas air hangat, ruang laktasi, dan Food Corner yang melayani pengunjung sepanjang jam operasional.",
-    ],
-    image: {
-      src: "/images/paradis-q-1.jpeg",
-      alt: "Area makan beratap di kawasan Paradis Q",
-    },
-    gallery: [
-      { src: "/images/hero-waterpark-pool.jpg", alt: "Kolam ombak Paradis Q" },
-      { src: "/images/work-aquapark.jpg", alt: "Menara seluncuran Paradis Q" },
-      { src: "/images/service-waterpark-alt.jpg", alt: "Area bermain air Paradis Q" },
-    ],
-    features: [
-      "18 seluncuran termasuk racer slide dan bowl slide",
-      "Kolam ombak 1.100 m2 dengan gelombang terjadwal",
-      "Lazy river sepanjang 260 meter",
-      "Toddler Lagoon: kolam dangkal berpemanas surya",
-      "24 lifeguard bersertifikat internasional",
-      "320 loker, ruang bilas air hangat, dan ruang laktasi",
-    ],
-    specs: [
-      { label: "Luas kawasan", value: "3,4 hektar" },
-      { label: "Kapasitas harian", value: "4.500 pengunjung" },
-      { label: "Jam operasional", value: "09.00 – 18.00 WITA" },
-      { label: "Seluncuran tertinggi", value: "22 meter" },
-      { label: "Unit bisnis di dalam", value: "Food Corner" },
-      { label: "Lokasi", value: "Kawasan Q, sisi utara" },
-    ],
-    hours: "09.00 – 18.00 WITA",
-    outlets: [
-      {
-        slug: "food-corner",
-        name: "Food Corner",
-        type: "Food Court",
-        tagline: "Delapan tenant kuliner di dalam waterpark",
-        summary:
-          "Food court dengan delapan tenant bertema nusantara, area makan beratap, dan pilihan menu cepat saji untuk pengunjung waterpark.",
-        description: [
-          "Food Corner berada di tengah kawasan Paradis Q dengan delapan tenant yang menyajikan masakan nusantara, makanan ringan, dan minuman dingin.",
-          "Area makan beratap berkapasitas 600 kursi dirancang agar pengunjung tetap nyaman meski sedang basah setelah bermain air.",
-          "Seluruh tenant memakai bahan segar harian dan menyediakan paket combo keluarga serta menu anak.",
-        ],
-        image: {
-          src: "/images/work-beach-club.jpg",
-          alt: "Area makan Food Corner dengan kursi dan meja",
-        },
-        gallery: [
-          { src: "/images/service-cabana.jpg", alt: "Meja makan di area beratap Food Corner" },
-          { src: "/images/news-summer-promo.jpg", alt: "Pengunjung menikmati makan siang" },
-          {
-            src: "/images/service-waterpark-alt.jpg",
-            alt: "Suasana waterpark di sekitar Food Corner",
-          },
-        ],
-        features: [
-          "Delapan tenant kuliner nusantara",
-          "Area makan beratap 600 kursi",
-          "Paket combo keluarga dan menu anak",
-          "Pilihan menu cepat saji dan minuman dingin",
-          "Berada di tengah kawasan waterpark",
-        ],
-        specs: [
-          { label: "Jumlah tenant", value: "8 tenant" },
-          { label: "Kapasitas", value: "600 kursi" },
-          { label: "Jam operasional", value: "09.00 – 18.00 WITA" },
-          { label: "Berada di", value: "Paradis Q, area tengah" },
-          { label: "Pembayaran", value: "Tunai & non-tunai" },
-        ],
-        hours: "09.00 – 18.00 WITA",
-        priceFrom: "Rp 35.000 / porsi",
-      },
-    ],
-  },
-  {
-    slug: "qubu-suites",
-    name: "Hotel Qubu Suites",
-    type: "Hotel & Suites",
-    tagline: "144 suite dengan Resto Embun, Gym, dan Spa",
-    summary:
-      "Sayap suite dengan balkon privat, butler service 24 jam, serta tiga unit bisnis di dalamnya: Resto Embun, Gym, dan Spa.",
-    description: [
-      "Hotel Qubu Suites menempati sayap barat kawasan Q dengan 144 suite dalam empat tipe: Suite, Deluxe, Family Suites, dan Grand Suites.",
-      "Semua suite memakai kasur pocket-spring, linen katun organik 400 thread count, dan balkon privat menghadap taman atau Teluk Benoa.",
-      "Tamu suite mendapat akses ke Executive Lounge untuk sarapan privat, butler service 24 jam, dan late check-out hingga pukul 15.00. Di dalam gedung ini juga beroperasi Resto Embun, Gym, dan Spa.",
-    ],
-    image: {
-      src: "/images/qubu-suites-1.jpeg",
-      alt: "Suite Hotel Qubu Suites dengan tempat tidur king dan aksen kayu",
-    },
-    gallery: [
-      { src: "/images/qubu-suites-2.jpeg", alt: "Suite Hotel Qubu Suites dengan area duduk" },
-      { src: "/images/qubu-suites-3.jpeg", alt: "Kamar suite dengan pencahayaan hangat" },
-      { src: "/images/qubu-suites-4.jpeg", alt: "Detail interior suite Hotel Qubu Suites" },
-    ],
-    features: [
-      "144 suite dalam empat tipe",
-      "Balkon privat di 82% suite",
-      "Butler service 24 jam",
-      "Akses Executive Lounge untuk sarapan privat",
-      "Tiga unit bisnis: Resto Embun, Gym, dan Spa",
-      "Linen katun organik 400 thread count",
-    ],
-    specs: [
-      { label: "Jumlah suite", value: "144 suite" },
-      { label: "Tipe suite", value: "4 kategori" },
-      { label: "Luas terkecil", value: "64 m2" },
-      { label: "Luas terbesar", value: "310 m2 (Presidential)" },
-      { label: "Unit bisnis di dalam", value: "Resto Embun, Gym, Spa" },
-      { label: "Lokasi", value: "Kawasan Q, sayap barat" },
-    ],
-    hours: "Resepsionis 24 jam",
-    roomTypes: [
-      {
-        slug: "suite",
-        name: "Suite",
+        slug: "deluxe-with-view",
+        name: "Deluxe with View",
         description:
-          "Suite satu kamar dengan ruang tamu terpisah, balkon privat, dan akses Executive Lounge.",
+          "Kamar deluxe di lantai atas dengan balkon yang menghadap taman tropis atau Teluk Benoa.",
         image: {
           src: "/images/qubu-suites-1.jpeg",
-          alt: "Suite Hotel Qubu Suites dengan tempat tidur king dan kursi santai",
+          alt: "Kamar Deluxe with View dengan tempat tidur king dan panel kayu ukir",
+        },
+        size: "52 m2",
+        bed: "1 King",
+        capacity: "2 tamu + 1 anak",
+        view: "Taman atau Teluk Benoa",
+        features: [
+          "Balkon privat dengan pemandangan",
+          "Area duduk",
+          "Kulkas mini dan mesin kopi",
+          "Akses Executive Lounge",
+        ],
+      },
+      {
+        slug: "suite-room",
+        name: "Suite Room",
+        description:
+          "Suite satu kamar dengan ruang tamu terpisah, meja makan, dan akses Executive Lounge.",
+        image: {
+          src: "/images/qubu-suites-4.jpeg",
+          alt: "Ruang tamu Suite Room dengan sofa dan meja makan",
         },
         size: "64 m2",
         bed: "1 King",
@@ -361,211 +148,717 @@ export const businessUnits: BusinessUnit[] = [
         ],
       },
       {
-        slug: "deluxe",
-        name: "Deluxe",
+        slug: "family-suite",
+        name: "Family Suite",
         description:
-          "Kamar deluxe dengan area duduk dan balkon yang menghadap taman tropis atau Teluk Benoa.",
+          "Suite keluarga dengan dapur kecil dan ruang tamu bersama untuk hingga empat tamu.",
         image: {
-          src: "/images/qubu-suites-2.jpeg",
-          alt: "Kamar Deluxe dengan tempat tidur king, meja kerja, dan jendela besar",
-        },
-        size: "72 m2",
-        bed: "1 King",
-        capacity: "2 tamu + 1 anak",
-        view: "Taman atau Teluk Benoa",
-        features: [
-          "Area duduk dan meja kerja",
-          "Balkon privat",
-          "Akses Executive Lounge",
-          "Butler service 24 jam",
-        ],
-      },
-      {
-        slug: "family-suites",
-        name: "Family Suites",
-        description:
-          "Suite keluarga berkapasitas hingga empat tamu dengan ruang tamu bersama dan balkon privat.",
-        image: {
-          src: "/images/villa-7.jpeg",
-          alt: "Kamar Family Suites dengan tempat tidur tingkat dan area bermain anak",
+          src: "/images/qubu-suites-3.jpeg",
+          alt: "Dapur kecil dan area minibar di Family Suite Hotel Qubu Suites",
         },
         size: "96 m2",
         bed: "1 King + 2 Single",
         capacity: "4 tamu",
-        view: "Garden view",
+        view: "Taman tropis",
         features: [
           "Ruang tamu bersama",
-          "Balkon privat",
-          "Peralatan anak tersedia",
+          "Dapur kecil",
+          "Perlengkapan anak tersedia",
           "Akses Executive Lounge",
         ],
       },
       {
-        slug: "grand-suites",
-        name: "Grand Suites",
+        slug: "qubu-grand-suite",
+        name: "Qubu Grand Suite",
         description:
-          "Suite terluas dengan ruang tamu dan ruang makan terpisah serta balkon dengan pemandangan panorama.",
+          "Suite terluas dengan ruang tamu dan ruang makan terpisah serta balkon panorama.",
         image: {
-          src: "/images/qubu-suites-4.jpeg",
-          alt: "Ruang tamu Grand Suites dengan sofa, meja makan, dan TV",
+          src: "/images/hero-hotel-room.jpg",
+          alt: "Qubu Grand Suite dengan area duduk dan tempat tidur menghadap jendela besar",
         },
-        size: "Hingga 310 m2",
+        size: "160 m2",
         bed: "1 King",
         capacity: "2 – 4 tamu",
         view: "Panorama Teluk Benoa",
         features: [
           "Ruang tamu dan ruang makan terpisah",
           "Balkon panorama",
-          "Dapur kecil",
           "Butler service 24 jam",
+          "Akses Executive Lounge",
         ],
       },
     ],
-    outlets: [
+    facilities: [
       {
-        slug: "resto-embun",
-        name: "Resto Embun",
+        slug: "embun-signature-restaurant",
+        name: "Embun Signature Restaurant",
         type: "Restoran",
-        tagline: "Sarapan pagi dan menu plant-forward",
-        summary:
-          "Restoran sarapan dengan 140 kursi, live cooking station, dan menu plant-forward yang menghadap taman tropis.",
-        description: [
-          "Resto Embun melayani sarapan untuk tamu Hotel Qubu Suites dengan 140 kursi dan jendela besar yang menghadap taman tropis.",
-          "Selain buffet sarapan, dapur Embun mengembangkan menu plant-forward dengan 40% hidangan berbasis sayuran dari kebun sendiri.",
-          "Mulai pukul 18.00 Resto Embun membuka sesi makan malam dengan menu degustasi lima hidangan.",
-        ],
+        description:
+          "Restoran signature dengan 140 kursi, live cooking station, dan menu plant-forward yang menghadap taman tropis.",
         image: {
           src: "/images/embun-1.jpeg",
-          alt: "Resto Embun dengan area buffet dan meja marmer hitam",
+          alt: "Embun Signature Restaurant dengan area buffet dan meja marmer hitam",
         },
-        gallery: [
-          { src: "/images/embun-1.jpeg", alt: "Area buffet Resto Embun" },
-          {
-            src: "/images/qubu-suites-2.jpeg",
-            alt: "Suite di Hotel Qubu Suites tempat Resto Embun berada",
-          },
-          { src: "/images/qubu-suites-4.jpeg", alt: "Interior Hotel Qubu Suites" },
-        ],
-        features: [
-          "140 kursi menghadap taman",
-          "Buffet sarapan 06.00 – 10.30",
-          "40% menu berbasis sayuran",
-          "Menu degustasi lima hidangan setiap malam",
-          "Pilihan menu bebas gluten dan menu anak",
-        ],
-        specs: [
-          { label: "Kapasitas", value: "140 kursi" },
-          { label: "Jam operasional", value: "06.00 – 22.00 WITA" },
-          { label: "Sarapan", value: "Buffet 06.00 – 10.30" },
-          { label: "Berada di", value: "Hotel Qubu Suites, lantai 2" },
-          { label: "Dress code", value: "Resort casual" },
-        ],
-        hours: "06.00 – 22.00 WITA",
-        priceFrom: "Rp 165.000 / orang",
       },
       {
-        slug: "gym",
-        name: "Gym",
-        type: "Pusat Kebugaran",
-        tagline: "Peralatan lengkap, buka 24 jam",
-        summary:
-          "Pusat kebugaran 24 jam dengan peralatan cardio dan strength, area functional training, serta kelas grup harian.",
-        description: [
-          "Gym Hotel Qubu Suites buka 24 jam dan dapat diakses tamu menggunakan kartu kamar.",
-          "Tersedia peralatan cardio dan strength dari merek komersial, area functional training seluas 120 m2, serta ruang kelas untuk sesi grup.",
-          "Pelatih pribadi tersedia atas permintaan, begitu pula program latihan pagi di area taman.",
-        ],
+        slug: "qubiq-bar",
+        name: "Qubiq Bar",
+        type: "Bar & Lounge",
+        description:
+          "Bar lounge dengan koktail tropis, pilihan wine, dan small bites, buka setiap sore hingga malam.",
         image: {
-          src: "/images/spa-gym-2.jpeg",
-          alt: "Ruang Gym dengan treadmill dan rak dumbbell",
+          src: "/images/work-sky-lounge.jpg",
+          alt: "Bar lounge dengan area duduk dan rak botol menghadap laut",
         },
-        gallery: [
-          { src: "/images/spa-gym-2.jpeg", alt: "Area cardio Gym dengan jendela besar" },
-          {
-            src: "/images/qubu-suites-3.jpeg",
-            alt: "Suite di Hotel Qubu Suites tempat Gym berada",
-          },
-          { src: "/images/qubu-suites-4.jpeg", alt: "Interior Hotel Qubu Suites" },
-        ],
-        features: [
-          "Akses 24 jam dengan kartu kamar",
-          "Peralatan cardio dan strength komersial",
-          "Area functional training 120 m2",
-          "Kelas grup harian",
-          "Pelatih pribadi atas permintaan",
-        ],
-        specs: [
-          { label: "Jam operasional", value: "24 jam" },
-          { label: "Luas area", value: "120 m2" },
-          { label: "Kelas grup", value: "2 sesi per hari" },
-          { label: "Berada di", value: "Hotel Qubu Suites, lantai 3" },
-          { label: "Akses", value: "Kartu kamar tamu" },
-        ],
-        hours: "24 jam",
       },
       {
-        slug: "spa",
-        name: "Spa",
+        slug: "meeting-room",
+        name: "Meeting Room",
+        type: "Ruang Rapat",
+        description:
+          "Ruang rapat dengan proyektor, tata suara, dan penataan meja bundar untuk pertemuan korporat maupun acara privat.",
+        image: {
+          src: "/images/service-ballroom.jpg",
+          alt: "Ruang rapat dengan barisan kursi dan plafon tinggi",
+        },
+      },
+      {
+        slug: "spa-wellness-center",
+        name: "Spa & Wellness Center",
         type: "Spa & Wellness",
-        tagline: "Delapan ruang perawatan dengan bahan botani lokal",
-        summary:
-          "Spa dengan delapan ruang perawatan, sauna inframerah, kolam hidroterapi, dan produk botani racikan sendiri.",
-        description: [
-          "Spa Hotel Qubu Suites menggabungkan teknik pijat tradisional Bali dengan formulasi botani yang diracik dari kebun herbal sendiri.",
-          "Delapan ruang perawatan terdiri dari enam ruang couple dan dua ruang terapi olahraga, masing-masing dengan shower privat dan teras kecil menghadap taman.",
-          "Fasilitas pendukung meliputi sauna inframerah, kolam hidroterapi air hangat, ruang relaksasi, dan studio yoga dengan kelas pagi harian.",
-        ],
+        description:
+          "Delapan ruang perawatan, sauna inframerah, kolam hidroterapi, dan produk botani racikan sendiri.",
         image: {
           src: "/images/spa-gym-1.jpeg",
-          alt: "Ruang perawatan Spa dengan dua tempat tidur dan tanaman",
+          alt: "Dua tempat tidur perawatan di Spa & Wellness Center Qubu",
         },
-        gallery: [
-          { src: "/images/spa-gym-1.jpeg", alt: "Ruang perawatan couple di Spa" },
-          {
-            src: "/images/qubu-suites-1.jpeg",
-            alt: "Suite di Hotel Qubu Suites tempat Spa berada",
-          },
-          { src: "/images/qubu-suites-2.jpeg", alt: "Area suite Hotel Qubu Suites" },
-        ],
+      },
+      {
+        slug: "entertainment-room",
+        name: "Entertainment Room",
+        type: "Ruang Hiburan",
+        description:
+          "Ruang hiburan dengan meja biliar, karaoke, dan konsol permainan untuk tamu dewasa maupun keluarga.",
+        image: {
+          src: "/images/work-lobby.jpg",
+          alt: "Ruang santai dengan sofa merah dan meja kayu",
+        },
+      },
+      {
+        slug: "kids-club",
+        name: "Kids Club",
+        type: "Klub Anak",
+        description:
+          "Area bermain anak dengan pendamping bersertifikat, kegiatan harian, dan rasio pengawasan 1:6.",
+        image: {
+          src: "/images/service-kids-club.jpg",
+          alt: "Area bermain anak dengan perosotan dan rangka warna-warni",
+        },
+      },
+    ],
+  },
+  {
+    slug: "hotel-q",
+    name: "Hotel Q",
+    type: "Hotel",
+    tagline: "Kamar Superior hingga Suite dengan Patio Bistro di lantai dasar",
+    summary:
+      "Bangunan utama kawasan Q dengan lima tipe kamar, kolam dewasa dan kolam anak, serta akses pejalan kaki ke The Q Hall dan Paradis-Q.",
+    description: [
+      "Hotel Q adalah bangunan utama kawasan Q dan pintu masuk bagi sebagian besar tamu. Tersedia lima tipe kamar: Superior, Superior Plus, Premier, Premier Plus, dan Suite Room.",
+      "Lobby berkonsep atrium menghubungkan resepsionis, lobby lounge, pusat informasi wisata, dan Patio Bistro yang melayani sarapan hingga makan malam.",
+      "Fasilitas penunjang meliputi kolam dewasa dan kolam anak, pusat kebugaran, meeting room, serta jalur pejalan kaki beratap menuju The Q Hall dan Paradis-Q.",
+    ],
+    image: {
+      src: "/images/hotel-q-1.jpeg",
+      alt: "Fasad Hotel Q dengan lapisan kisi geometris merah dan putih",
+    },
+    gallery: [
+      {
+        src: "/images/hotel-q-2.jpeg",
+        alt: "Kamar Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
+      },
+      {
+        src: "/images/hotel-q-1.jpeg",
+        alt: "Fasad Hotel Q dengan lapisan kisi geometris merah dan putih",
+      },
+      {
+        src: "/images/hero-hotel-room.jpg",
+        alt: "Kamar hotel dengan sofa, tempat tidur besar, dan jendela lebar",
+      },
+      {
+        src: "/images/work-suite.jpg",
+        alt: "Kamar hotel dengan tempat tidur besar dan panel kepala tempat tidur bergelombang",
+      },
+      {
+        src: "/images/patio-1.jpeg",
+        alt: "Interior Patio Bistro dengan meja kayu dan rak botol",
+      },
+      {
+        src: "/images/patio-2.jpeg",
+        alt: "Suasana makan malam di Patio Bistro dengan plafon kayu",
+      },
+      {
+        src: "/images/service-ballroom.jpg",
+        alt: "Meeting room dengan barisan kursi dan plafon tinggi",
+      },
+    ],
+    features: [
+      "Lima tipe kamar untuk pasangan maupun keluarga",
+      "Patio Bistro di lantai dasar",
+      "Kolam dewasa dan kolam anak",
+      "Meeting room untuk pertemuan kecil",
+      "Lobby lounge dan pusat informasi wisata",
+      "Jalur pejalan kaki beratap ke The Q Hall dan Paradis-Q",
+    ],
+    specs: [
+      { label: "Jumlah kamar", value: "268 kamar" },
+      { label: "Tipe kamar", value: "5 kategori" },
+      { label: "Luas kamar", value: "24 – 56 m2" },
+      { label: "Check-in / out", value: "14.00 / 12.00 WITA" },
+      { label: "Fasilitas unggulan", value: "Patio Bistro & Meeting Room" },
+      { label: "Lokasi", value: "Kawasan Q, Tanjung Benoa" },
+    ],
+    hours: "Resepsionis 24 jam",
+    roomTypesLabel: "Jenis Kamar",
+    roomTypes: [
+      {
+        slug: "superior",
+        name: "Superior",
+        description:
+          "Tipe kamar dasar Hotel Q dengan fasilitas lengkap untuk dua tamu dan akses ke seluruh area kawasan Q.",
+        image: {
+          src: "/images/hotel-q-2.jpeg",
+          alt: "Kamar Superior Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
+        },
+        size: "24 m2",
+        bed: "1 King atau 2 Single",
+        capacity: "2 tamu",
+        view: "Kota atau taman",
         features: [
-          "Delapan ruang perawatan, enam di antaranya couple",
-          "Produk botani racikan sendiri",
-          "Sauna inframerah dan kolam hidroterapi",
-          "Studio yoga dengan kelas pagi harian",
-          "Paket perawatan pasangan 120 menit",
+          "AC dan smart TV",
+          "Kamar mandi shower",
+          "Mini bar dan safety box",
+          "Akses kolam dewasa & kolam anak",
         ],
-        specs: [
-          { label: "Jumlah ruang", value: "8 ruang perawatan" },
-          { label: "Jam operasional", value: "08.00 – 21.00 WITA" },
-          { label: "Durasi perawatan", value: "60 / 90 / 120 menit" },
-          { label: "Kapasitas harian", value: "96 perawatan" },
-          { label: "Berada di", value: "Hotel Qubu Suites, lantai 2" },
+      },
+      {
+        slug: "superior-plus",
+        name: "Superior Plus",
+        description:
+          "Kamar superior yang lebih luas dengan area duduk, meja kerja, dan jendela besar.",
+        image: {
+          src: "/images/hero-hotel-room.jpg",
+          alt: "Kamar Superior Plus dengan sofa, tempat tidur besar, dan jendela lebar",
+        },
+        size: "28 m2",
+        bed: "1 King",
+        capacity: "2 tamu + 1 anak",
+        view: "Pool view",
+        features: [
+          "Area duduk tambahan",
+          "Balkon privat",
+          "Coffee maker dan mini bar",
+          "Akses kolam dewasa & kolam anak",
         ],
-        hours: "08.00 – 21.00 WITA",
-        priceFrom: "Rp 520.000 / perawatan",
+      },
+      {
+        slug: "premier",
+        name: "Premier",
+        description:
+          "Kamar premier dengan tempat tidur besar, panel kayu, dan ruang gerak lebih lega.",
+        image: {
+          src: "/images/work-suite.jpg",
+          alt: "Kamar Premier dengan tempat tidur besar dan panel kepala tempat tidur bergelombang",
+        },
+        size: "32 m2",
+        bed: "1 King",
+        capacity: "3 tamu",
+        view: "Garden view",
+        features: [
+          "Area kerja dan meja rias",
+          "Kulkas mini dan mesin kopi",
+          "Bathrobe dan sandal",
+          "Akses kolam dewasa & kolam anak",
+        ],
+      },
+      {
+        slug: "premier-plus",
+        name: "Premier Plus",
+        description:
+          "Kamar premier dengan area duduk tambahan serta pemandangan kolam atau taman kawasan Q.",
+        image: {
+          src: "/images/hero-hotel-room.jpg",
+          alt: "Kamar Premier Plus dengan sofa dan tempat tidur menghadap jendela besar",
+        },
+        size: "36 m2",
+        bed: "1 King",
+        capacity: "2 tamu + 1 anak",
+        view: "Pool & garden view",
+        features: [
+          "Area duduk tambahan",
+          "Balkon privat",
+          "Coffee maker dan mini bar",
+          "Akses kolam dewasa & kolam anak",
+        ],
+      },
+      {
+        slug: "suite-room",
+        name: "Suite Room",
+        description:
+          "Suite satu kamar dengan ruang tamu kecil dan ruang gerak paling lega di Hotel Q.",
+        image: {
+          src: "/images/work-suite.jpg",
+          alt: "Suite Room dengan tempat tidur besar dan area duduk di Hotel Q",
+        },
+        size: "56 m2",
+        bed: "1 King",
+        capacity: "2 tamu + 2 anak",
+        view: "Pool view",
+        features: [
+          "Ruang tamu terpisah",
+          "Balkon privat",
+          "Layanan kamar 24 jam",
+          "Akses kolam dewasa & kolam anak",
+        ],
+      },
+    ],
+    facilities: [
+      {
+        slug: "patio-bistro",
+        name: "Patio Bistro",
+        type: "Restoran",
+        description:
+          "Restoran utama Hotel Q dengan 240 kursi, live station nusantara, Asia, dan Western, serta teras yang menghadap taman.",
+        image: {
+          src: "/images/patio-1.jpeg",
+          alt: "Interior Patio Bistro dengan meja kayu dan rak botol",
+        },
+      },
+      {
+        slug: "meeting-room",
+        name: "Meeting Room",
+        type: "Ruang Rapat",
+        description:
+          "Ruang rapat dengan proyektor dan tata suara untuk pertemuan korporat maupun acara privat skala kecil.",
+        image: {
+          src: "/images/service-ballroom.jpg",
+          alt: "Meeting room dengan barisan kursi dan plafon tinggi",
+        },
+      },
+    ],
+  },
+  {
+    slug: "qhall",
+    name: "The Q Hall Convention Center",
+    type: "Convention Center",
+    tagline: "Ballroom bebas pilar dan enam ruang pertemuan serbaguna",
+    summary:
+      "Pusat konvensi dengan ballroom bebas pilar, pre-function lounge, dan tim event teknis untuk konferensi, pameran, serta pernikahan berskala besar.",
+    description: [
+      "The Q Hall Convention Center dirancang untuk konferensi, pameran, dan pernikahan berskala besar. Ballroom utamanya bebas pilar dengan tinggi plafon 9 meter dan dapat dibagi menjadi tiga ruang independen.",
+      "Enam ruang pertemuan — Merbau, Lontar, Pulai, The Q Hall Lantai 1, Mahoni, dan Mahoni Outdoor — tersedia untuk sesi paralel, jamuan, maupun acara privat dengan kapasitas yang berbeda-beda.",
+      "Tim event The Q Hall menangani perencanaan teknis, katering hingga ribuan pax, serta koordinasi akomodasi bagi delegasi yang menginap di Hotel Q dan Hotel Qubu Suites.",
+    ],
+    image: {
+      src: "/images/qhall-1.jpeg",
+      alt: "Fasad The Q Hall Convention Center dengan kanopi kawat dekoratif",
+    },
+    gallery: [
+      {
+        src: "/images/qhall-1.jpeg",
+        alt: "Fasad The Q Hall Convention Center dengan kanopi kawat dekoratif",
+      },
+      {
+        src: "/images/qhall-2.jpeg",
+        alt: "Ruang Merbau dengan barisan kursi dan karpet bermotif merah",
+      },
+      {
+        src: "/images/qhall-3.jpeg",
+        alt: "Ruang Lontar dengan meja bundar dan karpet merah bermotif",
+      },
+      {
+        src: "/images/qhall-4.jpeg",
+        alt: "Ruang Pulai dengan penataan meja kelas dan lampu gantung",
+      },
+      {
+        src: "/images/qhall-5.jpeg",
+        alt: "Ruang Mahoni dengan lorong dekorasi bunga dan lampu gantung",
+      },
+      {
+        src: "/images/qhall-6.jpeg",
+        alt: "The Q Hall Lantai 1 dengan meja bundar, karpet merah, dan lampu gantung emas",
+      },
+      {
+        src: "/images/mahoni-1.jpeg",
+        alt: "Ruang Mahoni dengan meja bundar dan kursi berkain merah muda",
+      },
+      {
+        src: "/images/mahoni-2.jpeg",
+        alt: "Ruang Mahoni Outdoor dengan dekorasi balon dan panggung acara",
+      },
+    ],
+    features: [
+      "Ballroom bebas pilar dengan plafon 9 meter",
+      "Dapat dibagi menjadi tiga ruang independen",
+      "Enam ruang pertemuan serbaguna",
+      "Pre-function lounge untuk resepsi dan pameran",
+      "Layar LED, sistem audio, dan rigging terintegrasi",
+      "Katering hingga ribuan pax dengan dapur halal",
+    ],
+    specs: [
+      { label: "Ballroom", value: "1.800 m2" },
+      { label: "Ruang pertemuan", value: "6 ruangan" },
+      { label: "Plafon", value: "9 meter, bebas pilar" },
+      { label: "Kapasitas banquet", value: "1.200 pax" },
+      { label: "Kapasitas teater", value: "1.500 delegasi" },
+      { label: "Lokasi", value: "Kawasan Q, sayap timur" },
+    ],
+    hours: "Fleksibel sesuai jadwal acara",
+    roomTypesLabel: "Jenis Ruangan",
+    roomTypes: [
+      {
+        slug: "merbau",
+        name: "Merbau",
+        description:
+          "Ruang pertemuan terbesar dengan penataan teater maupun klasikal dan karpet bermotif khas Q Hall.",
+        image: {
+          src: "/images/qhall-2.jpeg",
+          alt: "Ruang Merbau dengan barisan kursi dan karpet bermotif merah",
+        },
+        size: "500 m2",
+        capacity: "400 delegasi",
+        features: [
+          "Penataan teater, klasikal, atau banquet",
+          "Layar LED dan tata suara",
+          "Pintu akses langsung ke pre-function lounge",
+        ],
+      },
+      {
+        slug: "lontar",
+        name: "Lontar",
+        description:
+          "Ruang jamuan dengan meja bundar untuk gala dinner, resepsi, dan makan malam delegasi.",
+        image: {
+          src: "/images/qhall-3.jpeg",
+          alt: "Ruang Lontar dengan meja bundar dan karpet merah bermotif",
+        },
+        size: "380 m2",
+        capacity: "300 tamu",
+        features: [
+          "Penataan banquet meja bundar",
+          "Dekat dengan dapur katering",
+          "Ruang transit untuk pengantin",
+        ],
+      },
+      {
+        slug: "pulai",
+        name: "Pulai",
+        description:
+          "Ruang rapat dengan penataan meja kelas dan pencahayaan hangat untuk sesi paralel konferensi.",
+        image: {
+          src: "/images/qhall-4.jpeg",
+          alt: "Ruang Pulai dengan penataan meja kelas dan lampu gantung",
+        },
+        size: "240 m2",
+        capacity: "180 peserta",
+        features: [
+          "Penataan kelas atau U-shape",
+          "Proyektor dan layar",
+          "Koneksi ke ruang breakout lain",
+        ],
+      },
+      {
+        slug: "the-q-hall-lantai-1",
+        name: "The Q Hall Lantai 1",
+        description:
+          "Hall utama di lantai dasar untuk pameran, konvensi, dan jamuan besar dengan plafon tinggi.",
+        image: {
+          src: "/images/qhall-6.jpeg",
+          alt: "The Q Hall Lantai 1 dengan meja bundar, karpet merah, dan lampu gantung emas",
+        },
+        size: "1.200 m2",
+        capacity: "1.200 tamu",
+        features: [
+          "Akses dock bongkar-muat",
+          "Dapat digabung dengan ballroom utama",
+          "Rigging dan listrik tiga fasa",
+        ],
+      },
+      {
+        slug: "mahoni",
+        name: "Mahoni",
+        description:
+          "Ruang pertemuan dan jamuan dengan penataan meja bundar serta kursi berkain untuk acara privat.",
+        image: {
+          src: "/images/mahoni-1.jpeg",
+          alt: "Ruang Mahoni dengan meja bundar dan kursi berkain merah muda",
+        },
+        size: "320 m2",
+        capacity: "240 tamu",
+        features: [
+          "Penataan banquet dan seminar",
+          "Proyektor dan panggung kecil",
+          "Dapur terhubung dengan katering Q Hall",
+        ],
+      },
+      {
+        slug: "mahoni-outdoor",
+        name: "Mahoni Outdoor",
+        description:
+          "Area semi-terbuka di sisi Mahoni untuk acara santai, ulang tahun, dan resepsi bertema taman.",
+        image: {
+          src: "/images/mahoni-2.jpeg",
+          alt: "Ruang Mahoni Outdoor dengan dekorasi balon dan panggung acara",
+        },
+        size: "260 m2",
+        capacity: "200 tamu",
+        features: [
+          "Panggung dekorasi fleksibel",
+          "Sirkulasi udara terbuka",
+          "Cocok untuk acara keluarga",
+        ],
+      },
+    ],
+    facilities: [],
+  },
+  {
+    slug: "paradis-q",
+    name: "Paradis-Q Waterpark",
+    type: "Waterpark",
+    tagline: "Kolam ombak, kolam arus, dan menara seluncuran setinggi 22 meter",
+    summary:
+      "Waterpark keluarga dengan lima area kolam utama, menara seluncuran, serta Food Corner dan Rooftop Q di dalam kawasan.",
+    description: [
+      "Paradis-Q Waterpark adalah jantung pengalaman liburan keluarga di kawasan Q. Lima area kolam utama melayani setiap usia, mulai dari kolam anak berkedalaman 20 cm hingga kolam ombak seluas 1.100 m2 dan menara seluncuran setinggi 22 meter.",
+      "Seluruh area memakai sistem filtrasi sirkulasi tertutup dengan pemantauan kualitas air setiap dua jam, serta dijaga lifeguard bersertifikat Bronze Medallion yang berpatroli bergiliran.",
+      "Fasilitas penunjang meliputi loker, ruang bilas air hangat, ruang laktasi, Food Corner, dan Rooftop Q yang menghadap langsung ke area kolam.",
+    ],
+    image: {
+      src: "/images/hero-waterpark-pool.jpg",
+      alt: "Kolam dengan seluncuran warna-warni dan pohon palem di Paradis-Q Waterpark",
+    },
+    gallery: [
+      {
+        src: "/images/hero-waterpark-pool.jpg",
+        alt: "Kolam dengan seluncuran warna-warni dan pohon palem di Paradis-Q Waterpark",
+      },
+      {
+        src: "/images/work-aquapark.jpg",
+        alt: "Keluarga bermain di kolam dangkal dengan seluncuran merah",
+      },
+      {
+        src: "/images/work-lagoon-pool.jpg",
+        alt: "Kolam luas dengan air biru jernih dan pohon palem",
+      },
+      {
+        src: "/images/service-waterpark.jpg",
+        alt: "Kolam ramai pengunjung dengan seluncuran dan pohon palem",
+      },
+      {
+        src: "/images/service-waterpark-alt.jpg",
+        alt: "Menara seluncuran biru dan putih dengan lintasan berundak",
+      },
+      {
+        src: "/images/paradis-q-1.jpeg",
+        alt: "Area makan terbuka di dalam kawasan Paradis-Q Waterpark",
+      },
+      {
+        src: "/images/service-restaurant.jpg",
+        alt: "Area makan dengan meja dan kursi menghadap laut",
+      },
+      {
+        src: "/images/q-rooftop-1.jpeg",
+        alt: "Rooftop Q dengan lorong dekorasi bunga dan meja bundar",
+      },
+      {
+        src: "/images/q-rooftop-2.jpeg",
+        alt: "Area makan Rooftop Q dengan meja bundar berkain emas",
+      },
+      {
+        src: "/images/q-rooftop-3.jpeg",
+        alt: "Panggung acara dengan dekorasi bunga di Rooftop Q",
+      },
+      {
+        src: "/images/q-rooftop-4-indoor.jpeg",
+        alt: "Ruang makan indoor Rooftop Q dengan meja bundar dan area buffet",
+      },
+    ],
+    features: [
+      "Kolam ombak 1.100 m2 dengan gelombang terjadwal",
+      "Kolam arus sepanjang 260 meter",
+      "Menara seluncuran setinggi 22 meter",
+      "Kolam anak dengan kedalaman 20 – 40 cm",
+      "Lifeguard bersertifikat dengan pemantauan berkala",
+      "Food Corner dan Rooftop Q di dalam kawasan",
+    ],
+    specs: [
+      { label: "Luas kawasan", value: "3,4 hektar" },
+      { label: "Jenis kolam", value: "5 area kolam" },
+      { label: "Kapasitas harian", value: "4.500 pengunjung" },
+      { label: "Jam operasional", value: "09.00 – 18.00 WITA" },
+      { label: "Seluncuran tertinggi", value: "22 meter" },
+      { label: "Lokasi", value: "Kawasan Q, sisi utara" },
+    ],
+    hours: "09.00 – 18.00 WITA",
+    roomTypesLabel: "Jenis Kolam",
+    roomTypes: [
+      {
+        slug: "kolam-anak",
+        name: "Kolam Anak",
+        description:
+          "Kolam dangkal berpemanas surya dengan seluncuran kecil dan pengawasan lifeguard untuk balita.",
+        image: {
+          src: "/images/work-aquapark.jpg",
+          alt: "Keluarga bermain di kolam dangkal dengan seluncuran merah",
+        },
+        size: "Kedalaman 20 – 40 cm",
+        capacity: "Anak & balita",
+        features: [
+          "Air hangat dari pemanas surya",
+          "Seluncuran kecil khusus anak",
+          "Lifeguard siaga penuh",
+        ],
+      },
+      {
+        slug: "semi-olympic",
+        name: "Semi Olympic",
+        description:
+          "Kolam ukuran semi olimpiade dengan enam lintasan untuk berenang serius maupun latihan ringan.",
+        image: {
+          src: "/images/work-lagoon-pool.jpg",
+          alt: "Kolam luas dengan air biru jernih dan pohon palem",
+        },
+        size: "25 meter, 6 lintasan",
+        capacity: "Dewasa & remaja",
+        features: [
+          "Kedalaman 1,2 – 1,5 meter",
+          "Lintasan dengan penanda jelas",
+          "Area start dan finis untuk latihan",
+        ],
+      },
+      {
+        slug: "kolam-arus",
+        name: "Kolam Arus",
+        description:
+          "Lazy river sepanjang 260 meter yang mengelilingi kawasan hijau waterpark.",
+        image: {
+          src: "/images/service-waterpark.jpg",
+          alt: "Kolam ramai pengunjung dengan seluncuran dan pohon palem",
+        },
+        size: "260 meter",
+        capacity: "Semua usia",
+        features: [
+          "Arus tenang mengikuti jalur lingkar",
+          "Ban pelampung tersedia",
+          "Titik keluar di beberapa zona",
+        ],
+      },
+      {
+        slug: "kolam-ombak",
+        name: "Kolam Ombak",
+        description:
+          "Kolam ombak seluas 1.100 m2 dengan gelombang terjadwal setiap sesi.",
+        image: {
+          src: "/images/hero-waterpark-pool.jpg",
+          alt: "Kolam ombak dengan seluncuran warna-warni dan pohon palem",
+        },
+        size: "1.100 m2",
+        capacity: "Semua usia",
+        features: [
+          "Gelombang terjadwal tiap sesi",
+          "Kedalaman bertahap 0,3 – 1,5 meter",
+          "Area duduk di tepi kolam",
+        ],
+      },
+      {
+        slug: "tower-slide",
+        name: "Tower Slide",
+        description:
+          "Menara seluncuran setinggi 22 meter dengan racer slide dan bowl slide untuk pencari adrenalin.",
+        image: {
+          src: "/images/service-waterpark-alt.jpg",
+          alt: "Menara seluncuran biru dan putih dengan lintasan berundak",
+        },
+        size: "Tinggi 22 meter",
+        capacity: "Tinggi minimal 120 cm",
+        features: [
+          "Racer slide multi-lintasan",
+          "Bowl slide untuk satu atau dua orang",
+          "Pemeriksaan tinggi badan di pintu masuk",
+        ],
+      },
+    ],
+    facilities: [
+      {
+        slug: "food-corner",
+        name: "Food Corner",
+        type: "Food Court",
+        description:
+          "Food court dengan delapan tenant bertema nusantara dan area makan beratap untuk pengunjung waterpark.",
+        image: {
+          src: "/images/service-restaurant.jpg",
+          alt: "Area makan dengan meja dan kursi menghadap laut",
+        },
+      },
+      {
+        slug: "rooftop-q",
+        name: "Rooftop Q",
+        type: "Rooftop Venue",
+        description:
+          "Rooftop serbaguna untuk acara privat, jamuan, dan pernikahan dengan pemandangan langsung ke area waterpark.",
+        image: {
+          src: "/images/q-rooftop-1.jpeg",
+          alt: "Rooftop Q dengan lorong dekorasi bunga dan meja bundar",
+        },
       },
     ],
   },
   {
     slug: "villa",
-    name: "Villa",
+    name: "Villa Town House",
     type: "Villa",
-    tagline: "Enam villa privat dengan kolam dan dapur sendiri",
+    tagline: "Enam villa privat dua lantai dengan kolam dan dapur sendiri",
     summary:
       "Enam villa privat berukuran dua sampai empat kamar dengan kolam pribadi, dapur, dan layanan villa host.",
     description: [
-      "Villa Qubu Resort terdiri dari enam unit privat berukuran dua sampai empat kamar tidur, masing-masing dengan kolam pribadi, dapur, dan ruang makan sendiri.",
+      "Villa Town House terdiri dari enam unit privat dua lantai berukuran dua sampai empat kamar tidur, masing-masing dengan kolam pribadi, dapur, dan ruang makan sendiri.",
       "Setiap villa memiliki villa host yang mengatur kebutuhan tamu, mulai dari transportasi, katering, hingga penjadwalan aktivitas keluarga.",
       "Villa cocok untuk keluarga besar, grup kecil, maupun tamu yang menginap jangka panjang dengan kebutuhan privasi lebih.",
     ],
     image: {
-      src: "/images/villa-1.jpeg",
-      alt: "Kamar villa dengan panel kayu dan pencahayaan hangat",
+      src: "/images/villa-5.jpeg",
+      alt: "Fasad bangunan Villa Town House dua lantai berwarna oranye",
     },
     gallery: [
-      { src: "/images/villa-2.jpeg", alt: "Ruang keluarga villa dengan tangga kayu" },
-      { src: "/images/villa-3.jpeg", alt: "Interior villa Qubu Resort" },
-      { src: "/images/villa-5.jpeg", alt: "Sudut lain villa dengan sentuhan kayu" },
+      {
+        src: "/images/villa-5.jpeg",
+        alt: "Fasad bangunan Villa Town House dua lantai berwarna oranye",
+      },
+      {
+        src: "/images/villa-1.jpeg",
+        alt: "Kamar villa dengan lemari kayu dan meja rias",
+      },
+      {
+        src: "/images/villa-6.jpeg",
+        alt: "Kamar villa dengan dua tempat tidur twin dan lantai kayu",
+      },
+      {
+        src: "/images/villa-7.jpeg",
+        alt: "Kamar anak villa dengan tempat tidur tingkat dan karpet warna-warni",
+      },
+      {
+        src: "/images/villa-2.jpeg",
+        alt: "Ruang keluarga villa dengan sofa kuning dan tangga kayu",
+      },
+      {
+        src: "/images/villa-3.jpeg",
+        alt: "Ruang makan villa dengan meja kayu dan dapur kecil",
+      },
+      {
+        src: "/images/villa-4.jpeg",
+        alt: "Balkon villa dengan railing besi menghadap taman dan kolam",
+      },
     ],
     features: [
       "Enam villa privat, 2 sampai 4 kamar tidur",
@@ -579,50 +872,11 @@ export const businessUnits: BusinessUnit[] = [
       { label: "Kamar tidur", value: "2 – 4 kamar per villa" },
       { label: "Kapasitas", value: "4 – 10 tamu per villa" },
       { label: "Check-in / out", value: "14.00 / 12.00 WITA" },
-      { label: "Unit bisnis di dalam", value: "Layanan villa (single unit)" },
+      { label: "Fasilitas", value: "Kolam privat, dapur, villa host" },
       { label: "Lokasi", value: "Kawasan Q, sisi selatan" },
     ],
     hours: "Check-in 14.00 · Check-out 12.00",
-    outlets: [],
-  },
-  {
-    slug: "pemancingan",
-    name: "Pemancingan",
-    type: "Rekreasi",
-    tagline: "Kolam pemancingan keluarga dan pondok makan ikan",
-    summary:
-      "Area pemancingan keluarga dengan tiga kolam, penyewaan alat, dan pondok makan yang mengolah hasil tangkapan tamu.",
-    description: [
-      "Pemancingan Qubu Resort menempati area seluas 1,2 hektar dengan tiga kolam: kolam ikan mas, kolam nila, dan kolam khusus untuk anak.",
-      "Pengunjung dapat menyewa alat pancing, membeli umpan, atau mengikuti sesi pemandu untuk tamu yang baru pertama kali memancing.",
-      "Hasil tangkapan dapat langsung diolah di pondok makan dengan pilihan bakar, goreng, atau sup, dan dinikmati di saung tepi kolam.",
-    ],
-    image: {
-      src: "/images/work-lagoon-pool.jpg",
-      alt: "Kolam pemancingan dengan saung dan pohon rindang",
-    },
-    gallery: [
-      { src: "/images/hero-beach-resort.jpg", alt: "Area hijau di sekitar kolam pemancingan" },
-      { src: "/images/service-sunset-deck.jpg", alt: "Saung tepi kolam pemancingan" },
-      { src: "/images/work-lagoon-pool.jpg", alt: "Air kolam pemancingan yang tenang" },
-    ],
-    features: [
-      "Tiga kolam: ikan mas, nila, dan kolam anak",
-      "Penyewaan alat pancing dan penjualan umpan",
-      "Sesi pemandu untuk pemula",
-      "Pondok makan pengolahan hasil tangkapan",
-      "Saung tepi kolam untuk keluarga",
-    ],
-    specs: [
-      { label: "Luas area", value: "1,2 hektar" },
-      { label: "Jumlah kolam", value: "3 kolam" },
-      { label: "Jam operasional", value: "07.00 – 18.00 WITA" },
-      { label: "Sewa alat", value: "Rp 25.000 / set" },
-      { label: "Unit bisnis di dalam", value: "Layanan pemancingan (single unit)" },
-      { label: "Lokasi", value: "Kawasan Q, sisi barat" },
-    ],
-    hours: "07.00 – 18.00 WITA",
-    outlets: [],
+    facilities: [],
   },
 ];
 
@@ -630,28 +884,13 @@ export function getUnitBySlug(slug: string) {
   return businessUnits.find((unit) => unit.slug === slug);
 }
 
-export function getOutlet(unitSlug: string, outletSlug: string): UnitOutlet | undefined {
-  return getUnitBySlug(unitSlug)?.outlets.find((outlet) => outlet.slug === outletSlug);
-}
-
 /** Absolute href helpers so every layer builds the same URLs. */
 export function unitHref(unit: BusinessUnit) {
   return "/unit-bisnis/" + unit.slug;
 }
 
-export function outletHref(unit: BusinessUnit, outlet: UnitOutlet) {
-  return "/unit-bisnis/" + unit.slug + "/" + outlet.slug;
-}
-
-/** Total business units operated inside buildings (used in copy + stats). */
-export const outletCount = businessUnits.reduce((total, unit) => total + unit.outlets.length, 0);
-
-/** Entries for the "Unit Bisnis" navigation dropdown. */
+/** Entries for the "Destinasi" navigation dropdown, in display order. */
 export const businessUnitMenu: NavItem[] = businessUnits.map((unit) => ({
   label: unit.name,
   href: unitHref(unit),
-  children: unit.outlets.map((outlet) => ({
-    label: outlet.name,
-    href: outletHref(unit, outlet),
-  })),
 }));
