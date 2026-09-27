@@ -635,53 +635,69 @@ export const businessUnits: BusinessUnit[] = [
       "Fasilitas penunjang meliputi loker, ruang bilas air hangat, ruang laktasi, Food Corner, dan Rooftop Q yang menghadap langsung ke area kolam.",
     ],
     image: {
-      src: "/images/hero-waterpark-pool.jpg",
-      alt: "Kolam dengan seluncuran warna-warni dan pohon palem di Paradis-Q Waterpark",
+      src: "/images/thower_slide_1.jpg",
+      alt: "Menara seluncuran warna-warni setinggi 22 meter di Paradis-Q Waterpark",
     },
     gallery: [
       {
-        src: "/images/hero-waterpark-pool.jpg",
-        alt: "Kolam dengan seluncuran warna-warni dan pohon palem di Paradis-Q Waterpark",
+        src: "/images/thower_slide_1.jpg",
+        alt: "Menara seluncuran warna-warni dengan lintasan kuning, biru, dan hijau",
       },
       {
-        src: "/images/work-aquapark.jpg",
-        alt: "Keluarga bermain di kolam dangkal dengan seluncuran merah",
+        src: "/images/kolam_ombak_2.jpg",
+        alt: "Pengunjung bermain di kolam ombak dengan ban pelampung hijau",
       },
       {
-        src: "/images/work-lagoon-pool.jpg",
-        alt: "Kolam luas dengan air biru jernih dan pohon palem",
+        src: "/images/kolam_arus_1.jpg",
+        alt: "Alur kolam arus di antara bebatuan dan tanaman hijau",
       },
       {
-        src: "/images/service-waterpark.jpg",
-        alt: "Kolam ramai pengunjung dengan seluncuran dan pohon palem",
+        src: "/images/kolam_anak_1.jpg",
+        alt: "Struktur bermain air dengan seluncuran kecil dan ember tumpah di kolam anak",
       },
       {
-        src: "/images/service-waterpark-alt.jpg",
-        alt: "Menara seluncuran biru dan putih dengan lintasan berundak",
+        src: "/images/semi_olympic_2.jpg",
+        alt: "Lintasan kolam semi olimpiade dengan tali pembatas dan pengunjung berenang",
       },
       {
-        src: "/images/paradis-q-1.jpeg",
-        alt: "Area makan terbuka di dalam kawasan Paradis-Q Waterpark",
+        src: "/images/thower_slide_2.jpg",
+        alt: "Seluncuran menara dengan cipratan air dan tema tebing batu",
       },
       {
-        src: "/images/service-restaurant.jpg",
-        alt: "Area makan dengan meja dan kursi menghadap laut",
+        src: "/images/thower_slide_3.jpg",
+        alt: "Tampak luas kawasan waterpark dengan menara seluncuran dan kolam",
       },
       {
-        src: "/images/q-rooftop-1.jpeg",
-        alt: "Rooftop Q dengan lorong dekorasi bunga dan meja bundar",
+        src: "/images/kolam_ombak_1.jpg",
+        alt: "Kolam ombak dengan gelombang dan pohon palem di tepian",
       },
       {
-        src: "/images/q-rooftop-2.jpeg",
-        alt: "Area makan Rooftop Q dengan meja bundar berkain emas",
+        src: "/images/kolam_ombak_3.jpg",
+        alt: "Kolam ombak ramai pengunjung di bawah pohon palem",
       },
       {
-        src: "/images/q-rooftop-3.jpeg",
-        alt: "Panggung acara dengan dekorasi bunga di Rooftop Q",
+        src: "/images/kolam_arus_2.jpg",
+        alt: "Pengunjung mengapung di kolam arus dengan ban pelampung kuning",
       },
       {
-        src: "/images/q-rooftop-4-indoor.jpeg",
-        alt: "Ruang makan indoor Rooftop Q dengan meja bundar dan area buffet",
+        src: "/images/kolam_arus_3.jpg",
+        alt: "Alur kolam arus yang berkelok di antara bebatuan",
+      },
+      {
+        src: "/images/kolam_anak_2.jpg",
+        alt: "Kolam anak dengan ember tumpah dan seluncuran kecil",
+      },
+      {
+        src: "/images/kolam_anak_3.jpg",
+        alt: "Ember raksasa menuangkan air di area bermain kolam anak",
+      },
+      {
+        src: "/images/semi_olympic_1.jpg",
+        alt: "Kolam semi olimpiade dengan pengunjung berenang dan dek bermotif",
+      },
+      {
+        src: "/images/semi_olympic_3.jpg",
+        alt: "Kolam luas menghadap bangunan dan taman tropis",
       },
     ],
     features: [
@@ -709,8 +725,8 @@ export const businessUnits: BusinessUnit[] = [
         description:
           "Kolam dangkal berpemanas surya dengan seluncuran kecil dan pengawasan lifeguard untuk balita.",
         image: {
-          src: "/images/work-aquapark.jpg",
-          alt: "Keluarga bermain di kolam dangkal dengan seluncuran merah",
+          src: "/images/kolam_anak_1.jpg",
+          alt: "Struktur bermain air dengan seluncuran kecil dan ember tumpah di kolam anak",
         },
         size: "Kedalaman 20 – 40 cm",
         capacity: "Anak & balita",
@@ -726,8 +742,8 @@ export const businessUnits: BusinessUnit[] = [
         description:
           "Kolam ukuran semi olimpiade dengan enam lintasan untuk berenang serius maupun latihan ringan.",
         image: {
-          src: "/images/work-lagoon-pool.jpg",
-          alt: "Kolam luas dengan air biru jernih dan pohon palem",
+          src: "/images/semi_olympic_2.jpg",
+          alt: "Lintasan kolam semi olimpiade dengan tali pembatas dan pengunjung berenang",
         },
         size: "25 meter, 6 lintasan",
         capacity: "Dewasa & remaja",
@@ -743,8 +759,8 @@ export const businessUnits: BusinessUnit[] = [
         description:
           "Lazy river sepanjang 260 meter yang mengelilingi kawasan hijau waterpark.",
         image: {
-          src: "/images/service-waterpark.jpg",
-          alt: "Kolam ramai pengunjung dengan seluncuran dan pohon palem",
+          src: "/images/kolam_arus_1.jpg",
+          alt: "Alur kolam arus di antara bebatuan dan tanaman hijau",
         },
         size: "260 meter",
         capacity: "Semua usia",
@@ -760,8 +776,8 @@ export const businessUnits: BusinessUnit[] = [
         description:
           "Kolam ombak seluas 1.100 m2 dengan gelombang terjadwal setiap sesi.",
         image: {
-          src: "/images/hero-waterpark-pool.jpg",
-          alt: "Kolam ombak dengan seluncuran warna-warni dan pohon palem",
+          src: "/images/kolam_ombak_2.jpg",
+          alt: "Pengunjung bermain di kolam ombak dengan ban pelampung hijau",
         },
         size: "1.100 m2",
         capacity: "Semua usia",
@@ -777,8 +793,8 @@ export const businessUnits: BusinessUnit[] = [
         description:
           "Menara seluncuran setinggi 22 meter dengan racer slide dan bowl slide untuk pencari adrenalin.",
         image: {
-          src: "/images/service-waterpark-alt.jpg",
-          alt: "Menara seluncuran biru dan putih dengan lintasan berundak",
+          src: "/images/thower_slide_1.jpg",
+          alt: "Menara seluncuran warna-warni dengan kolam di bawahnya",
         },
         size: "Tinggi 22 meter",
         capacity: "Tinggi minimal 120 cm",

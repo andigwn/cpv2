@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
@@ -11,6 +11,8 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /** The brief asks for a 2–3 second auto-slide on every unit gallery. */
 const AUTO_ADVANCE_MS = 2500;
+/** Glide duration of one slide; comfortably inside the auto-advance interval. */
+const SLIDE_DURATION_S = 1.05;
 
 type UnitGalleryProps = {
   slides: ImageAsset[];
@@ -20,31 +22,64 @@ type UnitGalleryProps = {
 };
 
 /**
+ * Direction-aware slides: the next photo glides in from the side while the previous
+ * one leaves, with a soft opacity blend so the rotation reads as one continuous
+ * camera move instead of a hard cut.
+ */
+const slideVariants: Variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0.35,
+  }),
+  center: { x: "0%", opacity: 1 },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-100%" : "100%",
+    opacity: 0.35,
+  }),
+};
+
+/** Reduced-motion fallback: a quiet crossfade with no travel. */
+const fadeVariants: Variants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+/**
  * Auto-playing photo gallery for the business-unit pages.
  *
- * - Crossfades to the next photo every 2.5 seconds; hovering, focusing or dragging
- *   pauses the rotation, and `prefers-reduced-motion` disables it entirely.
+ * - Auto-advances every 2.5 seconds with a smooth directional glide; hovering,
+ *   focusing or dragging pauses the rotation, and `prefers-reduced-motion` switches
+ *   to a plain crossfade and stops the timer.
  * - Manual navigation: previous/next buttons, clickable dots and horizontal swipe
  *   (drag) on the photo.
  * - `next/image` keeps the payload to the visible photo plus lazy follow-ups, and
  *   every slide carries its own descriptive alt text.
  */
 export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
-  const [index, setIndex] = useState(0);
+  const [{ index, direction }, setState] = useState({ index: 0, direction: 1 });
   const [paused, setPaused] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const total = slides.length;
 
   const goTo = useCallback(
-    (next: number) => setIndex(((next % total) + total) % total),
+    (next: number) =>
+      setState((current) => ({
+        index: ((next % total) + total) % total,
+        direction: next >= current.index ? 1 : -1,
+      })),
     [total],
   );
   const next = useCallback(
-    () => setIndex((current) => (current + 1) % total),
+    () => setState((current) => ({ index: (current.index + 1) % total, direction: 1 })),
     [total],
   );
   const previous = useCallback(
-    () => setIndex((current) => (current - 1 + total) % total),
+    () =>
+      setState((current) => ({
+        index: (current.index - 1 + total) % total,
+        direction: -1,
+      })),
     [total],
   );
 
@@ -69,28 +104,33 @@ export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
       onBlur={() => setPaused(false)}
     >
       <div className="relative aspect-4/3 overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/70 shadow-[0_30px_80px_-60px_rgba(19,25,34,0.6)] sm:aspect-16/10">
-        <AnimatePresence mode="sync" initial={false}>
+        <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={index}
-            className="absolute inset-0"
-            initial={
-              prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 1.03 }
+            custom={direction}
+            variants={prefersReducedMotion ? fadeVariants : slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={
+              prefersReducedMotion
+                ? { duration: 0.3, ease: EASE_CINEMATIC }
+                : {
+                    x: { duration: SLIDE_DURATION_S, ease: EASE_CINEMATIC },
+                    opacity: { duration: 0.7, ease: EASE_CINEMATIC },
+                  }
             }
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              opacity: { duration: 0.7, ease: EASE_CINEMATIC },
-              scale: { duration: 1.1, ease: EASE_CINEMATIC },
-            }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.12}
+            dragElastic={0.14}
+            dragMomentum={false}
             onDragStart={() => setPaused(true)}
             onDragEnd={(_, info) => {
               setPaused(false);
               if (info.offset.x < -60) next();
               else if (info.offset.x > 60) previous();
             }}
+            className="absolute inset-0"
           >
             <Image
               src={active.src}

@@ -23,21 +23,21 @@ export const services: Service[] = [
       "Untuk kenyamanan keluarga, tersedia 320 loker berukuran besar, ruang laktasi, area bilas air hangat, dan delapan food truck bertema nusantara di dalam kawasan.",
     ],
     image: {
-      src: "/images/paradis-q-1.jpeg",
-      alt: "Area makan beratap di kawasan Paradis Q",
+      src: "/images/kolam_ombak_2.jpg",
+      alt: "Pengunjung bermain di kolam ombak Paradis Q Waterpark",
     },
     gallery: [
       {
-        src: "/images/work-aquapark.jpg",
-        alt: "Menara seluncuran waterpark dengan struktur berwarna cerah",
+        src: "/images/thower_slide_2.jpg",
+        alt: "Seluncuran menara dengan cipratan air di Paradis Q Waterpark",
       },
       {
-        src: "/images/hero-waterpark-pool.jpg",
-        alt: "Kolam ombak waterpark dengan pengunjung bermain air",
+        src: "/images/kolam_ombak_3.jpg",
+        alt: "Kolam ombak dengan pengunjung dan deretan pohon palem",
       },
       {
-        src: "/images/service-kids-club.jpg",
-        alt: "Area bermain air anak dengan air dangkal dan pengawasan lifeguard",
+        src: "/images/kolam_arus_2.jpg",
+        alt: "Pengunjung mengapung di kolam arus dengan ban pelampung kuning",
       },
     ],
     features: [
@@ -342,8 +342,8 @@ export const services: Service[] = [
         alt: "Pendamping kids club bersama anak-anak",
       },
       {
-        src: "/images/service-waterpark.jpg",
-        alt: "Area bermain air anak",
+        src: "/images/kolam_anak_3.jpg",
+        alt: "Ember raksasa menuangkan air di area bermain air anak",
       },
     ],
     features: [
