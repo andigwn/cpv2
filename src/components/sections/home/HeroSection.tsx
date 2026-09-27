@@ -110,14 +110,14 @@ export function HeroSection() {
               className="flex h-full flex-col items-center justify-center gap-5 px-6 text-center"
             >
               <span className="text-sunshine-300 text-[0.68rem] font-semibold tracking-[0.44em] uppercase drop-shadow-[0_2px_14px_rgba(19,25,34,0.8)]">
-                Tanjung Benoa · Bali
+                Kubu Raya · Pontianak
               </span>
               <Image
                 src="/images/logo.png"
                 alt="Qubu Resort"
                 width={800}
                 height={145}
-                className="h-auto w-[min(82vw,42rem)] brightness-0 invert drop-shadow-[0_8px_32px_rgba(19,25,34,0.75)]"
+                className="h-auto w-[min(82vw,42rem)] brightness-0 drop-shadow-[0_8px_32px_rgba(19,25,34,0.75)] invert"
               />
             </motion.div>
           </motion.div>
@@ -166,7 +166,7 @@ export function HeroSection() {
                     holdDuration={2000}
                     deleteSpeed={32}
                     pauseBeforeRestart={500}
-                    className="from-sunshine-300 via-[#FFD34E] to-[#EF723D] bg-linear-to-r bg-clip-text text-transparent [text-shadow:none] drop-shadow-[0_3px_16px_rgba(19,25,34,0.6)]"
+                    className="from-sunshine-300 bg-linear-to-r via-[#FFD34E] to-[#EF723D] bg-clip-text text-transparent drop-shadow-[0_3px_16px_rgba(19,25,34,0.6)] text-shadow-none"
                     inline
                   />
                 </span>

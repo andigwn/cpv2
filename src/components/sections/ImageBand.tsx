@@ -82,18 +82,12 @@ export function ImageBand({
   const scale = useSpring(rawScale, SCRUB_SPRING);
 
   // Caption follows the same rule: it rises in shortly after the band pins.
-  const captionOpacity = useTransform(
-    scrollYProgress,
-    [pinStart + 0.06, pinStart + 0.2],
-    [0, 1],
-    { clamp: true },
-  );
-  const captionY = useTransform(
-    scrollYProgress,
-    [pinStart + 0.06, pinStart + 0.2],
-    [18, 0],
-    { clamp: true },
-  );
+  const captionOpacity = useTransform(scrollYProgress, [pinStart + 0.06, pinStart + 0.2], [0, 1], {
+    clamp: true,
+  });
+  const captionY = useTransform(scrollYProgress, [pinStart + 0.06, pinStart + 0.2], [18, 0], {
+    clamp: true,
+  });
 
   const showTop = fade === "both";
   const showBottom = fade !== "none";
@@ -131,13 +125,13 @@ export function ImageBand({
         {showTop ? (
           <div
             aria-hidden
-            className="from-sand-100 via-sand-100/70 absolute inset-x-0 top-0 h-24 bg-gradient-to-b to-transparent sm:h-36"
+            className="from-sand-100 via-sand-100/70 absolute inset-x-0 top-0 h-24 bg-linear-to-b to-transparent sm:h-36"
           />
         ) : null}
         {showBottom ? (
           <div
             aria-hidden
-            className="from-sand-100 via-sand-100/70 absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t to-transparent sm:h-36"
+            className="from-sand-100 via-sand-100/70 absolute inset-x-0 bottom-0 h-24 bg-linear-to-t to-transparent sm:h-36"
           />
         ) : null}
 

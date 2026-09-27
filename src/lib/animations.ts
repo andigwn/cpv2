@@ -32,6 +32,29 @@ export const ROTATION = {
   zoomScale: 1.08,
 } as const;
 
+/** Business-unit photo gallery timings (prd.md section 6). */
+export const GALLERY = {
+  /** A photo holds on screen for this long before the next glide starts. */
+  intervalMs: 5000,
+  /** Horizontal glide of one slide; comfortably inside the advance interval. */
+  slideSeconds: 1.05,
+  /** Opacity blend that softens the edges of the glide. */
+  blendSeconds: 0.7,
+  /**
+   * Continuous Ken Burns motion while a photo is on screen, so the frame keeps
+   * drifting between cuts instead of freezing on a still image. The loop runs
+   * forever, so the photo is still moving no matter when the visitor looks at it.
+   */
+  kenBurns: {
+    zoomFrom: 1.06,
+    zoomTo: 1.16,
+    /** Horizontal travel as a percentage of the frame width. */
+    driftPercent: 2,
+    /** One full there-and-back drift cycle in seconds. */
+    loopSeconds: 8,
+  },
+} as const;
+
 /**
  * Shared rhythm for the alternating photo/content bands on the home page and the
  * long-form inner pages. Keeping the values here means every band transition moves

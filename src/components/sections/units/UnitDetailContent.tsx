@@ -94,7 +94,12 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
         </StaggerContainer>
       </ContentBand>
 
-      <ImageBand image={first ?? unit.image} caption={"Suasana " + unit.name} />
+      {/* Photo beat that opens the "jenis kamar / ruangan / kolam" chapter. Units without
+          room types (e.g. Villa Town House) skip it, so two photo bands never sit back
+          to back. */}
+      {unit.roomTypes?.length ? (
+        <ImageBand image={first ?? unit.image} caption={"Suasana " + unit.name} />
+      ) : null}
 
       {/* Jenis kamar / ruangan / kolam */}
       {unit.roomTypes?.length ? (
@@ -195,7 +200,7 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
         <SectionTitle
           eyebrow="Galeri"
           title={"Galeri foto " + unit.name}
-          description="Foto berganti otomatis setiap 2,5 detik — gunakan tombol panah atau geser foto untuk berpindah."
+          description="Foto berganti otomatis setiap 5 detik — gunakan tombol panah atau geser foto untuk berpindah."
           className="max-w-2xl"
         />
         <UnitGallery slides={unit.gallery} label={"Galeri foto " + unit.name} />

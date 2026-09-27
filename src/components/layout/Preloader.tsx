@@ -61,14 +61,14 @@ export function Preloader({ duration = 1500, onFinish }: PreloaderProps) {
           variants={preloaderVariants}
           initial="visible"
           exit="exit"
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-gradient-to-b from-white via-lagoon-50 to-sand-100"
+          className="via-lagoon-50 to-sand-100 fixed inset-0 z-100 flex flex-col items-center justify-center bg-linear-to-b from-white"
           role="status"
           aria-live="polite"
           aria-label="Memuat situs Qubu Resort"
         >
           <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-lagoon-200/60 blur-3xl" />
-            <div className="absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-sunshine-200/60 blur-3xl" />
+            <div className="bg-lagoon-200/60 absolute -top-24 -left-24 h-72 w-72 rounded-full blur-3xl" />
+            <div className="bg-sunshine-200/60 absolute -right-16 bottom-0 h-80 w-80 rounded-full blur-3xl" />
           </div>
 
           <motion.div
@@ -77,15 +77,15 @@ export function Preloader({ duration = 1500, onFinish }: PreloaderProps) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex flex-col items-center gap-6 px-6 text-center"
           >
-            <span className="text-[0.7rem] font-semibold tracking-[0.4em] text-lagoon-700 uppercase">
+            <span className="text-lagoon-700 text-[0.7rem] font-semibold tracking-[0.4em] uppercase">
               {SITE.tagline}
             </span>
-            <p className="font-display text-4xl font-bold tracking-tight text-ink-900 sm:text-6xl">
+            <p className="font-display text-ink-900 text-4xl font-bold tracking-tight sm:text-6xl">
               {SITE.name}
             </p>
-            <div className="relative h-[3px] w-56 overflow-hidden rounded-full bg-ink-200 sm:w-72">
+            <div className="bg-ink-200 relative h-0.75 w-56 overflow-hidden rounded-full sm:w-72">
               <motion.span
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#0B6C3C] via-[#8BC91B] to-[#FFE52C]"
+                className="absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-[#0B6C3C] via-[#8BC91B] to-[#FFE52C]"
                 style={{ width: `${progress}%` }}
               />
             </div>

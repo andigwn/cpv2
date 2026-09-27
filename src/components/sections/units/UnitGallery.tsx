@@ -6,13 +6,7 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
-import { EASE_CINEMATIC } from "@/lib/animations";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-
-/** The brief asks for a 2–3 second auto-slide on every unit gallery. */
-const AUTO_ADVANCE_MS = 2500;
-/** Glide duration of one slide; comfortably inside the auto-advance interval. */
-const SLIDE_DURATION_S = 1.05;
+import { EASE_CINEMATIC, EASE_IN_OUT, GALLERY } from "@/lib/animations";
 
 type UnitGalleryProps = {
   slides: ImageAsset[];
@@ -38,40 +32,47 @@ const slideVariants: Variants = {
   }),
 };
 
-/** Reduced-motion fallback: a quiet crossfade with no travel. */
-const fadeVariants: Variants = {
-  enter: { opacity: 0 },
-  center: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
 /**
  * Auto-playing photo gallery for the business-unit pages.
  *
- * - Auto-advances every 2.5 seconds with a smooth directional glide; hovering,
- *   focusing or dragging pauses the rotation, and `prefers-reduced-motion` switches
- *   to a plain crossfade and stops the timer.
+ * - The rotation starts on its own the moment the gallery renders: no click, hover
+ *   or focus is needed to wake it up.
+ * - Every photo keeps drifting while it is shown (slow Ken Burns zoom + pan), so the
+ *   frame is never a frozen still between transitions.
+ * - The photo after the visible one is preloaded and only transform/opacity animate,
+ *   which keeps each glide smooth; dragging pauses the timer only while the visitor
+ *   is actually holding the photo.
  * - Manual navigation: previous/next buttons, clickable dots and horizontal swipe
- *   (drag) on the photo.
- * - `next/image` keeps the payload to the visible photo plus lazy follow-ups, and
- *   every slide carries its own descriptive alt text.
+ *   (drag) on the photo. Pressing them is a shortcut, not a prerequisite — a manual
+ *   step simply restarts the auto-advance beat.
  */
 export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
-  const [{ index, direction }, setState] = useState({ index: 0, direction: 1 });
-  const [paused, setPaused] = useState(false);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const [{ index, direction, moved }, setState] = useState({
+    index: 0,
+    direction: 1,
+    moved: false,
+  });
+  const [dragging, setDragging] = useState(false);
   const total = slides.length;
 
+  /**
+   * `moved` is false only for the slide that mounts with the page. The first slide is
+   * rendered without an entrance animation, while every later slide glides in. It is
+   * tracked per slide (instead of via `AnimatePresence initial={false}`) because the
+   * presence context would otherwise freeze the Ken Burns loop of the first photo too.
+   */
   const goTo = useCallback(
     (next: number) =>
       setState((current) => ({
         index: ((next % total) + total) % total,
         direction: next >= current.index ? 1 : -1,
+        moved: true,
       })),
     [total],
   );
   const next = useCallback(
-    () => setState((current) => ({ index: (current.index + 1) % total, direction: 1 })),
+    () =>
+      setState((current) => ({ index: (current.index + 1) % total, direction: 1, moved: true })),
     [total],
   );
   const previous = useCallback(
@@ -79,69 +80,111 @@ export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
       setState((current) => ({
         index: (current.index - 1 + total) % total,
         direction: -1,
+        moved: true,
       })),
     [total],
   );
 
+  /**
+   * Autoplay. A fresh timeout after every slide change means the first photo also
+   * rotates without any interaction, and a manual step gets a whole beat before the
+   * rotation continues.
+   */
   useEffect(() => {
-    if (prefersReducedMotion || paused || total <= 1) return;
-    const timer = setInterval(next, AUTO_ADVANCE_MS);
-    return () => clearInterval(timer);
-  }, [next, paused, prefersReducedMotion, total]);
+    if (total <= 1 || dragging) return;
+
+    const from = index;
+    const timer = window.setTimeout(() => {
+      setState((current) =>
+        current.index === from
+          ? { index: (from + 1) % total, direction: 1, moved: true }
+          : current,
+      );
+    }, GALLERY.intervalMs);
+
+    return () => window.clearTimeout(timer);
+  }, [dragging, index, total]);
 
   if (!total) return null;
 
   const active = slides[index] ?? slides[0];
+  const upcoming = slides[(index + 1) % total];
+  const zoomsIn = index % 2 === 0;
+  const drift = GALLERY.kenBurns.driftPercent;
 
   return (
-    <div
-      className={cn("mt-10", className)}
-      aria-roledescription="carousel"
-      aria-label={label}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-    >
+    <div className={cn("mt-10", className)} aria-roledescription="carousel" aria-label={label}>
       <div className="relative aspect-4/3 overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/70 shadow-[0_30px_80px_-60px_rgba(19,25,34,0.6)] sm:aspect-16/10">
-        <AnimatePresence initial={false} custom={direction}>
+        {/* Hidden twin of the next photo: same props as the visible slide, so its
+            optimised URL is already in the browser cache when the glide starts. */}
+        {total > 1 && upcoming ? (
+          <div aria-hidden className="pointer-events-none absolute inset-0 opacity-0">
+            <Image
+              src={upcoming.src}
+              alt=""
+              fill
+              sizes="(max-width: 1024px) 100vw, 80vw"
+              quality={75}
+              loading="eager"
+              className="object-cover"
+            />
+          </div>
+        ) : null}
+
+        <AnimatePresence custom={direction}>
           <motion.div
             key={index}
             custom={direction}
-            variants={prefersReducedMotion ? fadeVariants : slideVariants}
-            initial="enter"
+            variants={slideVariants}
+            initial={moved ? "enter" : false}
             animate="center"
             exit="exit"
-            transition={
-              prefersReducedMotion
-                ? { duration: 0.3, ease: EASE_CINEMATIC }
-                : {
-                    x: { duration: SLIDE_DURATION_S, ease: EASE_CINEMATIC },
-                    opacity: { duration: 0.7, ease: EASE_CINEMATIC },
-                  }
-            }
+            transition={{
+              x: { duration: GALLERY.slideSeconds, ease: EASE_CINEMATIC },
+              opacity: { duration: GALLERY.blendSeconds, ease: EASE_CINEMATIC },
+            }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.14}
             dragMomentum={false}
-            onDragStart={() => setPaused(true)}
+            onDragStart={() => setDragging(true)}
             onDragEnd={(_, info) => {
-              setPaused(false);
+              setDragging(false);
               if (info.offset.x < -60) next();
               else if (info.offset.x > 60) previous();
             }}
-            className="absolute inset-0"
+            className="absolute inset-0 will-change-transform"
           >
-            <Image
-              src={active.src}
-              alt={active.alt}
-              fill
-              sizes="(max-width: 1024px) 100vw, 80vw"
-              quality={75}
-              priority={index === 0}
-              loading={index === 0 ? undefined : "lazy"}
-              className="cursor-grab object-cover active:cursor-grabbing"
-            />
+            {/* Ken Burns: the photo keeps zooming and drifting while it is on screen. The
+                keyframes run in a seamless loop, so the frame is never a frozen still. */}
+            <motion.div
+              animate={{
+                scale: zoomsIn
+                  ? [GALLERY.kenBurns.zoomFrom, GALLERY.kenBurns.zoomTo, GALLERY.kenBurns.zoomFrom]
+                  : [GALLERY.kenBurns.zoomTo, GALLERY.kenBurns.zoomFrom, GALLERY.kenBurns.zoomTo],
+                x:
+                  direction > 0
+                    ? [`${drift}%`, `-${drift}%`, `${drift}%`]
+                    : [`-${drift}%`, `${drift}%`, `-${drift}%`],
+              }}
+              transition={{
+                duration: GALLERY.kenBurns.loopSeconds,
+                repeat: Infinity,
+                ease: EASE_IN_OUT,
+              }}
+              className="absolute inset-0 will-change-transform"
+            >
+              <Image
+                src={active.src}
+                alt={active.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 80vw"
+                quality={75}
+                priority={index === 0}
+                loading={index === 0 ? undefined : "eager"}
+                className="cursor-grab object-cover active:cursor-grabbing"
+              />
+            </motion.div>
           </motion.div>
         </AnimatePresence>
 

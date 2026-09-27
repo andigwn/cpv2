@@ -78,7 +78,7 @@ export const testimonials: Testimonial[] = [
 
 /** Marquee items used under the hero. */
 export const heroMarquee = [
-  "Beachfront Resort",
+  "Hotel Qubu Suites",
   "Waterpark Keluarga",
   "Spa & Wellness",
   "Convention Centre",

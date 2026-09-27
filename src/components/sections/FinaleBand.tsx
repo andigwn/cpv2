@@ -56,11 +56,9 @@ export function FinaleBand({
   const messageOpacity = useSpring(rawMessageOpacity, SCRUB_SPRING);
   const rawMessageY = useTransform(pin, [...FINALE.messageWindow], [FINALE.messageTravel, 0]);
   const messageY = useSpring(rawMessageY, SCRUB_SPRING);
-  const rawMessageScale = useTransform(
-    pin,
-    [...FINALE.messageWindow],
-    [...FINALE.messageScale] as number[],
-  );
+  const rawMessageScale = useTransform(pin, [...FINALE.messageWindow], [
+    ...FINALE.messageScale,
+  ] as number[]);
   const messageScale = useSpring(rawMessageScale, SCRUB_SPRING);
 
   return (
@@ -88,7 +86,7 @@ export function FinaleBand({
         <motion.div
           aria-hidden
           style={prefersReducedMotion ? { opacity: 1 } : { opacity: veil }}
-          className="from-ink-900/95 via-ink-900/80 to-ink-900/55 absolute inset-0 bg-gradient-to-t"
+          className="from-ink-900/95 via-ink-900/80 to-ink-900/55 absolute inset-0 bg-linear-to-t"
         />
 
         <div className="relative z-10 flex h-full items-center justify-center">

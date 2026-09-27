@@ -46,7 +46,9 @@ export function PageHero({
   const imageAlt = background.type === "video" ? title : background.alt;
 
   return (
-    <section className={cn("relative isolate flex min-h-[68vh] items-end overflow-hidden", className)}>
+    <section
+      className={cn("relative isolate flex min-h-[68vh] items-end overflow-hidden", className)}
+    >
       <motion.div
         className="absolute inset-[-6%]"
         animate={prefersReducedMotion ? undefined : { scale: [1, 1.06, 1] }}
@@ -65,21 +67,21 @@ export function PageHero({
 
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-sand-100 via-sand-100/45 to-transparent"
+        className="from-sand-100 via-sand-100/45 absolute inset-0 bg-linear-to-t to-transparent"
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-sand-100/80 to-transparent sm:h-44"
+        className="from-sand-100/80 absolute inset-x-0 top-0 h-32 bg-linear-to-b to-transparent sm:h-44"
       />
 
       <div className="shell relative z-10 pt-40 pb-16 sm:pb-20 lg:pb-24">
         {breadcrumbs?.length ? (
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex flex-wrap items-center gap-2 text-xs text-ink-600">
+            <ol className="text-ink-600 flex flex-wrap items-center gap-2 text-xs">
               {breadcrumbs.map((crumb, index) => (
                 <li key={crumb.label + "-" + index} className="flex items-center gap-2">
                   {crumb.href ? (
-                    <Link href={crumb.href} className="transition-colors hover:text-lagoon-700">
+                    <Link href={crumb.href} className="hover:text-lagoon-700 transition-colors">
                       {crumb.label}
                     </Link>
                   ) : (
@@ -88,7 +90,7 @@ export function PageHero({
                     </span>
                   )}
                   {index < breadcrumbs.length - 1 ? (
-                    <ChevronRight className="h-3 w-3 text-ink-400" aria-hidden />
+                    <ChevronRight className="text-ink-400 h-3 w-3" aria-hidden />
                   ) : null}
                 </li>
               ))}
@@ -101,7 +103,7 @@ export function PageHero({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: EASE_SOFT }}
-            className="inline-flex items-center gap-2 text-[0.7rem] font-semibold tracking-[0.28em] text-lagoon-700 uppercase"
+            className="text-lagoon-700 inline-flex items-center gap-2 text-[0.7rem] font-semibold tracking-[0.28em] uppercase"
           >
             <span aria-hidden className="h-px w-8 bg-current opacity-60" />
             {eyebrow}
@@ -111,7 +113,7 @@ export function PageHero({
             initial={{ opacity: 0, y: 22, clipPath: "inset(0 0 100% 0)" }}
             animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" }}
             transition={{ duration: 0.8, ease: EASE_SOFT, delay: 0.08 }}
-            className="mt-4 font-display text-4xl leading-[1.03] text-ink-900 sm:text-5xl lg:text-6xl"
+            className="font-display text-ink-900 mt-4 text-4xl leading-[1.03] sm:text-5xl lg:text-6xl"
           >
             {title}
           </motion.h1>
@@ -121,7 +123,7 @@ export function PageHero({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: EASE_SOFT, delay: 0.18 }}
-              className="mt-4 text-base leading-relaxed text-ink-600"
+              className="text-ink-600 mt-4 text-base leading-relaxed"
             >
               {description}
             </motion.p>
