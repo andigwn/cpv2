@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
 import { EASE_CINEMATIC, EASE_IN_OUT, GALLERY } from "@/lib/animations";
+import { useT } from "@/i18n/useTranslation";
 
 type UnitGalleryProps = {
   slides: ImageAsset[];
@@ -47,6 +48,7 @@ const slideVariants: Variants = {
  *   step simply restarts the auto-advance beat.
  */
 export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
+  const t = useT();
   const [{ index, direction, moved }, setState] = useState({
     index: 0,
     direction: 1,
@@ -198,7 +200,7 @@ export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
             <button
               type="button"
               onClick={previous}
-              aria-label="Foto sebelumnya"
+              aria-label={t("gallery.previous")}
               className="text-ink-800 absolute bottom-5 left-5 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/85 backdrop-blur-md transition hover:bg-white"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden />
@@ -206,7 +208,7 @@ export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
             <button
               type="button"
               onClick={next}
-              aria-label="Foto berikutnya"
+              aria-label={t("gallery.next")}
               className="text-ink-800 absolute bottom-5 left-20 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/85 backdrop-blur-md transition hover:bg-white"
             >
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -225,7 +227,10 @@ export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
               key={slide.src + "-" + slideIndex}
               type="button"
               onClick={() => goTo(slideIndex)}
-              aria-label={"Tampilkan foto " + (slideIndex + 1) + ": " + slide.alt}
+              aria-label={t("gallery.showPhoto", {
+                number: slideIndex + 1,
+                alt: slide.alt,
+              })}
               aria-current={slideIndex === index ? "true" : undefined}
               className={cn(
                 "h-2 rounded-full transition-all duration-300",

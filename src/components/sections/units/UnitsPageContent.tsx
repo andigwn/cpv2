@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Store } from "lucide-react";
-import { businessUnits, unitHref } from "@/data/units";
+import { unitHref } from "@/data/units";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import type { ImageAsset, SectionBackgroundConfig } from "@/types";
 import { staggerItem } from "@/lib/animations";
@@ -14,6 +15,8 @@ import { PageHero } from "@/components/sections/PageHero";
 import { ContentBand } from "@/components/sections/ContentBand";
 import { ImageBand } from "@/components/sections/ImageBand";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
+import { useBusinessUnits } from "@/i18n/useContent";
+import { useT } from "@/i18n/useTranslation";
 
 type UnitsPageContentProps = {
   heroBackground: (typeof sectionBackgrounds)[keyof typeof sectionBackgrounds];
@@ -21,11 +24,14 @@ type UnitsPageContentProps = {
 
 /** ImageBand only needs a still, so the shared section background photos are reused. */
 function still(bg: SectionBackgroundConfig, alt: string): ImageAsset {
-  return { src: bg.src, alt: bg.type === "image-loop" ? bg.alt : alt };
+  return { src: bg.src, alt: bg.alt || alt };
 }
 
 /** Overview of every business unit owned by the group (route: /unit-bisnis). */
 export function UnitsPageContent({ heroBackground }: UnitsPageContentProps) {
+  const t = useT();
+  const businessUnits = useBusinessUnits();
+
   // Supporting facilities flattened across the five units, each linking back to its unit.
   const facilityRows = businessUnits.flatMap((unit) =>
     unit.facilities.map((facility) => ({ unit, facility })),
@@ -34,22 +40,25 @@ export function UnitsPageContent({ heroBackground }: UnitsPageContentProps) {
   return (
     <>
       <PageHero
-        eyebrow="Destinasi"
-        title="Lima destinasi, satu kawasan terpadu"
-        description="Dari hotel dan convention centre sampai waterpark dan villa privat — semuanya berjarak beberapa menit berjalan kaki."
+        eyebrow={t("units.heroEyebrow")}
+        title={t("units.heroTitle")}
+        description={t("units.heroDescription")}
         background={heroBackground}
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Destinasi" }]}
+        breadcrumbs={[
+          { label: t("common.home"), href: "/" },
+          { label: t("nav.destinations") },
+        ]}
       >
         <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
-          Rencanakan kunjungan
+          {t("common.planVisit")}
         </Button>
       </PageHero>
 
       <ContentBand>
         <SectionTitle
-          eyebrow="Daftar destinasi"
-          title="Jelajahi setiap destinasi"
-          description="Pilih destinasi untuk melihat profil, jenis kamar atau ruangan, fasilitas pendukung, dan galeri fotonya."
+          eyebrow={t("units.listEyebrow")}
+          title={t("units.listTitle")}
+          description={t("units.listDescription")}
           className="max-w-2xl"
         />
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -62,27 +71,31 @@ export function UnitsPageContent({ heroBackground }: UnitsPageContentProps) {
               title={unit.name}
               description={unit.tagline}
               href={unitHref(unit)}
-              ctaLabel={"Lihat " + unit.name}
+              ctaLabel={t("common.seeDestination", { name: unit.name })}
             />
           ))}
         </StaggerContainer>
       </ContentBand>
 
       <ImageBand
-        image={still(sectionBackgrounds.worksGrid, "Tampak udara kawasan Q")}
-        caption="Kawasan Q dari udara"
+        image={still(sectionBackgrounds.unitsBand, t("units.bandCaption"))}
+        caption={t("units.bandCaption")}
       />
 
       <ContentBand>
         <SectionTitle
-          eyebrow="Fasilitas pendukung"
-          title="Restoran, spa, ruang rapat, dan lainnya"
-          description="Fasilitas yang beroperasi di dalam setiap destinasi Qubu Resort."
+          eyebrow={t("units.facilitiesEyebrow")}
+          title={t("units.facilitiesTitle")}
+          description={t("units.facilitiesDescription")}
           className="max-w-2xl"
         />
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {facilityRows.map(({ unit, facility }) => (
-            <motion.div key={unit.slug + "-" + facility.slug} variants={staggerItem} className="h-full">
+            <motion.div
+              key={unit.slug + "-" + facility.slug}
+              variants={staggerItem}
+              className="h-full"
+            >
               <InfoCard
                 href={unitHref(unit)}
                 eyebrow={unit.name + " · " + facility.type}
@@ -90,7 +103,9 @@ export function UnitsPageContent({ heroBackground }: UnitsPageContentProps) {
                 body={facility.description}
                 icon={<Store className="h-5 w-5" aria-hidden />}
                 footer={
-                  <span className="text-lagoon-700 text-sm font-semibold">Lihat detail</span>
+                  <span className="text-lagoon-700 text-sm font-semibold">
+                    {t("common.viewDetail")}
+                  </span>
                 }
               />
             </motion.div>
@@ -98,10 +113,21 @@ export function UnitsPageContent({ heroBackground }: UnitsPageContentProps) {
         </StaggerContainer>
         <div className="mt-10">
           <Button href="/contact" variant="outline">
-            Hubungi tim reservasi
+            {t("common.contactReservation")}
           </Button>
         </div>
       </ContentBand>
+
+      {/* Hidden structured list keeps every destination discoverable by crawlers. */}
+      <nav aria-label={t("a11y.destinationsList")} className="sr-only">
+        <ul>
+          {businessUnits.map((unit) => (
+            <li key={unit.slug}>
+              <Link href={unitHref(unit)}>{unit.name}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </>
   );
 }

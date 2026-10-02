@@ -1,6 +1,3 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
-
 /** Shared shapes used across the content layer (`src/data`) and the UI. */
 
 export type ImageAsset = {
@@ -14,6 +11,8 @@ export type ImageAsset = {
 
 export type NavItem = {
   label: string;
+  /** Dot-path key in `src/i18n/translations.ts`; falls back to `label` when omitted. */
+  labelKey?: string;
   href: string;
   /** Optional sub-entries: rendered as a dropdown on desktop, accordion on mobile. */
   children?: NavItem[];
@@ -28,23 +27,10 @@ export type SocialLink = {
 
 export type SocialIconName = "instagram" | "facebook" | "youtube" | "linkedin" | "twitter";
 
-export type SectionBackgroundConfig =
-  | {
-      type: "video";
-      /** Video file path, lazily attached once the section approaches the viewport. */
-      src: string;
-      /** Shown before the video is ready (avoids an empty frame). */
-      poster: string;
-      /** Extra Tailwind classes layered on top of the media. */
-      overlayClassName?: string;
-    }
-  | {
-      type: "image-loop";
-      src: string;
-      alt: string;
-      loopVariant: "pan" | "zoom";
-      overlayClassName?: string;
-    };
+export type SectionBackgroundConfig = {
+  src: string;
+  alt: string;
+};
 
 export type Stat = {
   value: string;
@@ -70,19 +56,6 @@ export type Service = {
   featured: boolean;
 };
 
-export type Work = {
-  slug: string;
-  title: string;
-  client: string;
-  location: string;
-  year: number;
-  category: "hotel" | "waterpark" | "resort" | "mixed-use";
-  summary: string;
-  image: ImageAsset;
-  metrics: { label: string; value: string }[];
-  scope: string[];
-};
-
 export type NewsPost = {
   slug: string;
   title: string;
@@ -97,20 +70,6 @@ export type NewsPost = {
   tags: string[];
 };
 
-export type TimelineEntry = {
-  year: string;
-  title: string;
-  description: string;
-};
-
-export type Testimonial = {
-  quote: string;
-  name: string;
-  role: string;
-  /** Optional: real guest portraits are not available yet — omit rather than fake one. */
-  image?: ImageAsset;
-};
-
 /** A supporting facility shown on a business-unit page (no separate route). */
 export type UnitFacility = {
   slug: string;
@@ -122,6 +81,22 @@ export type UnitFacility = {
   image?: ImageAsset;
 };
 
+/** A dining venue listed on the dedicated /dining page. */
+export type DiningVenue = {
+  slug: string;
+  name: string;
+  /** Short type label, e.g. "Restoran", "All-day Dining". */
+  type: string;
+  description: string;
+  image: ImageAsset;
+  /** Photos used by the venue slider on the Dining page. */
+  gallery: ImageAsset[];
+  /** Short selling points shown as chips. */
+  features: string[];
+  hours: string;
+  location: string;
+};
+
 /** A room category offered by a lodging business unit. */
 export type RoomType = {
   slug: string;
@@ -129,6 +104,11 @@ export type RoomType = {
   description: string;
   /** Lead photo for the room card. Falls back to the unit photo when omitted. */
   image?: ImageAsset;
+  /**
+   * Extra photos shown in the card's automatic slider. When omitted (or a single
+   * photo) the card renders the still image without a slider.
+   */
+  images?: ImageAsset[];
   /** Floor area, e.g. "28 m2". */
   size?: string;
   /** Bed configuration, e.g. "1 King atau 2 Single". */
@@ -159,6 +139,8 @@ export type BusinessUnit = {
   roomTypes?: RoomType[];
   /** Section label for `roomTypes`: "Jenis Kamar", "Jenis Ruangan" or "Jenis Kolam". */
   roomTypesLabel?: string;
+  /** Localized plural noun for `roomTypes`, used in generated headings e.g. "kamar"/"rooms". */
+  roomTypesNoun?: string;
   /** Supporting facilities shown on the page (restaurants, spa, meeting rooms, ...). */
   facilities: UnitFacility[];
 };
@@ -174,15 +156,3 @@ export type JobOpening = {
   responsibilities: string[];
   requirements: string[];
 };
-
-export type LegalLink = {
-  label: string;
-  href: string;
-};
-
-export type LayoutSlot = {
-  children: ReactNode;
-  params?: Promise<Record<string, string>>;
-} & Record<string, unknown>;
-
-export type MetadataFactory = (input?: { title?: string; description?: string }) => Metadata;

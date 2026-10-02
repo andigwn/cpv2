@@ -4,29 +4,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { featuredSlugs, getNewsBySlug } from "@/data/news";
 import { formatDate } from "@/lib/utils";
 import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
 import { ContentBand } from "@/components/sections/ContentBand";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
-
-const posts = featuredSlugs
-  .map((slug) => getNewsBySlug(slug))
-  .filter((post): post is NonNullable<typeof post> => Boolean(post))
-  .slice(0, 3);
+import { useNewsPosts } from "@/i18n/useContent";
+import { useLocale, useT } from "@/i18n/useTranslation";
 
 /** Three latest stories, image + date + title only. */
 export function NewsPreview() {
+  const t = useT();
+  const locale = useLocale();
+  const posts = useNewsPosts().slice(0, 3);
+
   if (!posts.length) return null;
 
   return (
     <ContentBand id="news" overlap>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <SectionTitle
-          eyebrow="Berita"
-          title="Kabar terbaru"
+          eyebrow={t("home.newsEyebrow")}
+          title={t("home.newsTitle")}
           className="max-w-xl"
           titleClassName="text-3xl sm:text-4xl"
         />
@@ -36,7 +36,7 @@ export function NewsPreview() {
           className="shrink-0"
           icon={<ArrowRight className="h-4 w-4" aria-hidden />}
         >
-          Semua berita
+          {t("home.newsCta")}
         </Button>
       </div>
 
@@ -53,10 +53,10 @@ export function NewsPreview() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </span>
-              <span className="mt-5 block text-[0.65rem] font-semibold tracking-[0.18em] text-ink-400 uppercase">
-                {formatDate(post.publishedAt)}
+              <span className="text-ink-400 mt-5 block text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
+                {formatDate(post.publishedAt, locale)}
               </span>
-              <h3 className="mt-2 text-lg leading-snug text-ink-900 transition-colors group-hover:text-lagoon-700">
+              <h3 className="text-ink-900 group-hover:text-lagoon-700 mt-2 text-lg leading-snug transition-colors">
                 {post.title}
               </h3>
             </Link>

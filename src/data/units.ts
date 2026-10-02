@@ -14,13 +14,13 @@ export const businessUnits: BusinessUnit[] = [
     slug: "qubu-suites",
     name: "Hotel Qubu Suites",
     type: "Hotel & Suites",
-    tagline: "Suite dengan balkon privat, restoran signature, dan spa",
+    tagline: "Suite dengan balkon privat, bar lounge, dan spa",
     summary:
-      "Sayap suite kawasan Q dengan balkon privat, butler service 24 jam, serta Embun Signature Restaurant, spa, dan fasilitas keluarga di dalam satu gedung.",
+      "Sayap suite kawasan Q dengan balkon privat, butler service 24 jam, serta Qubiq Bar, spa, dan fasilitas keluarga di dalam satu gedung.",
     description: [
       "Hotel Qubu Suites menempati sayap barat kawasan Q dengan 144 suite yang terbagi ke dalam lima tipe: Deluxe, Deluxe with View, Suite Room, Family Suite, dan Qubu Grand Suite.",
       "Semua suite memakai kasur pocket-spring, linen katun organik, dan balkon privat menghadap taman tropis atau Teluk Benoa. Tamu suite mendapat akses Executive Lounge untuk sarapan privat dan butler service 24 jam.",
-      "Di dalam gedung ini juga beroperasi Embun Signature Restaurant, Qubiq Bar, Meeting Room, Spa & Wellness Center, Entertainment Room, dan Kids Club, sehingga tamu tidak perlu meninggalkan sayap suite untuk makan, bersantai, atau membawa anak bermain.",
+      "Di dalam gedung ini juga beroperasi Qubiq Bar, Meeting Room, Spa & Wellness Center, Entertainment Room, dan Kids Club, sehingga tamu tidak perlu meninggalkan sayap suite untuk bersantai atau membawa anak bermain.",
     ],
     image: {
       src: "/images/qubu-suites-1.jpeg",
@@ -73,19 +73,20 @@ export const businessUnits: BusinessUnit[] = [
       "Balkon privat di sebagian besar suite",
       "Butler service 24 jam",
       "Akses Executive Lounge untuk sarapan privat",
-      "Embun Signature Restaurant dan Qubiq Bar",
-      "Spa & Wellness Center, Entertainment Room, dan Kids Club",
+      "Qubiq Bar dan Entertainment Room",
+      "Spa & Wellness Center dan Kids Club",
     ],
     specs: [
       { label: "Jumlah suite", value: "144 suite" },
       { label: "Tipe kamar", value: "5 kategori" },
       { label: "Luas kamar", value: "48 – 160 m2" },
       { label: "Check-in / out", value: "14.00 / 12.00 WITA" },
-      { label: "Fasilitas unggulan", value: "Embun, Qubiq Bar, Spa" },
+      { label: "Fasilitas unggulan", value: "Qubiq Bar, Spa, Kids Club" },
       { label: "Lokasi", value: "Kawasan Q, sayap barat" },
     ],
     hours: "Resepsionis 24 jam",
     roomTypesLabel: "Jenis Kamar",
+    roomTypesNoun: "kamar",
     roomTypes: [
       {
         slug: "deluxe",
@@ -96,6 +97,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qubu-suites-2.jpeg",
           alt: "Kamar Deluxe dengan tempat tidur king dan meja kerja menghadap jendela",
         },
+        images: [
+          {
+            src: "/images/qubu-suites-2.jpeg",
+            alt: "Kamar Deluxe dengan tempat tidur king dan meja kerja menghadap jendela",
+          },
+          {
+            src: "/images/qubu-suites-4.jpeg",
+            alt: "Ruang tamu Deluxe dengan sofa, meja makan, dan televisi",
+          },
+          {
+            src: "/images/hero-hotel-room.jpg",
+            alt: "Kamar Deluxe dengan sofa dan jendela lebar",
+          },
+        ],
         size: "48 m2",
         bed: "1 King atau 2 Single",
         capacity: "2 tamu",
@@ -116,6 +131,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qubu-suites-1.jpeg",
           alt: "Kamar Deluxe with View dengan tempat tidur king dan panel kayu ukir",
         },
+        images: [
+          {
+            src: "/images/qubu-suites-1.jpeg",
+            alt: "Kamar Deluxe with View dengan tempat tidur king dan panel kayu ukir",
+          },
+          {
+            src: "/images/qubu-suites-2.jpeg",
+            alt: "Kamar Deluxe with View dengan meja kerja dan jendela besar",
+          },
+          {
+            src: "/images/work-suite.jpg",
+            alt: "Kamar Deluxe with View dengan panel kepala tempat tidur bergelombang",
+          },
+        ],
         size: "52 m2",
         bed: "1 King",
         capacity: "2 tamu + 1 anak",
@@ -136,6 +165,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qubu-suites-4.jpeg",
           alt: "Ruang tamu Suite Room dengan sofa dan meja makan",
         },
+        images: [
+          {
+            src: "/images/qubu-suites-4.jpeg",
+            alt: "Ruang tamu Suite Room dengan sofa dan meja makan",
+          },
+          {
+            src: "/images/qubu-suites-1.jpeg",
+            alt: "Kamar Suite Room dengan tempat tidur king dan panel kayu ukir",
+          },
+          {
+            src: "/images/work-suite.jpg",
+            alt: "Kamar Suite Room dengan panel kepala tempat tidur bergelombang",
+          },
+        ],
         size: "64 m2",
         bed: "1 King",
         capacity: "2 tamu",
@@ -156,6 +199,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qubu-suites-3.jpeg",
           alt: "Dapur kecil dan area minibar di Family Suite Hotel Qubu Suites",
         },
+        images: [
+          {
+            src: "/images/qubu-suites-3.jpeg",
+            alt: "Dapur kecil dan area minibar di Family Suite Hotel Qubu Suites",
+          },
+          {
+            src: "/images/qubu-suites-2.jpeg",
+            alt: "Kamar Family Suite dengan meja kerja dan jendela besar",
+          },
+          {
+            src: "/images/qubu-suites-4.jpeg",
+            alt: "Ruang tamu Family Suite dengan sofa dan meja makan",
+          },
+        ],
         size: "96 m2",
         bed: "1 King + 2 Single",
         capacity: "4 tamu",
@@ -176,6 +233,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/hero-hotel-room.jpg",
           alt: "Qubu Grand Suite dengan area duduk dan tempat tidur menghadap jendela besar",
         },
+        images: [
+          {
+            src: "/images/hero-hotel-room.jpg",
+            alt: "Qubu Grand Suite dengan area duduk dan tempat tidur menghadap jendela besar",
+          },
+          {
+            src: "/images/qubu-suites-1.jpeg",
+            alt: "Kamar Qubu Grand Suite dengan tempat tidur king dan panel kayu ukir",
+          },
+          {
+            src: "/images/qubu-suites-4.jpeg",
+            alt: "Ruang tamu Qubu Grand Suite dengan sofa dan meja makan",
+          },
+        ],
         size: "160 m2",
         bed: "1 King",
         capacity: "2 – 4 tamu",
@@ -189,17 +260,6 @@ export const businessUnits: BusinessUnit[] = [
       },
     ],
     facilities: [
-      {
-        slug: "embun-signature-restaurant",
-        name: "Embun Signature Restaurant",
-        type: "Restoran",
-        description:
-          "Restoran signature dengan 140 kursi, live cooking station, dan menu plant-forward yang menghadap taman tropis.",
-        image: {
-          src: "/images/embun-1.jpeg",
-          alt: "Embun Signature Restaurant dengan area buffet dan meja marmer hitam",
-        },
-      },
       {
         slug: "qubiq-bar",
         name: "Qubiq Bar",
@@ -261,12 +321,12 @@ export const businessUnits: BusinessUnit[] = [
     slug: "hotel-q",
     name: "Hotel Q",
     type: "Hotel",
-    tagline: "Kamar Superior hingga Suite dengan Patio Bistro di lantai dasar",
+    tagline: "Kamar Superior hingga Suite di bangunan utama kawasan Q",
     summary:
       "Bangunan utama kawasan Q dengan lima tipe kamar, kolam dewasa dan kolam anak, serta akses pejalan kaki ke The Q Hall dan Paradis-Q.",
     description: [
       "Hotel Q adalah bangunan utama kawasan Q dan pintu masuk bagi sebagian besar tamu. Tersedia lima tipe kamar: Superior, Superior Plus, Premier, Premier Plus, dan Suite Room.",
-      "Lobby berkonsep atrium menghubungkan resepsionis, lobby lounge, pusat informasi wisata, dan Patio Bistro yang melayani sarapan hingga makan malam.",
+      "Lobby berkonsep atrium menghubungkan resepsionis, lobby lounge, dan pusat informasi wisata bagi tamu yang baru tiba di kawasan Q.",
       "Fasilitas penunjang meliputi kolam dewasa dan kolam anak, pusat kebugaran, meeting room, serta jalur pejalan kaki beratap menuju The Q Hall dan Paradis-Q.",
     ],
     image: {
@@ -305,9 +365,9 @@ export const businessUnits: BusinessUnit[] = [
     ],
     features: [
       "Lima tipe kamar untuk pasangan maupun keluarga",
-      "Patio Bistro di lantai dasar",
       "Kolam dewasa dan kolam anak",
       "Meeting room untuk pertemuan kecil",
+      "Pusat kebugaran 24 jam",
       "Lobby lounge dan pusat informasi wisata",
       "Jalur pejalan kaki beratap ke The Q Hall dan Paradis-Q",
     ],
@@ -316,11 +376,12 @@ export const businessUnits: BusinessUnit[] = [
       { label: "Tipe kamar", value: "5 kategori" },
       { label: "Luas kamar", value: "24 – 56 m2" },
       { label: "Check-in / out", value: "14.00 / 12.00 WITA" },
-      { label: "Fasilitas unggulan", value: "Patio Bistro & Meeting Room" },
+      { label: "Fasilitas unggulan", value: "Kolam dewasa & Meeting Room" },
       { label: "Lokasi", value: "Kawasan Q, Tanjung Benoa" },
     ],
     hours: "Resepsionis 24 jam",
     roomTypesLabel: "Jenis Kamar",
+    roomTypesNoun: "kamar",
     roomTypes: [
       {
         slug: "superior",
@@ -331,6 +392,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/hotel-q-2.jpeg",
           alt: "Kamar Superior Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
         },
+        images: [
+          {
+            src: "/images/hotel-q-2.jpeg",
+            alt: "Kamar Superior Hotel Q dengan tempat tidur besar dan handuk berbentuk gajah",
+          },
+          {
+            src: "/images/hero-hotel-room.jpg",
+            alt: "Kamar Superior dengan sofa, tempat tidur besar, dan jendela lebar",
+          },
+          {
+            src: "/images/work-suite.jpg",
+            alt: "Kamar Superior dengan panel kepala tempat tidur bergelombang",
+          },
+        ],
         size: "24 m2",
         bed: "1 King atau 2 Single",
         capacity: "2 tamu",
@@ -351,6 +426,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/hero-hotel-room.jpg",
           alt: "Kamar Superior Plus dengan sofa, tempat tidur besar, dan jendela lebar",
         },
+        images: [
+          {
+            src: "/images/hero-hotel-room.jpg",
+            alt: "Kamar Superior Plus dengan sofa, tempat tidur besar, dan jendela lebar",
+          },
+          {
+            src: "/images/hotel-q-2.jpeg",
+            alt: "Kamar Superior Plus dengan tempat tidur besar",
+          },
+          {
+            src: "/images/work-suite.jpg",
+            alt: "Kamar Superior Plus dengan panel kepala tempat tidur bergelombang",
+          },
+        ],
         size: "28 m2",
         bed: "1 King",
         capacity: "2 tamu + 1 anak",
@@ -371,6 +460,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/work-suite.jpg",
           alt: "Kamar Premier dengan tempat tidur besar dan panel kepala tempat tidur bergelombang",
         },
+        images: [
+          {
+            src: "/images/work-suite.jpg",
+            alt: "Kamar Premier dengan tempat tidur besar dan panel kepala tempat tidur bergelombang",
+          },
+          {
+            src: "/images/hero-hotel-room.jpg",
+            alt: "Kamar Premier dengan sofa dan jendela lebar",
+          },
+          {
+            src: "/images/hotel-q-2.jpeg",
+            alt: "Kamar Premier dengan tempat tidur besar dan dekorasi handuk",
+          },
+        ],
         size: "32 m2",
         bed: "1 King",
         capacity: "3 tamu",
@@ -391,6 +494,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/hero-hotel-room.jpg",
           alt: "Kamar Premier Plus dengan sofa dan tempat tidur menghadap jendela besar",
         },
+        images: [
+          {
+            src: "/images/hero-hotel-room.jpg",
+            alt: "Kamar Premier Plus dengan sofa dan tempat tidur menghadap jendela besar",
+          },
+          {
+            src: "/images/work-suite.jpg",
+            alt: "Kamar Premier Plus dengan tempat tidur besar dan panel bergelombang",
+          },
+          {
+            src: "/images/hotel-q-2.jpeg",
+            alt: "Kamar Premier Plus dengan tempat tidur besar dan dekorasi handuk",
+          },
+        ],
         size: "36 m2",
         bed: "1 King",
         capacity: "2 tamu + 1 anak",
@@ -411,6 +528,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/work-suite.jpg",
           alt: "Suite Room dengan tempat tidur besar dan area duduk di Hotel Q",
         },
+        images: [
+          {
+            src: "/images/work-suite.jpg",
+            alt: "Suite Room dengan tempat tidur besar dan area duduk di Hotel Q",
+          },
+          {
+            src: "/images/hero-hotel-room.jpg",
+            alt: "Ruang tamu Suite Room dengan sofa dan jendela lebar",
+          },
+          {
+            src: "/images/hotel-q-2.jpeg",
+            alt: "Kamar Suite Room Hotel Q dengan tempat tidur besar",
+          },
+        ],
         size: "56 m2",
         bed: "1 King",
         capacity: "2 tamu + 2 anak",
@@ -424,17 +555,6 @@ export const businessUnits: BusinessUnit[] = [
       },
     ],
     facilities: [
-      {
-        slug: "patio-bistro",
-        name: "Patio Bistro",
-        type: "Restoran",
-        description:
-          "Restoran utama Hotel Q dengan 240 kursi, live station nusantara, Asia, dan Western, serta teras yang menghadap taman.",
-        image: {
-          src: "/images/patio-1.jpeg",
-          alt: "Interior Patio Bistro dengan meja kayu dan rak botol",
-        },
-      },
       {
         slug: "meeting-room",
         name: "Meeting Room",
@@ -516,6 +636,7 @@ export const businessUnits: BusinessUnit[] = [
     ],
     hours: "Fleksibel sesuai jadwal acara",
     roomTypesLabel: "Jenis Ruangan",
+    roomTypesNoun: "ruangan",
     roomTypes: [
       {
         slug: "merbau",
@@ -526,6 +647,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qhall-2.jpeg",
           alt: "Ruang Merbau dengan barisan kursi dan karpet bermotif merah",
         },
+        images: [
+          {
+            src: "/images/qhall-2.jpeg",
+            alt: "Ruang Merbau dengan barisan kursi dan karpet bermotif merah",
+          },
+          {
+            src: "/images/qhall-4.jpeg",
+            alt: "Ruang Merbau dengan penataan meja kelas dan lampu gantung",
+          },
+          {
+            src: "/images/qhall-6.jpeg",
+            alt: "Ruang Merbau dengan meja bundar, karpet merah, dan lampu gantung emas",
+          },
+        ],
         size: "500 m2",
         capacity: "400 delegasi",
         features: [
@@ -543,6 +678,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qhall-3.jpeg",
           alt: "Ruang Lontar dengan meja bundar dan karpet merah bermotif",
         },
+        images: [
+          {
+            src: "/images/qhall-3.jpeg",
+            alt: "Ruang Lontar dengan meja bundar dan karpet merah bermotif",
+          },
+          {
+            src: "/images/qhall-6.jpeg",
+            alt: "Ruang jamuan dengan meja bundar dan lampu gantung emas",
+          },
+          {
+            src: "/images/qhall-2.jpeg",
+            alt: "Ruang Lontar dengan penataan kursi dan karpet bermotif merah",
+          },
+        ],
         size: "380 m2",
         capacity: "300 tamu",
         features: [
@@ -560,6 +709,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qhall-4.jpeg",
           alt: "Ruang Pulai dengan penataan meja kelas dan lampu gantung",
         },
+        images: [
+          {
+            src: "/images/qhall-4.jpeg",
+            alt: "Ruang Pulai dengan penataan meja kelas dan lampu gantung",
+          },
+          {
+            src: "/images/qhall-2.jpeg",
+            alt: "Ruang Pulai dengan barisan kursi dan karpet merah",
+          },
+          {
+            src: "/images/qhall-3.jpeg",
+            alt: "Ruang Pulai dengan meja bundar dan karpet bermotif",
+          },
+        ],
         size: "240 m2",
         capacity: "180 peserta",
         features: [
@@ -577,6 +740,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/qhall-6.jpeg",
           alt: "The Q Hall Lantai 1 dengan meja bundar, karpet merah, dan lampu gantung emas",
         },
+        images: [
+          {
+            src: "/images/qhall-6.jpeg",
+            alt: "The Q Hall Lantai 1 dengan meja bundar, karpet merah, dan lampu gantung emas",
+          },
+          {
+            src: "/images/qhall-3.jpeg",
+            alt: "The Q Hall Lantai 1 dengan meja bundar dan karpet merah",
+          },
+          {
+            src: "/images/qhall-4.jpeg",
+            alt: "The Q Hall Lantai 1 dengan penataan meja kelas",
+          },
+        ],
         size: "1.200 m2",
         capacity: "1.200 tamu",
         features: [
@@ -594,6 +771,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/mahoni-1.jpeg",
           alt: "Ruang Mahoni dengan meja bundar dan kursi berkain merah muda",
         },
+        images: [
+          {
+            src: "/images/mahoni-1.jpeg",
+            alt: "Ruang Mahoni dengan meja bundar dan kursi berkain merah muda",
+          },
+          {
+            src: "/images/mahoni-2.jpeg",
+            alt: "Ruang Mahoni dengan dekorasi acara dan panggung",
+          },
+          {
+            src: "/images/qhall-5.jpeg",
+            alt: "Ruang jamuan dengan lorong dekorasi bunga dan lampu gantung",
+          },
+        ],
         size: "320 m2",
         capacity: "240 tamu",
         features: [
@@ -611,6 +802,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/mahoni-2.jpeg",
           alt: "Ruang Mahoni Outdoor dengan dekorasi balon dan panggung acara",
         },
+        images: [
+          {
+            src: "/images/mahoni-2.jpeg",
+            alt: "Ruang Mahoni Outdoor dengan dekorasi balon dan panggung acara",
+          },
+          {
+            src: "/images/mahoni-1.jpeg",
+            alt: "Ruang Mahoni Outdoor dengan meja bundar dan kursi berkain",
+          },
+          {
+            src: "/images/qhall-5.jpeg",
+            alt: "Area semi-terbuka dengan lorong dekorasi bunga",
+          },
+        ],
         size: "260 m2",
         capacity: "200 tamu",
         features: [
@@ -718,6 +923,7 @@ export const businessUnits: BusinessUnit[] = [
     ],
     hours: "09.00 – 18.00 WITA",
     roomTypesLabel: "Jenis Kolam",
+    roomTypesNoun: "kolam",
     roomTypes: [
       {
         slug: "kolam-anak",
@@ -728,6 +934,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/kolam_anak_1.jpg",
           alt: "Struktur bermain air dengan seluncuran kecil dan ember tumpah di kolam anak",
         },
+        images: [
+          {
+            src: "/images/kolam_anak_1.jpg",
+            alt: "Struktur bermain air dengan seluncuran kecil dan ember tumpah di kolam anak",
+          },
+          {
+            src: "/images/kolam_anak_2.jpg",
+            alt: "Kolam anak dengan ember tumpah dan seluncuran kecil",
+          },
+          {
+            src: "/images/kolam_anak_3.jpg",
+            alt: "Ember raksasa menuangkan air di area bermain kolam anak",
+          },
+        ],
         size: "Kedalaman 20 – 40 cm",
         capacity: "Anak & balita",
         features: [
@@ -745,6 +965,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/semi_olympic_2.jpg",
           alt: "Lintasan kolam semi olimpiade dengan tali pembatas dan pengunjung berenang",
         },
+        images: [
+          {
+            src: "/images/semi_olympic_2.jpg",
+            alt: "Lintasan kolam semi olimpiade dengan tali pembatas dan pengunjung berenang",
+          },
+          {
+            src: "/images/semi_olympic_1.jpg",
+            alt: "Kolam semi olimpiade dengan pengunjung berenang dan dek bermotif",
+          },
+          {
+            src: "/images/semi_olympic_3.jpg",
+            alt: "Kolam semi olimpiade menghadap bangunan dan taman tropis",
+          },
+        ],
         size: "25 meter, 6 lintasan",
         capacity: "Dewasa & remaja",
         features: [
@@ -762,6 +996,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/kolam_arus_1.jpg",
           alt: "Alur kolam arus di antara bebatuan dan tanaman hijau",
         },
+        images: [
+          {
+            src: "/images/kolam_arus_1.jpg",
+            alt: "Alur kolam arus di antara bebatuan dan tanaman hijau",
+          },
+          {
+            src: "/images/kolam_arus_2.jpg",
+            alt: "Pengunjung mengapung di kolam arus dengan ban pelampung kuning",
+          },
+          {
+            src: "/images/kolam_arus_3.jpg",
+            alt: "Alur kolam arus yang berkelok di antara bebatuan",
+          },
+        ],
         size: "260 meter",
         capacity: "Semua usia",
         features: [
@@ -779,6 +1027,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/kolam_ombak_2.jpg",
           alt: "Pengunjung bermain di kolam ombak dengan ban pelampung hijau",
         },
+        images: [
+          {
+            src: "/images/kolam_ombak_2.jpg",
+            alt: "Pengunjung bermain di kolam ombak dengan ban pelampung hijau",
+          },
+          {
+            src: "/images/kolam_ombak_1.jpg",
+            alt: "Kolam ombak dengan gelombang dan pohon palem di tepian",
+          },
+          {
+            src: "/images/kolam_ombak_3.jpg",
+            alt: "Kolam ombak ramai pengunjung di bawah pohon palem",
+          },
+        ],
         size: "1.100 m2",
         capacity: "Semua usia",
         features: [
@@ -796,6 +1058,20 @@ export const businessUnits: BusinessUnit[] = [
           src: "/images/thower_slide_1.jpg",
           alt: "Menara seluncuran warna-warni dengan kolam di bawahnya",
         },
+        images: [
+          {
+            src: "/images/thower_slide_1.jpg",
+            alt: "Menara seluncuran warna-warni dengan kolam di bawahnya",
+          },
+          {
+            src: "/images/thower_slide_2.jpg",
+            alt: "Seluncuran menara dengan cipratan air dan tema tebing batu",
+          },
+          {
+            src: "/images/thower_slide_3.jpg",
+            alt: "Tampak luas kawasan waterpark dengan menara seluncuran dan kolam",
+          },
+        ],
         size: "Tinggi 22 meter",
         capacity: "Tinggi minimal 120 cm",
         features: [

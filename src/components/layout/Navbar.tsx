@@ -8,12 +8,16 @@ import { CalendarDays, ChevronDown, Menu, Phone, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/types";
-import { MAIN_NAV, SITE, SOCIAL_LINKS } from "@/lib/constants";
+import { SITE, SOCIAL_LINKS } from "@/lib/constants";
 import { NavDropdown } from "@/components/layout/NavDropdown";
+import { DestinationLogo, destinationSlugFromPath } from "@/components/layout/DestinationLogo";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { mobileMenuVariants, mobileSubmenuItem } from "@/lib/animations";
 import { useMenuStore } from "@/store/useMenuStore";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
+import { useMainNav } from "@/i18n/useNav";
+import { useT } from "@/i18n/useTranslation";
 import { Button } from "@/components/ui/Button";
 import { SocialIcon } from "@/components/ui/SocialIcon";
 
@@ -25,6 +29,8 @@ export function Navbar() {
   const pathname = usePathname();
   const { isOpen, toggle, close } = useMenuStore();
   const { scrolled, scrollingDown, progress } = useScrollProgress(48);
+  const navItems = useMainNav();
+  const t = useT();
 
   useLockBodyScroll(isOpen);
 
@@ -34,6 +40,9 @@ export function Navbar() {
 
   const linkTone = overHero ? "text-white/90 hover:text-white" : "text-ink-600 hover:text-ink-900";
   const activeTone = overHero ? "text-white" : "text-lagoon-700";
+
+  // Destination pages swap the navbar logo for that destination's own logo.
+  const destinationSlug = destinationSlugFromPath(pathname);
 
   return (
     <>
@@ -49,33 +58,36 @@ export function Navbar() {
         )}
       >
         <nav
-          aria-label="Navigasi utama"
+          aria-label={t("a11y.mainNav")}
           className="shell relative flex h-(--site-header-height) items-center justify-between gap-4 xl:gap-6"
         >
-          {/* The logo already carries the wordmark and the tagline, so it replaces
-              the old icon + text lockup. Over the hero it sits on a soft white plate
-              so the dark green artwork stays legible on any photograph. */}
+          {/* Home pages show the official lockup; destination pages show that
+              destination's own logo at the same optical size. */}
           <Link
             href="/"
             onClick={close}
-            aria-label={SITE.name + " — beranda"}
-            className={cn(
-              "group inline-flex shrink-0 items-center rounded-2xl px-2 py-1.5 transition-all duration-500",
-              overHero && "",
-            )}
+            aria-label={t("a11y.homepage", { site: SITE.name })}
+            className="group inline-flex shrink-0 items-center rounded-2xl px-2 py-1.5 transition-all duration-500"
           >
-            <Image
-              src="/images/logo.png"
-              alt={SITE.name}
-              width={199}
-              height={36}
-              priority
-              className="h-7 w-auto transition-transform duration-500 group-hover:scale-[1.03] sm:h-8 xl:h-9"
-            />
+            {destinationSlug ? (
+              <DestinationLogo
+                slug={destinationSlug}
+                className="transition-transform duration-500 group-hover:scale-[1.02]"
+              />
+            ) : (
+              <Image
+                src="/images/logo.png"
+                alt={SITE.name}
+                width={199}
+                height={36}
+                priority
+                className="h-7 w-auto transition-transform duration-500 group-hover:scale-[1.03] sm:h-8 xl:h-9"
+              />
+            )}
           </Link>
 
           <ul className="hidden items-center gap-0.5 lg:flex">
-            {MAIN_NAV.map((item) => {
+            {navItems.map((item) => {
               const isActive =
                 item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
@@ -118,30 +130,35 @@ export function Navbar() {
           </ul>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <LanguageSwitcher overHero={overHero} />
             <Button href="/contact" size="sm" variant="primary">
-              Reservasi
+              {t("nav.reserve")}
             </Button>
           </div>
 
-          <button
-            type="button"
-            onClick={toggle}
-            aria-expanded={isOpen}
-            aria-controls="mobile-menu"
-            aria-label={isOpen ? "Tutup menu" : "Buka menu"}
-            className={cn(
-              "inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-300 lg:hidden",
-              overHero
-                ? "border-white/50 bg-white/15 text-white backdrop-blur-md"
-                : "border-ink-200 text-ink-800 bg-white/80 backdrop-blur-md",
-            )}
-          >
-            {isOpen ? (
-              <X className="h-5 w-5" aria-hidden />
-            ) : (
-              <Menu className="h-5 w-5" aria-hidden />
-            )}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <LanguageSwitcher overHero={overHero} />
+
+            <button
+              type="button"
+              onClick={toggle}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
+              aria-label={isOpen ? t("a11y.closeMenu") : t("a11y.openMenu")}
+              className={cn(
+                "inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-300",
+                overHero
+                  ? "border-white/50 bg-white/15 text-white backdrop-blur-md"
+                  : "border-ink-200 text-ink-800 bg-white/80 backdrop-blur-md",
+              )}
+            >
+              {isOpen ? (
+                <X className="h-5 w-5" aria-hidden />
+              ) : (
+                <Menu className="h-5 w-5" aria-hidden />
+              )}
+            </button>
+          </div>
         </nav>
 
         {/* Reading progress */}
@@ -165,16 +182,16 @@ export function Navbar() {
             exit="closed"
             className="via-lagoon-50 to-sand-100 fixed inset-0 z-40 flex flex-col bg-linear-to-b from-white pt-(--site-header-height) lg:hidden"
           >
-            <nav aria-label="Navigasi mobile" className="shell flex-1 overflow-y-auto py-8">
+            <nav aria-label={t("a11y.mobileNav")} className="shell flex-1 overflow-y-auto py-8">
               <ul className="flex flex-col gap-1">
-                {MAIN_NAV.map((item, index) => (
+                {navItems.map((item, index) => (
                   <MobileNavItem key={item.href} item={item} index={index} onNavigate={close} />
                 ))}
               </ul>
 
               <div className="mt-8 flex flex-col gap-3">
                 <Button href="/contact" fullWidth size="lg" onClick={close}>
-                  <CalendarDays className="h-4 w-4" aria-hidden /> Reservasi Sekarang
+                  <CalendarDays className="h-4 w-4" aria-hidden /> {t("nav.reserveNow")}
                 </Button>
                 <Button
                   href={`tel:${SITE.contact.phone.replace(/[^+\d]/g, "")}`}
@@ -243,7 +260,9 @@ function MobileNavItem({
           className="border-ink-200/70 font-display text-ink-900 flex items-center justify-between border-b py-4 text-2xl font-bold"
         >
           {item.label}
-          <span className="text-ink-400 text-xs font-medium tracking-widest">0{index + 1}</span>
+          <span className="text-ink-400 text-xs font-medium tracking-widest">
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </Link>
       </motion.li>
     );

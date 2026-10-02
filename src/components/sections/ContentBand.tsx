@@ -1,11 +1,6 @@
-"use client";
-
-import { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { bandOverlapStyle, SCRUB_SPRING } from "@/lib/animations";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { bandOverlapStyle } from "@/lib/animations";
 
 type ContentBandProps = {
   children: ReactNode;
@@ -48,6 +43,9 @@ const innerClasses = {
  * rises over the photo band while that photo is still pinned and covers it completely.
  * It is opaque and sits at `z-10`, so it always paints above the photos. The sheet meets
  * the band above/below with a clean, sharp edge — no soft gradient seam.
+ *
+ * Scroll-linked scaling was removed per the revision: the layout no longer zooms while
+ * scrolling, only the smooth momentum scrolling stays.
  */
 export function ContentBand({
   children,
@@ -57,17 +55,6 @@ export function ContentBand({
   overlap = false,
   className,
 }: ContentBandProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "start 0.35"],
-  });
-  // The sheet settles like the reference's overlapping sections: it rises into place and
-  // eases the last few percent with a little lag rather than stopping dead on the scroll.
-  const rawScale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
-  const scale = useSpring(rawScale, SCRUB_SPRING);
-
   return (
     <section
       id={id}
@@ -81,13 +68,9 @@ export function ContentBand({
           spacingClasses[spacing],
         )}
       >
-        <motion.div
-          ref={ref}
-          style={prefersReducedMotion ? undefined : { scale }}
-          className={cn("origin-top", shellClasses[width])}
-        >
+        <div className={shellClasses[width]}>
           <div className={innerClasses[width]}>{children}</div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

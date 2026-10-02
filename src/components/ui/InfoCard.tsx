@@ -54,16 +54,18 @@ export function InfoCard({
       ) : null}
 
       {eyebrow ? (
-        <span className="text-[0.65rem] font-semibold tracking-[0.18em] text-ink-400 uppercase">
+        <span className="text-ink-400 text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
           {eyebrow}
         </span>
       ) : null}
 
-      <h3 className={cn("font-display text-lg leading-snug font-bold text-ink-900", titleClassName)}>
+      <h3
+        className={cn("font-display text-ink-900 text-lg leading-snug font-bold", titleClassName)}
+      >
         {title}
       </h3>
 
-      {body ? <p className="text-sm leading-relaxed text-ink-600">{body}</p> : null}
+      {body ? <p className="text-ink-600 text-sm leading-relaxed">{body}</p> : null}
       {footer ? <div className="mt-auto pt-3">{footer}</div> : null}
     </>
   );

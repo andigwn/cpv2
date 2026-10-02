@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { ReactElement } from "react";
@@ -8,6 +7,8 @@ import { ArrowRight, BedDouble, Check, Eye, Maximize2, Users } from "lucide-reac
 import { cn } from "@/lib/utils";
 import type { ImageAsset, RoomType } from "@/types";
 import { EASE_SOFT } from "@/lib/animations";
+import { RoomImageSlider } from "@/components/ui/RoomImageSlider";
+import { useT } from "@/i18n/useTranslation";
 
 type RoomTypeCardProps = {
   roomType: RoomType;
@@ -34,42 +35,47 @@ type RoomSpec = {
  * The old room list was text only; this card leads with the room photo, overlays the
  * name on the image and lists the practical specs (size, bed, occupancy, view) plus the
  * short selling points, so a visitor can compare types at a glance.
+ *
+ * When a room type carries more than one photo, the header becomes the shared
+ * `RoomImageSlider` (autoplay, hover arrows, swipe); a single photo stays a still image.
  */
 export function RoomTypeCard({
   roomType,
   index,
   fallbackImage,
   href = "/contact",
-  ctaLabel = "Tanya ketersediaan",
+  ctaLabel,
   className,
 }: RoomTypeCardProps) {
+  const t = useT();
   const image = roomType.image ?? fallbackImage;
+  const slides: ImageAsset[] = roomType.images?.length ? roomType.images : image ? [image] : [];
 
   const specs: RoomSpec[] = [
     roomType.size
       ? {
-          label: "Luas",
+          label: t("room.size"),
           value: roomType.size,
           icon: <Maximize2 className="h-4 w-4" aria-hidden />,
         }
       : null,
     roomType.bed
       ? {
-          label: "Tempat tidur",
+          label: t("room.bed"),
           value: roomType.bed,
           icon: <BedDouble className="h-4 w-4" aria-hidden />,
         }
       : null,
     roomType.capacity
       ? {
-          label: "Kapasitas",
+          label: t("room.capacity"),
           value: roomType.capacity,
           icon: <Users className="h-4 w-4" aria-hidden />,
         }
       : null,
     roomType.view
       ? {
-          label: "Pemandangan",
+          label: t("room.view"),
           value: roomType.view,
           icon: <Eye className="h-4 w-4" aria-hidden />,
         }
@@ -88,15 +94,8 @@ export function RoomTypeCard({
       )}
     >
       <div className="relative aspect-[16/10] overflow-hidden">
-        {image ? (
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            sizes="(max-width: 1023px) 100vw, 50vw"
-            loading="lazy"
-            className="object-cover transition-transform duration-[1200ms] ease-out group-hover/room:scale-[1.07]"
-          />
+        {slides.length ? (
+          <RoomImageSlider slides={slides} sizes="(max-width: 1023px) 100vw, 50vw" />
         ) : (
           <div className="from-lagoon-100 via-sand-100 to-lagoon-50 flex h-full w-full items-center justify-center bg-gradient-to-br">
             <BedDouble className="text-lagoon-300 h-12 w-12" aria-hidden />
@@ -105,14 +104,14 @@ export function RoomTypeCard({
 
         <div
           aria-hidden
-          className="from-ink-900/85 via-ink-900/25 absolute inset-0 bg-gradient-to-t to-transparent"
+          className="from-ink-900/85 via-ink-900/25 pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent"
         />
 
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
           <div className="flex flex-col gap-1.5">
             {index !== undefined ? (
               <span className="text-[0.65rem] font-semibold tracking-[0.24em] text-white/75 uppercase">
-                {"Tipe " + String(index + 1).padStart(2, "0")}
+                {t("room.badge", { number: String(index + 1).padStart(2, "0") })}
               </span>
             ) : null}
             <h3 className="font-display text-2xl leading-none font-bold text-white sm:text-[1.75rem]">
@@ -168,7 +167,7 @@ export function RoomTypeCard({
             href={href}
             className="group/cta text-lagoon-700 hover:text-lagoon-800 inline-flex items-center gap-2 text-sm font-semibold"
           >
-            {ctaLabel}
+            {ctaLabel ?? t("common.askAvailability")}
             <ArrowRight
               className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1"
               aria-hidden

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import type { SectionBackgroundConfig } from "@/types";
 import { EASE_CINEMATIC, EASE_SOFT } from "@/lib/animations";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useT } from "@/i18n/useTranslation";
 
 type PageHeroProps = {
   eyebrow: string;
@@ -39,11 +40,8 @@ export function PageHero({
   align = "left",
 }: PageHeroProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const t = useT();
   const centered = align === "center";
-
-  // Banner backgrounds are always image loops; the video shape only carries a poster.
-  const imageSrc = background.type === "video" ? background.poster : background.src;
-  const imageAlt = background.type === "video" ? title : background.alt;
 
   return (
     <section
@@ -55,8 +53,8 @@ export function PageHero({
         transition={{ duration: 26, repeat: Infinity, ease: EASE_CINEMATIC }}
       >
         <Image
-          src={imageSrc}
-          alt={imageAlt}
+          src={background.src}
+          alt={background.alt}
           fill
           sizes="100vw"
           priority
@@ -76,7 +74,7 @@ export function PageHero({
 
       <div className="shell relative z-10 pt-40 pb-16 sm:pb-20 lg:pb-24">
         {breadcrumbs?.length ? (
-          <nav aria-label="Breadcrumb" className="mb-6">
+          <nav aria-label={t("a11y.breadcrumb")} className="mb-6">
             <ol className="text-ink-600 flex flex-wrap items-center gap-2 text-xs">
               {breadcrumbs.map((crumb, index) => (
                 <li key={crumb.label + "-" + index} className="flex items-center gap-2">

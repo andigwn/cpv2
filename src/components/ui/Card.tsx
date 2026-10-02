@@ -8,6 +8,7 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
 import { imageHover, staggerItem, viewportOnce } from "@/lib/animations";
+import { useT } from "@/i18n/useTranslation";
 
 type CardProps = {
   image: ImageAsset;
@@ -58,7 +59,7 @@ export function Card({
   meta,
   footer,
   href,
-  ctaLabel = "Selengkapnya",
+  ctaLabel,
   className,
   imageClassName,
   ratio = "aspect-[4/3]",
@@ -66,6 +67,8 @@ export function Card({
   priority = false,
   variants,
 }: CardProps) {
+  const t = useT();
+  const linkLabel = ctaLabel ?? t("common.readMore");
   const entrance = variants ?? staggerItem;
   const hoverState = variants ? undefined : "hover";
   const restingState = variants ? undefined : "rest";
@@ -100,22 +103,22 @@ export function Card({
         />
 
         {eyebrow ? (
-          <span className="absolute top-4 left-4 z-10 rounded-full bg-white/85 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.18em] text-ink-700 uppercase backdrop-blur-md">
+          <span className="text-ink-700 absolute top-4 left-4 z-10 rounded-full bg-white/85 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.18em] uppercase backdrop-blur-md">
             {eyebrow}
           </span>
         ) : null}
 
         {href ? (
-          <span className="absolute right-4 bottom-4 z-10 flex h-10 w-10 translate-y-3 items-center justify-center rounded-full bg-white/90 text-ink-800 opacity-0 transition-all duration-500 group-hover/card:translate-y-0 group-hover/card:opacity-100">
+          <span className="text-ink-800 absolute right-4 bottom-4 z-10 flex h-10 w-10 translate-y-3 items-center justify-center rounded-full bg-white/90 opacity-0 transition-all duration-500 group-hover/card:translate-y-0 group-hover/card:opacity-100">
             <ArrowUpRight className="h-4 w-4" aria-hidden />
-            <span className="sr-only">{ctaLabel}</span>
+            <span className="sr-only">{linkLabel}</span>
           </span>
         ) : null}
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
         {meta ? (
-          <div className="flex flex-wrap items-center gap-3 text-xs text-ink-500">{meta}</div>
+          <div className="text-ink-500 flex flex-wrap items-center gap-3 text-xs">{meta}</div>
         ) : null}
         <motion.h3
           variants={variants ? undefined : titleHover}
@@ -123,7 +126,7 @@ export function Card({
         >
           {title}
         </motion.h3>
-        {description ? <p className="text-sm leading-relaxed text-ink-600">{description}</p> : null}
+        {description ? <p className="text-ink-600 text-sm leading-relaxed">{description}</p> : null}
         {footer ? <div className="mt-auto pt-3">{footer}</div> : null}
       </div>
     </>

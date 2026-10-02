@@ -11,6 +11,12 @@ export const EASE_CINEMATIC = [0.43, 0.13, 0.23, 0.96] as const;
 export const EASE_SOFT = [0.22, 1, 0.36, 1] as const;
 /** Symmetric in-out curve used by the infinite background pan/zoom loops. */
 export const EASE_IN_OUT = [0.42, 0, 0.58, 1] as const;
+/**
+ * Hero wipe curve: nearly linear with a soft takeoff and landing, matching the
+ * Ayana reference's mask sweep — the edge moves at an even pace instead of
+ * snapping at either end.
+ */
+export const EASE_WIPE = [0.45, 0.05, 0.55, 0.95] as const;
 
 export const DURATION = {
   fast: 0.35,
@@ -20,16 +26,28 @@ export const DURATION = {
   kenBurns: 7,
 } as const;
 
-/** Hero rotating background timings (prd.md section 12). */
+/**
+ * Hero rotating background timings.
+ *
+ * The photo change is an Ayana-style mask wipe: the incoming photo mounts on top
+ * of the outgoing one and is revealed by a soft diagonal mask edge sweeping from
+ * right to left, so the old photo is wiped away without ever cutting or flashing.
+ * Every photo also keeps pushing in slowly for as long as it is on screen (Ken
+ * Burns), so the frame keeps drifting between wipes.
+ */
 export const ROTATION = {
-  /** How long a single photo stays on screen. */
+  /** How long a single photo stays fully on screen before the next wipe starts. */
   intervalMs: 7000,
-  /** Dual-layer crossfade duration in seconds (1.5s - 2.5s). */
-  crossfadeSeconds: 2,
-  /** Slow alternating zoom duration in seconds. */
-  zoomSeconds: 7,
-  /** Zoom strength: odd frames zoom in, even frames zoom out. */
-  zoomScale: 1.08,
+  /** One photo hands over to the next over this many seconds. Deliberately slow. */
+  wipeSeconds: 3.2,
+  /** Grace period after the wipe before the incoming layer becomes the base, in ms. */
+  wipeSettleMs: 240,
+  /**
+   * Ken Burns drift. Even photos zoom in from 1 to 1.1, odd photos zoom back out
+   * from 1.1 to 1, so consecutive photos never repeat the same move. One photo is
+   * still drifting when it is swapped out.
+   */
+  zoom: { from: 1, to: 1.1, seconds: 9 },
 } as const;
 
 /** Business-unit photo gallery timings (prd.md section 6). */
@@ -78,10 +96,6 @@ export const BAND = {
    * beat so the intro copy animates before the About sheet starts covering it.
    */
   heroHoldSvh: 80,
-  /** Pinned photo eases in from this scale (subtle push-in on arrival). */
-  entryScale: 1.12,
-  /** Pinned photo eases back to this scale while the content sheet covers it. */
-  exitScale: 0.94,
   /** Slow alternating Ken Burns zoom shared by the photo bands and the video band. */
   kenBurnsSeconds: 28,
   /** Ken Burns peak scale. */
@@ -97,15 +111,6 @@ export const BAND_PIN_WINDOW = [
   100 / (BAND.photoHeightSvh + 100),
   BAND.photoHeightSvh / (BAND.photoHeightSvh + 100),
 ] as const;
-
-/**
- * Journey fraction where the next content sheet's top edge enters the viewport bottom,
- * derived from the geometry: `(photoHeightSvh - overlapSvh) / (photoHeightSvh + 100)`.
- * The pinned photo holds alone before this point, then dollies back while the sheet
- * covers it.
- */
-export const BAND_COVER_START =
-  (BAND.photoHeightSvh - BAND.overlapSvh) / (BAND.photoHeightSvh + 100);
 
 /**
  * Image bands show their own photo from the first
@@ -124,8 +129,38 @@ export const bandOverlapStyle = { marginTop: `-${BAND.overlapSvh}svh` } as const
  * scroll slightly instead of being welded to it. A soft spring on the continuous
  * transforms (scale, drift, veil) reproduces that trailing, heavy-camera feel
  * with Framer Motion; entrance fades stay unsmoothed so arrivals stay crisp.
+ *
+ * Tuned slightly softer than before (lower stiffness, a touch more mass) so the
+ * pinned frames glide a beat longer instead of snapping to the wheel.
  */
-export const SCRUB_SPRING = { stiffness: 90, damping: 24, mass: 0.6 } as const;
+export const SCRUB_SPRING = { stiffness: 72, damping: 22, mass: 0.7 } as const;
+
+/**
+ * Mouse-follow 3D tilt for the photo bands. The photo tips toward the cursor
+ * (the edge under the mouse comes forward) while the cursor moves across the
+ * pinned frame, then springs back to flat on leave. Opt-in per band.
+ */
+export const BAND_TILT = {
+  /** Peak rotation at the frame edge, in degrees. */
+  maxDegrees: 6,
+  /** CSS perspective applied to the sticky frame. */
+  perspective: 1400,
+  spring: { stiffness: 120, damping: 18, mass: 0.5 },
+} as const;
+
+/**
+ * Ambient 3D float for the photo bands: the photo sways gently in perspective
+ * (rotation only — no zoom, per the revision) so the pinned frame never sits
+ * still. Opt-in per band; stacks cleanly with the mouse tilt because it lives
+ * on its own layer.
+ */
+export const BAND_FLOAT = {
+  /** Peak rotation per axis, in degrees. */
+  rotateX: 2.2,
+  rotateY: 3,
+  /** One full there-and-back sway cycle in seconds. */
+  seconds: 16,
+} as const;
 
 /**
  * Hero brand reveal (the reference's entrance-message mask): after the intro copy clears,
@@ -137,8 +172,6 @@ export const HERO_REVEAL = {
   window: [0.16, 0.9] as const,
   /** Mask circle radius as a percentage of the gradient ray at start and end. */
   radius: [0, 118] as const,
-  /** Wordmark scale as the mask opens: settles into place. */
-  wordmarkScale: [1.1, 1] as const,
 } as const;
 
 /**
@@ -152,7 +185,6 @@ export const FINALE = {
   /** Pin window where the closing message rises in. */
   messageWindow: [0.52, 0.88] as const,
   messageTravel: 40,
-  messageScale: [0.97, 1] as const,
 } as const;
 
 export const viewportOnce = { once: true, amount: 0.25 } as const;
@@ -203,30 +235,10 @@ export const staggerItem: Variants = {
   },
 };
 
-/** Section heading reveal: clip-path wipe, editorial feel. */
-export const headingReveal: Variants = {
-  hidden: { opacity: 0, y: 24, clipPath: "inset(0 0 100% 0)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    clipPath: "inset(0 0 0% 0)",
-    transition: { duration: DURATION.slow, ease: EASE_SOFT },
-  },
-};
-
-export const cardHover = {
-  rest: { y: 0 },
-  hover: { y: -8, transition: { duration: DURATION.fast, ease: EASE_SOFT } },
-} as const;
-
+/** Card image hover variants (used by Card.tsx). */
 export const imageHover = {
   rest: { scale: 1 },
   hover: { scale: 1.08, transition: { duration: 0.8, ease: EASE_SOFT } },
-} as const;
-
-export const overlayHover = {
-  rest: { opacity: 0 },
-  hover: { opacity: 1, transition: { duration: DURATION.fast } },
 } as const;
 
 /** Page transition variants (used by PageTransition.tsx). */
@@ -238,12 +250,6 @@ export const pageTransition: Variants = {
     transition: { duration: DURATION.base, ease: EASE_SOFT, when: "beforeChildren" },
   },
   exit: { opacity: 0, y: -12, transition: { duration: DURATION.fast, ease: EASE_IN_OUT } },
-};
-
-export const navbarVariants: Variants = {
-  top: { y: 0, backgroundColor: "rgba(255,255,255,0)" },
-  scrolled: { y: 0, backgroundColor: "rgba(255,255,255,0.86)" },
-  hidden: { y: "-110%" },
 };
 
 export const mobileMenuVariants: Variants = {

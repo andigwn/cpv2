@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, CircleHelp, Clock } from "lucide-react";
-import { contactChannels, contactFaqs } from "@/data/contact";
 import { SITE } from "@/lib/constants";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import type { ImageAsset, SectionBackgroundConfig } from "@/types";
@@ -19,6 +18,8 @@ import { ContentBand } from "@/components/sections/ContentBand";
 import { ImageBand } from "@/components/sections/ImageBand";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
+import { useContactChannels, useContactFaqs } from "@/i18n/useContent";
+import { useT } from "@/i18n/useTranslation";
 
 type FormState = {
   name: string;
@@ -31,7 +32,7 @@ const initialState: FormState = { name: "", email: "", phone: "", message: "" };
 
 /** ImageBand only needs a still, so the shared section background photos are reused. */
 function still(bg: SectionBackgroundConfig, alt: string): ImageAsset {
-  return { src: bg.src, alt: bg.type === "image-loop" ? bg.alt : alt };
+  return { src: bg.src, alt: bg.alt || alt };
 }
 
 /** Contact page: four channels, one short form, the map and a four-question FAQ. */
@@ -40,6 +41,9 @@ export function ContactPageContent({
 }: {
   heroBackground: (typeof sectionBackgrounds)[keyof typeof sectionBackgrounds];
 }) {
+  const t = useT();
+  const contactChannels = useContactChannels();
+  const contactFaqs = useContactFaqs();
   const [form, setForm] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -53,12 +57,10 @@ export function ContactPageContent({
     event.preventDefault();
 
     const nextErrors: Partial<Record<keyof FormState, string>> = {};
-    if (form.name.trim().length < 2) nextErrors.name = "Nama minimal 2 karakter.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) nextErrors.email = "Format email belum benar.";
-    if (form.phone.replace(/[^\d]/g, "").length < 8)
-      nextErrors.phone = "Nomor telepon minimal 8 digit.";
-    if (form.message.trim().length < 12)
-      nextErrors.message = "Ceritakan kebutuhan Anda minimal 12 karakter.";
+    if (form.name.trim().length < 2) nextErrors.name = t("contact.errorName");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) nextErrors.email = t("contact.errorEmail");
+    if (form.phone.replace(/[^\d]/g, "").length < 8) nextErrors.phone = t("contact.errorPhone");
+    if (form.message.trim().length < 12) nextErrors.message = t("contact.errorMessage");
 
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
@@ -71,20 +73,20 @@ export function ContactPageContent({
   return (
     <>
       <PageHero
-        eyebrow="Kontak"
-        title="Mari bicarakan rencana liburan atau acara Anda"
-        description="Pilih kanal yang paling nyaman, atau kirim formulir singkat di bawah ini."
+        eyebrow={t("contact.heroEyebrow")}
+        title={t("contact.heroTitle")}
+        description={t("contact.heroDescription")}
         background={heroBackground}
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Kontak" }]}
+        breadcrumbs={[{ label: t("common.home"), href: "/" }, { label: t("nav.contact") }]}
       >
-        <Button href={contactChannels[1].href}>WhatsApp Concierge</Button>
+        <Button href={contactChannels[1].href}>{t("contact.heroCta")}</Button>
       </PageHero>
 
       <ContentBand>
         <SectionTitle
-          eyebrow="Kanal"
-          title="Pilih cara menghubungi kami"
-          description="Tim reservasi, event, dan kemitraan menjawab setiap hari."
+          eyebrow={t("contact.channelsEyebrow")}
+          title={t("contact.channelsTitle")}
+          description={t("contact.channelsDescription")}
           className="max-w-2xl"
         />
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -100,9 +102,9 @@ export function ContactPageContent({
                     href={channel.href}
                     target={channel.href.startsWith("http") ? "_blank" : undefined}
                     rel={channel.href.startsWith("http") ? "noreferrer noopener" : undefined}
-                    className="text-sm font-semibold text-lagoon-700 underline-offset-4 hover:underline"
+                    className="text-lagoon-700 text-sm font-semibold underline-offset-4 hover:underline"
                   >
-                    Hubungi
+                    {t("contact.channelCta")}
                   </a>
                 }
               />
@@ -112,15 +114,15 @@ export function ContactPageContent({
       </ContentBand>
 
       <ImageBand
-        image={still(sectionBackgrounds.contactIntro, "Dek kolam kawasan Q")}
-        caption="Kawasan Q, Tanjung Benoa"
+        image={still(sectionBackgrounds.contactIntro, t("contact.bandCaption"))}
+        caption={t("contact.bandCaption")}
       />
 
       <ContentBand>
         <SectionTitle
-          eyebrow="Formulir"
-          title="Kirim kebutuhan Anda"
-          description="Kami membalas setiap permintaan dalam satu hari kerja."
+          eyebrow={t("contact.formEyebrow")}
+          title={t("contact.formTitle")}
+          description={t("contact.formDescription")}
           className="max-w-2xl"
         />
         <FadeIn delay={0.1} className="mt-10 max-w-3xl">
@@ -134,20 +136,20 @@ export function ContactPageContent({
                 className="rounded-3xl bg-white/70 p-8 backdrop-blur-sm"
                 role="status"
               >
-                <CheckCircle2 className="h-8 w-8 text-leaf-600" aria-hidden />
-                <AnimatedText as="h3" text="Permintaan Anda tercatat" className="mt-4 text-xl" />
-                <p className="mt-3 text-sm leading-relaxed text-ink-700">
-                  Ini demo tanpa backend. Untuk respons langsung, hubungi{" "}
+                <CheckCircle2 className="text-leaf-600 h-8 w-8" aria-hidden />
+                <AnimatedText as="h3" text={t("contact.successTitle")} className="mt-4 text-xl" />
+                <p className="text-ink-700 mt-3 text-sm leading-relaxed">
+                  {t("contact.successBodyPrefix")}
                   <a
                     href={`mailto:${SITE.contact.reservationEmail}`}
-                    className="font-semibold text-lagoon-700 underline"
+                    className="text-lagoon-700 font-semibold underline"
                   >
                     {SITE.contact.reservationEmail}
                   </a>
-                  .
+                  {t("contact.successBodySuffix")}
                 </p>
                 <Button className="mt-6" variant="outline" onClick={() => setSubmitted(false)}>
-                  Kirim permintaan lain
+                  {t("contact.successCta")}
                 </Button>
               </motion.div>
             ) : (
@@ -162,32 +164,32 @@ export function ContactPageContent({
               >
                 <div className="grid gap-5 sm:grid-cols-3">
                   <Field
-                    label="Nama lengkap"
+                    label={t("contact.formName")}
                     id="name"
                     value={form.name}
                     onChange={(value) => update("name", value)}
                     error={errors.name}
-                    placeholder="Nama Anda"
+                    placeholder={t("contact.formNamePlaceholder")}
                     required
                   />
                   <Field
-                    label="Email"
+                    label={t("contact.formEmail")}
                     id="email"
                     type="email"
                     value={form.email}
                     onChange={(value) => update("email", value)}
                     error={errors.email}
-                    placeholder="nama@email.com"
+                    placeholder={t("footer.emailPlaceholder")}
                     required
                   />
                   <Field
-                    label="Telepon / WhatsApp"
+                    label={t("contact.formPhone")}
                     id="phone"
                     type="tel"
                     value={form.phone}
                     onChange={(value) => update("phone", value)}
                     error={errors.phone}
-                    placeholder="+62 8xx xxxx xxxx"
+                    placeholder={t("contact.formPhonePlaceholder")}
                     required
                   />
                 </div>
@@ -195,32 +197,32 @@ export function ContactPageContent({
                 <div className="mt-5 flex flex-col gap-2">
                   <label
                     htmlFor="message"
-                    className="text-xs font-semibold tracking-[0.14em] text-ink-600 uppercase"
+                    className="text-ink-600 text-xs font-semibold tracking-[0.14em] uppercase"
                   >
-                    Pesan <span className="text-coral-500">*</span>
+                    {t("contact.formMessage")} <span className="text-coral-500">*</span>
                   </label>
                   <textarea
                     id="message"
                     rows={4}
                     value={form.message}
                     onChange={(event) => update("message", event.target.value)}
-                    placeholder="Ceritakan kebutuhan Anda secara singkat."
+                    placeholder={t("contact.formMessagePlaceholder")}
                     aria-invalid={Boolean(errors.message)}
                     className={cn(
-                      "rounded-2xl border bg-white px-4 py-3 text-sm text-ink-800 placeholder:text-ink-400 focus:outline-none",
+                      "text-ink-800 placeholder:text-ink-400 rounded-2xl border bg-white px-4 py-3 text-sm focus:outline-none",
                       errors.message
                         ? "border-coral-400 focus:border-coral-500"
                         : "border-ink-200 focus:border-lagoon-500",
                     )}
                   />
                   {errors.message ? (
-                    <span className="text-xs text-coral-600">{errors.message}</span>
+                    <span className="text-coral-600 text-xs">{errors.message}</span>
                   ) : null}
                 </div>
 
                 <div className="mt-6">
                   <Button type="submit" size="lg">
-                    Kirim permintaan
+                    {t("contact.formSubmit")}
                   </Button>
                 </div>
               </motion.form>
@@ -230,14 +232,14 @@ export function ContactPageContent({
       </ContentBand>
 
       <ImageBand
-        image={still(sectionBackgrounds.contactForm, "Lobi utama Hotel Q")}
-        caption="Lobi utama Hotel Q"
+        image={still(sectionBackgrounds.contactForm, t("contact.formBandCaption"))}
+        caption={t("contact.formBandCaption")}
       />
 
       <ContentBand>
         <SectionTitle
-          eyebrow="Lokasi"
-          title="Temukan kami di Tanjung Benoa"
+          eyebrow={t("contact.locationEyebrow")}
+          title={t("contact.locationTitle")}
           description={SITE.contact.address}
           className="max-w-2xl"
         />
@@ -245,10 +247,10 @@ export function ContactPageContent({
           delay={0.1}
           className="mt-10 overflow-hidden rounded-3xl bg-white/70 p-2 backdrop-blur-sm"
         >
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[1.4rem]">
+          <div className="relative aspect-video w-full overflow-hidden rounded-[1.4rem]">
             {/* Lightweight embedded map (no API key required). */}
             <iframe
-              title="Peta lokasi Qubu Resort Tanjung Benoa"
+              title={t("contact.mapTitle")}
               src={`https://www.google.com/maps?q=${encodeURIComponent(
                 SITE.contact.mapsQuery,
               )}&output=embed`}
@@ -258,29 +260,29 @@ export function ContactPageContent({
             />
           </div>
         </FadeIn>
-        <p className="mt-5 inline-flex items-center gap-2 text-sm text-ink-600">
-          <Clock className="h-4 w-4 text-lagoon-600" aria-hidden />
-          {SITE.hours.sales}
+        <p className="text-ink-600 mt-5 inline-flex items-center gap-2 text-sm">
+          <Clock className="text-lagoon-600 h-4 w-4" aria-hidden />
+          {t("contact.salesHours")}
         </p>
       </ContentBand>
 
       <ImageBand
-        image={still(sectionBackgrounds.ctaBand, "Lounge dengan pemandangan laut")}
-        caption="Ruang tunggu tamu"
+        image={still(sectionBackgrounds.ctaBand, t("contact.faqBandCaption"))}
+        caption={t("contact.faqBandCaption")}
       />
 
       <ContentBand id="bantuan">
         <SectionTitle
-          eyebrow="Pusat bantuan"
-          title="Pertanyaan yang sering diajukan"
-          description="Belum terjawab? WhatsApp concierge kami aktif setiap hari."
+          eyebrow={t("contact.faqEyebrow")}
+          title={t("contact.faqTitle")}
+          description={t("contact.faqDescription")}
           className="max-w-2xl"
         />
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {contactFaqs.slice(0, 4).map((faq) => (
             <motion.div key={faq.question} variants={staggerItem} className="h-full">
               <InfoCard
-                eyebrow="FAQ"
+                eyebrow={t("contact.faqLabel")}
                 title={faq.question}
                 body={faq.answer}
                 icon={<CircleHelp className="h-5 w-5" aria-hidden />}
@@ -288,16 +290,15 @@ export function ContactPageContent({
             </motion.div>
           ))}
         </StaggerContainer>
-        <p id="privasi" className="mt-10 max-w-2xl text-xs leading-relaxed text-ink-500">
-          Data formulir dipakai hanya untuk keperluan reservasi dan tidak dijual ke pihak ketiga.
-          Permintaan penghapusan data dapat dikirim ke{" "}
+        <p id="privasi" className="text-ink-500 mt-10 max-w-2xl text-xs leading-relaxed">
+          {t("contact.privacyPrefix")}
           <a
             href={`mailto:${SITE.contact.email}`}
-            className="font-semibold text-lagoon-700 underline"
+            className="text-lagoon-700 font-semibold underline"
           >
             {SITE.contact.email}
           </a>
-          .
+          {t("contact.privacySuffix")}
         </p>
       </ContentBand>
     </>
@@ -330,7 +331,7 @@ function Field({
     <div className="flex flex-col gap-2">
       <label
         htmlFor={id}
-        className="text-xs font-semibold tracking-[0.14em] text-ink-600 uppercase"
+        className="text-ink-600 text-xs font-semibold tracking-[0.14em] uppercase"
       >
         {label} {required ? <span className="text-coral-500">*</span> : null}
       </label>
@@ -345,12 +346,14 @@ function Field({
         aria-describedby={error ? `${id}-error` : undefined}
         onChange={(event) => onChange(event.target.value)}
         className={cn(
-          "h-12 rounded-2xl border bg-white px-4 text-sm text-ink-800 placeholder:text-ink-400 focus:outline-none",
-          error ? "border-coral-400 focus:border-coral-500" : "border-ink-200 focus:border-lagoon-500",
+          "text-ink-800 placeholder:text-ink-400 h-12 rounded-2xl border bg-white px-4 text-sm focus:outline-none",
+          error
+            ? "border-coral-400 focus:border-coral-500"
+            : "border-ink-200 focus:border-lagoon-500",
         )}
       />
       {error ? (
-        <span id={`${id}-error`} className="text-xs text-coral-600">
+        <span id={`${id}-error`} className="text-coral-600 text-xs">
           {error}
         </span>
       ) : null}

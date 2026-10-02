@@ -275,17 +275,8 @@
 }
 
 /* ------------------------------------------------------------------------- */
-/* Keyframe helpers (marquee, soft bounce)                                   */
+/* Keyframe helpers (soft bounce)                                            */
 /* ------------------------------------------------------------------------- */
-@keyframes marquee-x {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @keyframes soft-bounce {
   0%,
   100% {
@@ -294,10 +285,6 @@
   50% {
     transform: translateY(0.5rem);
   }
-}
-
-@utility animate-marquee {
-  animation: marquee-x 32s linear infinite;
 }
 
 @utility animate-soft-bounce {

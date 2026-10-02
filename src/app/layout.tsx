@@ -72,12 +72,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preload" as="image" href="/images/qubu-resort-1.jpeg" fetchPriority="high" />
       </head>
       <body className="flex min-h-full flex-col bg-sand-100">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-ink-900 focus:shadow-lg"
-        >
-          Lewati ke konten utama
-        </a>
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

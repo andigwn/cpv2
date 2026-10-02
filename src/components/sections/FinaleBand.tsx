@@ -45,21 +45,14 @@ export function FinaleBand({
 
   // The closing photo is visible from the first pixel (no fade-in), so the band always
   // shows its OWN photo instead of the sticky hero behind the page showing through.
-  // Continuous, gentle push-in for the whole pin: the frame is never static. The springs
-  // give the closing beat the reference's scrubbed feel — the veil, the push and the
-  // rising message all trail the scroll like a camera settling on its subject.
-  const rawScale = useTransform(pin, [0, 1], [1.02, 1.12]);
-  const scale = useSpring(rawScale, SCRUB_SPRING);
+  // The veil depth and the rising message trail the scroll like a camera settling on its
+  // subject. No scroll-linked zoom: the revision removed every scale-on-scroll effect.
   const rawVeil = useTransform(pin, [...FINALE.veilWindow], [0, 1]);
   const veil = useSpring(rawVeil, SCRUB_SPRING);
   const rawMessageOpacity = useTransform(pin, [...FINALE.messageWindow], [0, 1]);
   const messageOpacity = useSpring(rawMessageOpacity, SCRUB_SPRING);
   const rawMessageY = useTransform(pin, [...FINALE.messageWindow], [FINALE.messageTravel, 0]);
   const messageY = useSpring(rawMessageY, SCRUB_SPRING);
-  const rawMessageScale = useTransform(pin, [...FINALE.messageWindow], [
-    ...FINALE.messageScale,
-  ] as number[]);
-  const messageScale = useSpring(rawMessageScale, SCRUB_SPRING);
 
   return (
     <section
@@ -69,10 +62,7 @@ export function FinaleBand({
       className={cn("relative w-full", className)}
     >
       <div className="sticky top-0 isolate h-svh w-full overflow-hidden">
-        <motion.div
-          style={prefersReducedMotion ? { scale: 1 } : { scale }}
-          className="absolute inset-[-4%]"
-        >
+        <div className="absolute inset-0">
           <Image
             src={image.src}
             alt={image.alt}
@@ -81,7 +71,7 @@ export function FinaleBand({
             quality={75}
             className="object-cover"
           />
-        </motion.div>
+        </div>
 
         <motion.div
           aria-hidden
@@ -92,9 +82,7 @@ export function FinaleBand({
         <div className="relative z-10 flex h-full items-center justify-center">
           <motion.div
             style={
-              prefersReducedMotion
-                ? { opacity: 1, y: 0, scale: 1 }
-                : { opacity: messageOpacity, y: messageY, scale: messageScale }
+              prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: messageOpacity, y: messageY }
             }
             className="shell"
           >

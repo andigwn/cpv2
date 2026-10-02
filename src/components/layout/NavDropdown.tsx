@@ -19,10 +19,10 @@ type NavDropdownProps = {
 /**
  * Desktop dropdown for a nav item that has children (the "Destinasi" menu).
  *
- * The panel only lists the business-unit names — no descriptions, category chips or
- * sub-menus — as requested in the revision brief. It is positioned against the
- * surrounding <nav> element so it always spans the content shell, opens on hover,
- * click and keyboard focus, and closes with Escape.
+ * The panel renders every entry as a single vertical column (no grid, no sideways
+ * fly-outs) and keeps a translucent, blurred background so the hero photography stays
+ * visible behind it while the white labels remain readable. It opens on hover, click and
+ * keyboard focus, and closes with Escape.
  */
 export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: NavDropdownProps) {
   const [open, setOpen] = useState(false);
@@ -61,6 +61,7 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
 
   return (
     <div
+      className="relative"
       onMouseEnter={openNow}
       onMouseLeave={closeSoon}
       onFocus={openNow}
@@ -109,32 +110,32 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="absolute inset-x-0 top-full z-50 mt-3 overflow-hidden rounded-3xl border border-white/70 bg-white/95 p-4 shadow-[0_40px_90px_-50px_rgba(19,25,34,0.55)] backdrop-blur-xl sm:p-5"
+            className={cn(
+              "absolute top-full left-0 z-50 mt-3 w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border p-3 shadow-[0_40px_90px_-50px_rgba(19,25,34,0.65)] backdrop-blur-xl",
+              // Transparent panel: the hero photograph stays visible behind it.
+              "border-white/25 bg-ink-900/35",
+            )}
           >
             <motion.span
               aria-hidden
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-              className="absolute inset-x-8 top-0 h-px origin-left bg-linear-to-r from-transparent via-[#FFE52C] to-transparent"
+              className="absolute inset-x-6 top-0 h-px origin-left bg-linear-to-r from-transparent via-[#FFE52C] to-transparent"
             />
 
-            <ul className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+            <ul className="flex flex-col gap-1">
               {children.map((child) => (
                 <motion.li key={child.href} variants={navPanelItem}>
                   <Link
                     href={child.href}
-                    className="group/unit border-ink-100 relative flex items-center justify-between gap-3 overflow-hidden rounded-2xl border bg-white/70 px-4 py-3 transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_18px_34px_-26px_rgba(11,108,60,0.7)]"
+                    className="group/unit relative flex items-center justify-between gap-3 overflow-hidden rounded-2xl px-4 py-2.5 transition-colors duration-300 hover:bg-white/15 focus-visible:bg-white/15"
                   >
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-linear-to-r from-[#FFE52C] to-[#EF723D] opacity-0 transition-opacity duration-500 ease-out group-hover/unit:opacity-100"
-                    />
-                    <span className="font-display text-ink-900 relative z-10 text-sm font-bold transition-colors duration-300">
+                    <span className="font-display relative z-10 text-sm font-bold text-white drop-shadow-[0_1px_6px_rgba(19,25,34,0.55)]">
                       {child.label}
                     </span>
                     <ArrowRight
-                      className="text-ink-300 group-hover/unit:text-ink-900 relative z-10 h-3.5 w-3.5 shrink-0 transition-[transform,color] duration-300 group-hover/unit:translate-x-0.5 group-hover/unit:-rotate-45"
+                      className="relative z-10 h-3.5 w-3.5 shrink-0 text-white/70 transition-[transform,color] duration-300 group-hover/unit:translate-x-0.5 group-hover/unit:-rotate-45 group-hover/unit:text-white"
                       aria-hidden
                     />
                   </Link>

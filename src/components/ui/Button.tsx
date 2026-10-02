@@ -55,9 +55,7 @@ export function Button({
         aria-hidden
         className={cn(
           "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover/btn:opacity-100",
-          variant === "primary"
-            ? "bg-linear-to-r from-[#FFE52C] to-[#EF723D]"
-            : "bg-white/25",
+          variant === "primary" ? "bg-linear-to-r from-[#FFE52C] to-[#EF723D]" : "bg-white/25",
         )}
       />
       {icon && iconPosition === "left" ? (
@@ -129,7 +127,8 @@ const variantClasses: Record<ButtonVariant, string> = {
     "bg-lagoon-600 text-white shadow-[0_14px_34px_-16px_rgba(11,108,60,0.9)] hover:shadow-[0_20px_44px_-18px_rgba(11,108,60,0.95)]",
   secondary:
     "bg-sunshine-400 text-ink-900 shadow-[0_14px_34px_-18px_rgba(255,229,44,0.9)] hover:bg-sunshine-300",
-  outline: "border border-ink-300 bg-white/70 text-ink-800 hover:border-lagoon-500 hover:text-lagoon-700",
+  outline:
+    "border border-ink-300 bg-white/70 text-ink-800 hover:border-lagoon-500 hover:text-lagoon-700",
   ghost: "text-ink-700 hover:bg-ink-100 hover:text-ink-900",
   light:
     "bg-white/85 text-ink-800 backdrop-blur-md shadow-[0_12px_30px_-20px_rgba(19,25,34,0.5)] hover:bg-white",

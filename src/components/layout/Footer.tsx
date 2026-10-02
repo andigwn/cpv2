@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
-import { FOOTER_NAV, SITE, SOCIAL_LINKS } from "@/lib/constants";
+import { SITE, SOCIAL_LINKS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 import { SocialIcon } from "@/components/ui/SocialIcon";
 import { FadeIn } from "@/components/animations/FadeIn";
+import { useFooterNav } from "@/i18n/useNav";
+import { useT } from "@/i18n/useTranslation";
 
 /**
  * Rich multi-column footer (prd.md section 4 point 7).
@@ -17,6 +19,8 @@ import { FadeIn } from "@/components/animations/FadeIn";
 export function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "success">("idle");
+  const columns = useFooterNav();
+  const t = useT();
 
   // No top border and no background of its own: the footer continues the same
   // broken-white canvas as the bands above it, so the page ends without a seam.
@@ -36,10 +40,9 @@ export function Footer() {
         <FadeIn className="border-lagoon-100 from-lagoon-50 to-sunshine-50 mb-14 overflow-hidden rounded-3xl border bg-linear-to-r via-white p-6 sm:p-10">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-xl">
-              <h2 className="text-2xl sm:text-3xl">Dapatkan promo & info event lebih dulu</h2>
+              <h2 className="text-2xl sm:text-3xl">{t("footer.newsletterTitle")}</h2>
               <p className="text-ink-600 mt-2 text-sm leading-relaxed">
-                Buletin bulanan berisi paket menginap, jadwal event waterpark, dan penawaran khusus
-                MICE. Tanpa spam, bisa berhenti kapan saja.
+                {t("footer.newsletterBody")}
               </p>
             </div>
 
@@ -53,7 +56,7 @@ export function Footer() {
               }}
             >
               <label htmlFor="newsletter-email" className="sr-only">
-                Alamat email
+                {t("footer.emailLabel")}
               </label>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <input
@@ -62,11 +65,11 @@ export function Footer() {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="nama@email.com"
+                  placeholder={t("footer.emailPlaceholder")}
                   className="border-ink-200 text-ink-800 placeholder:text-ink-400 focus:border-lagoon-500 h-12 flex-1 rounded-full border bg-white px-5 text-sm focus:outline-none"
                 />
                 <Button type="submit" size="md" icon={<Send className="h-4 w-4" aria-hidden />}>
-                  Berlangganan
+                  {t("footer.subscribe")}
                 </Button>
               </div>
               {status === "success" ? (
@@ -75,12 +78,10 @@ export function Footer() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-leaf-700 mt-3 text-sm font-medium"
                 >
-                  Terima kasih! Konfirmasi langganan dikirim ke email Anda.
+                  {t("footer.subscribeSuccess")}
                 </motion.p>
               ) : (
-                <p className="text-ink-500 mt-3 text-xs">
-                  Dengan berlangganan Anda menyetujui kebijakan privasi kami.
-                </p>
+                <p className="text-ink-500 mt-3 text-xs">{t("footer.subscribeConsent")}</p>
               )}
             </form>
           </div>
@@ -90,7 +91,7 @@ export function Footer() {
           <div>
             <Link
               href="/"
-              aria-label={SITE.name + " — beranda"}
+              aria-label={t("a11y.homepage", { site: SITE.name })}
               className="inline-flex items-center"
             >
               <Image
@@ -102,7 +103,9 @@ export function Footer() {
               />
             </Link>
 
-            <p className="text-ink-600 mt-5 max-w-sm text-sm leading-relaxed">{SITE.description}</p>
+            <p className="text-ink-600 mt-5 max-w-sm text-sm leading-relaxed">
+              {t("footer.description")}
+            </p>
 
             <ul className="text-ink-600 mt-6 flex flex-col gap-3 text-sm">
               <li className="flex items-start gap-3">
@@ -129,7 +132,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Clock className="text-lagoon-600 h-4 w-4 shrink-0" aria-hidden />
-                <span>{SITE.hours.waterpark}</span>
+                <span>{t("footer.hoursWaterpark")}</span>
               </li>
             </ul>
 
@@ -150,7 +153,7 @@ export function Footer() {
           </div>
 
           <div className="grid gap-10 sm:grid-cols-3">
-            {FOOTER_NAV.map((column) => (
+            {columns.map((column) => (
               <div key={column.title}>
                 <h3 className="text-ink-900 text-sm font-semibold tracking-[0.16em] uppercase">
                   {column.title}
@@ -178,16 +181,19 @@ export function Footer() {
 
         <div className="border-ink-200/70 text-ink-500 mt-14 flex flex-col gap-4 border-t pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {SITE.legalName}. Seluruh hak cipta dilindungi.
+            {t("footer.copyright", {
+              year: new Date().getFullYear(),
+              legalName: SITE.legalName,
+            })}
           </p>
           <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <Link href="/contact#privasi" className="hover:text-lagoon-700 transition-colors">
-              Kebijakan Privasi
+              {t("footer.privacy")}
             </Link>
             <Link href="/contact#bantuan" className="hover:text-lagoon-700 transition-colors">
-              Pusat Bantuan
+              {t("footer.help")}
             </Link>
-            <span>Placeholder fotografi: Unsplash & Wikimedia Commons</span>
+            <span>{t("footer.photoCredit")}</span>
           </p>
         </div>
       </div>

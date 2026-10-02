@@ -13,7 +13,6 @@ const ROUTES = [
   ["/services", 200, ["Layanan & Fasilitas", "Aurora Waterpark", "Paket menginap"]],
   ["/services/aurora-waterpark", 200, ["Aurora Waterpark", "7 zona", "Detail operasional"]],
   ["/services/aurora-convention-centre", 200, ["Aurora Convention Centre", "Ballroom"]],
-  ["/works", 200, ["Portfolio", "Proyek yang kami kembangkan"]],
   ["/news", 200, ["Newswire", "Promo Liburan Sekolah"]],
   ["/news/promo-liburan-sekolah-2026", 200, ["Promo Liburan Sekolah", "Berita lainnya"]],
   ["/careers", 200, ["Karir", "Front Office Manager", "Tunjangan"]],

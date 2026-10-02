@@ -41,8 +41,11 @@ const word: Variants = {
 };
 
 /**
- * Word-by-word headline reveal. Used everywhere except the Home hero, which uses the
- * typewriter effect instead (prd.md section 13a).
+ * Word-by-word headline reveal used by the section titles and article headings.
+ *
+ * The entrance rides the inner word box (clip + rise), the outer box clips the
+ * descenders so the flip-up stays clean. No scroll-linked motion: the words settle
+ * as soon as they arrive and stay put while the page scrolls.
  */
 export function AnimatedText({
   text,
@@ -65,7 +68,10 @@ export function AnimatedText({
       className={cn("inline-block [perspective:800px]", className)}
     >
       {words.map((item, index) => (
-        <span key={`${item}-${index}`} className="inline-block overflow-hidden pb-[0.08em]">
+        <span
+          key={`${item}-${index}`}
+          className="inline-block overflow-hidden pb-[0.08em]"
+        >
           <motion.span
             variants={word}
             className={cn("inline-block will-change-transform", wordClassName)}

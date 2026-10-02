@@ -11,14 +11,14 @@ export const SITE = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   foundedYear: 2009,
   contact: {
-    address: "Jl. Pantai Q No. 88, Tanjung Benoa, Badung, Bali 80361",
-    addressShort: "Tanjung Benoa, Bali",
+    address: "Jl. Arteri Supadio No.16, Sungai Raya, Kec. Sungai Raya, Kabupaten Kubu Raya, Kalimantan Barat 78117",
+    addressShort: "Kubu Raya, Kalimantan Barat",
     phone: "+62 361 8899 1200",
     whatsapp: "+62 811 3900 880",
     email: "hello@quburesort.id",
     reservationEmail: "reservation@quburesort.id",
     careerEmail: "career@quburesort.id",
-    mapsQuery: "Tanjung Benoa, Badung, Bali",
+    mapsQuery: "Jl. Arteri Supadio No.16, Sungai Raya, Kec. Sungai Raya, Kabupaten Kubu Raya, Kalimantan Barat 78117",
   },
   hours: {
     resort: "Check-in 14.00 · Check-out 12.00",
@@ -28,41 +28,56 @@ export const SITE = {
 } as const;
 
 export const MAIN_NAV: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Tentang", href: "/about" },
+  { label: "Home", labelKey: "nav.home", href: "/" },
+  { label: "Tentang", labelKey: "nav.about", href: "/about" },
   // Dropdown entries are derived from src/data/units.ts (single source of truth).
-  { label: "Destinasi", href: "/unit-bisnis", children: businessUnitMenu },
-  { label: "Kontak", href: "/contact" },
-  { label: "Karir", href: "/careers" },
+  {
+    label: "Destinasi",
+    labelKey: "nav.destinations",
+    href: "/unit-bisnis",
+    children: [
+      ...businessUnitMenu,
+      // Dining lives inside the Destinasi dropdown: Patio Bistro and Embun Resto
+      // were moved there from the hotel pages.
+      { label: "Dining", labelKey: "nav.dining", href: "/dining" },
+    ],
+  },
+  { label: "Kontak", labelKey: "nav.contact", href: "/contact" },
+  { label: "Karir", labelKey: "nav.careers", href: "/careers" },
 ];
 
-export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
+export const FOOTER_NAV: { title: string; titleKey: string; items: NavItem[] }[] = [
   {
     title: "Destinasi",
+    titleKey: "nav.destinations",
     items: [
       { label: "Hotel Qubu Suites", href: "/unit-bisnis/qubu-suites" },
       { label: "Hotel Q", href: "/unit-bisnis/hotel-q" },
       { label: "The Q Hall Convention Center", href: "/unit-bisnis/qhall" },
       { label: "Paradis-Q Waterpark", href: "/unit-bisnis/paradis-q" },
       { label: "Villa Town House", href: "/unit-bisnis/villa" },
-      { label: "Semua Destinasi", href: "/unit-bisnis" },
+      { label: "Dining", labelKey: "nav.dining", href: "/dining" },
+      { label: "Semua Destinasi", labelKey: "common.allDestinations", href: "/unit-bisnis" },
     ],
   },
   {
     title: "Perusahaan",
+    titleKey: "footer.company",
     items: [
-      { label: "Tentang Kami", href: "/about" },
-      { label: "Kontak", href: "/contact" },
+      { label: "Tentang Kami", labelKey: "nav.about", href: "/about" },
+      { label: "Kontak", labelKey: "nav.contact", href: "/contact" },
+      { label: "Karir", labelKey: "nav.careers", href: "/careers" },
     ],
   },
   {
     title: "Untuk Tamu",
+    titleKey: "footer.forGuests",
     items: [
-      { label: "Paket Menginap", href: "/services#paket" },
-      { label: "Tiket Waterpark", href: "/services/paradis-q" },
-      { label: "MICE & Event", href: "/services/qhall" },
-      { label: "Kebijakan Privasi", href: "/contact#privasi" },
-      { label: "Pusat Bantuan", href: "/contact#bantuan" },
+      { label: "Paket Menginap", labelKey: "footer.stayPackages", href: "/services#paket" },
+      { label: "Tiket Waterpark", labelKey: "footer.waterparkTickets", href: "/services/paradis-q" },
+      { label: "MICE & Event", labelKey: "footer.mice", href: "/services/qhall" },
+      { label: "Kebijakan Privasi", labelKey: "footer.privacy", href: "/contact#privasi" },
+      { label: "Pusat Bantuan", labelKey: "footer.help", href: "/contact#bantuan" },
     ],
   },
 ];
@@ -73,30 +88,3 @@ export const SOCIAL_LINKS: SocialLink[] = [
   { label: "YouTube", href: "https://youtube.com", icon: "youtube" },
   { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
 ];
-
-export const DESTINATIONS = [
-  "Nusa Dua, Bali",
-  "Tanjung Benoa, Bali",
-  "Labuan Bajo, NTT",
-  "Belitung, Bangka Belitung",
-  "Bogor, Jawa Barat",
-] as const;
-
-/** Section ids used by the floating section indicator + scroll linking. */
-export const HOME_SECTIONS = [
-  { id: "hero", label: "Beranda" },
-  { id: "highlights", label: "Highlight" },
-  { id: "about", label: "Tentang" },
-  { id: "services", label: "Fasilitas" },
-  { id: "news", label: "Berita" },
-  { id: "cta", label: "Reservasi" },
-] as const;
-
-/** Reusable overlay presets so every section keeps readable contrast (WCAG AA). */
-export const OVERLAY = {
-  light: "bg-gradient-to-b from-white/85 via-white/70 to-white/90",
-  soft: "bg-gradient-to-t from-white/85 via-white/60 to-white/30",
-  veil: "bg-white/55",
-  dark: "bg-gradient-to-t from-ink-900/60 via-ink-900/25 to-transparent",
-  edge: "bg-gradient-to-t from-white via-white/60 to-transparent",
-} as const;

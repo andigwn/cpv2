@@ -2,16 +2,10 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
-import {
-  BAND,
-  BAND_COVER_START,
-  BAND_PIN_WINDOW,
-  EASE_IN_OUT,
-  SCRUB_SPRING,
-} from "@/lib/animations";
+import { BAND, BAND_FLOAT, BAND_PIN_WINDOW, BAND_TILT, EASE_IN_OUT, SCRUB_SPRING } from "@/lib/animations";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 type ImageBandProps = {
@@ -22,6 +16,10 @@ type ImageBandProps = {
   align?: "center" | "left";
   /** Edge fade into the page canvas. Off by default in the band rhythm. */
   fade?: "both" | "bottom" | "none";
+  /** Tip the photo toward the cursor while it moves across the pinned frame. */
+  tilt3d?: boolean;
+  /** Sway the photo gently in perspective on its own, without any cursor input. */
+  float3d?: boolean;
   className?: string;
 };
 
@@ -41,9 +39,10 @@ type ImageBandProps = {
  *    never fades out on its own: it is hidden by an opaque sheet, exactly like the
  *    reference site hides a pinned video behind the next section.
  *
- * Two motions keep it from looking rigid, on separate wrappers so they compose: a
- * scroll-linked counter-drift downwards, and a slow push-in that dollies back out as the
- * sheet slides over.
+ * Per the revision the scroll-linked push-in/zoom was removed; a gentle counter-drift
+ * and the ambient Ken Burns loop keep the frame alive without any scroll zoom. Bands
+ * may opt into a mouse-follow 3D tilt (`tilt3d`) and/or an ambient 3D float
+ * (`float3d`) that move only the photo itself.
  */
 export function ImageBand({
   image,
@@ -51,6 +50,8 @@ export function ImageBand({
   priority = false,
   align = "center",
   fade = "none",
+  tilt3d = false,
+  float3d = false,
   className,
 }: ImageBandProps) {
   const ref = useRef<HTMLElement>(null);
@@ -61,25 +62,43 @@ export function ImageBand({
     offset: ["start end", "end start"],
   });
 
-  const [pinStart, pinEnd] = BAND_PIN_WINDOW;
+  const [pinStart] = BAND_PIN_WINDOW;
 
-  // The photo is visible from the moment the band enters the viewport — no fade-in.
-  // Hiding it until the pin made the sticky hero behind the page show through the band
-  // area (the "hero image covers the ImageBand" bug).
-  //
   // Downwards while the page scrolls up: the layers move in opposite directions. The
-  // springs give the pinned frame the reference's scrub lag — it trails the scroll
-  // slightly instead of being welded to it, so the camera feels heavy and physical.
+  // spring gives the pinned frame a scrub lag — it trails the scroll slightly instead of
+  // being welded to it, so the camera feels heavy and physical. No scale: the revision
+  // removed every scroll-linked zoom.
   const rawY = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);
   const y = useSpring(rawY, SCRUB_SPRING);
-  // Push in while the photo rises into view, settle at 1 for the pin, hold while the
-  // photo is alone, then dolly back out while the content sheet covers it.
-  const rawScale = useTransform(
-    scrollYProgress,
-    [0, pinStart, BAND_COVER_START, pinEnd],
-    [BAND.entryScale, 1, 1, BAND.exitScale],
-  );
-  const scale = useSpring(rawScale, SCRUB_SPRING);
+
+  // Mouse-follow 3D tilt: the photo tips toward the cursor while it moves across the
+  // frame and springs back to flat on leave. Only the photo tilts — captions and fades
+  // stay still, and reduced-motion visitors get the flat photo.
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const rotateX = useSpring(tiltX, BAND_TILT.spring);
+  const rotateY = useSpring(tiltY, BAND_TILT.spring);
+  const tiltEnabled = tilt3d && !prefersReducedMotion;
+
+  // Ambient 3D float: the photo sways on its own layer so it never fights the
+  // mouse tilt. Rotation only — no zoom — and off for reduced-motion visitors.
+  const floatEnabled = float3d && !prefersReducedMotion;
+  const threeDEnabled = (tilt3d || float3d) && !prefersReducedMotion;
+
+  function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    if (!tiltEnabled) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const nx = (event.clientX - rect.left) / rect.width - 0.5;
+    const ny = (event.clientY - rect.top) / rect.height - 0.5;
+    tiltX.set(ny * BAND_TILT.maxDegrees);
+    tiltY.set(-nx * BAND_TILT.maxDegrees);
+  }
+
+  function handleMouseLeave() {
+    if (!tiltEnabled) return;
+    tiltX.set(0);
+    tiltY.set(0);
+  }
 
   // Caption follows the same rule: it rises in shortly after the band pins.
   const captionOpacity = useTransform(scrollYProgress, [pinStart + 0.06, pinStart + 0.2], [0, 1], {
@@ -98,27 +117,49 @@ export function ImageBand({
       style={{ height: `${BAND.photoHeightSvh}svh` }}
       className={cn("relative w-full", className)}
     >
-      <div className="sticky top-0 isolate h-svh w-full overflow-hidden">
-        {/* Oversized so the counter-drift has room and never exposes an edge. */}
+      <div
+        className="sticky top-0 isolate h-svh w-full overflow-hidden"
+        style={threeDEnabled ? { perspective: BAND_TILT.perspective } : undefined}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Oversized so the counter-drift, the 3D tilt and the 3D float have room and
+            never expose an edge. 3D bands get a little extra bleed for the corners. */}
         <motion.div
-          style={prefersReducedMotion ? undefined : { y, scale }}
-          className="absolute inset-[-18%]"
+          style={{
+            ...(prefersReducedMotion ? {} : { y }),
+            ...(tiltEnabled ? { rotateX, rotateY } : {}),
+          }}
+          className={tilt3d || float3d ? "absolute inset-[-22%]" : "absolute inset-[-18%]"}
         >
           <motion.div
             className="absolute inset-0"
-            animate={prefersReducedMotion ? undefined : { scale: [1, BAND.kenBurnsScale, 1] }}
-            transition={{ duration: BAND.kenBurnsSeconds, repeat: Infinity, ease: EASE_IN_OUT }}
+            animate={
+              floatEnabled
+                ? {
+                    rotateX: [BAND_FLOAT.rotateX, -BAND_FLOAT.rotateX, BAND_FLOAT.rotateX],
+                    rotateY: [-BAND_FLOAT.rotateY, BAND_FLOAT.rotateY, -BAND_FLOAT.rotateY],
+                  }
+                : undefined
+            }
+            transition={{ duration: BAND_FLOAT.seconds, repeat: Infinity, ease: EASE_IN_OUT }}
           >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes="100vw"
-              priority={priority}
-              loading={priority ? undefined : "lazy"}
-              quality={75}
-              className="object-cover"
-            />
+            <motion.div
+              className="absolute inset-0"
+              animate={prefersReducedMotion ? undefined : { scale: [1, BAND.kenBurnsScale, 1] }}
+              transition={{ duration: BAND.kenBurnsSeconds, repeat: Infinity, ease: EASE_IN_OUT }}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="100vw"
+                priority={priority}
+                loading={priority ? undefined : "lazy"}
+                quality={75}
+                className="object-cover"
+              />
+            </motion.div>
           </motion.div>
         </motion.div>
 

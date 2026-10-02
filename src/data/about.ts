@@ -1,8 +1,3 @@
-import type { Stat, TimelineEntry } from "@/types";
-import { brandPromises, companyStats, testimonials } from "./meta";
-
-export { companyStats, testimonials, brandPromises };
-
 /** Long-form company story for the About page. */
 export const aboutStory = {
   eyebrow: "Tentang Kami",
@@ -18,52 +13,6 @@ export const aboutStory = {
   vision:
     "Menjadi grup hospitality keluarga paling dipercaya di Asia Tenggara pada 2030, dengan standar keberlanjutan yang terukur dan tim lokal yang tumbuh bersama kami.",
 };
-
-/** Milestone timeline (About page). */
-export const timeline: TimelineEntry[] = [
-  {
-    year: "2009",
-    title: "Qubu Resort dibuka",
-    description:
-      "Hotel 64 kamar di Tanjung Benoa dengan 38 karyawan dan satu restoran tepi pantai.",
-  },
-  {
-    year: "2013",
-    title: "Ekspansi sayap barat & spa pertama",
-    description:
-      "Penambahan 96 kamar, kolam utama baru, dan Q Spa dengan empat ruang perawatan.",
-  },
-  {
-    year: "2016",
-    title: "Paradis Q fase satu",
-    description:
-      "Pembukaan waterpark tiga zona dengan sembilan seluncuran dan kapasitas 2.000 pengunjung per hari.",
-  },
-  {
-    year: "2019",
-    title: "Menghapus plastik sekali pakai",
-    description:
-      "Seluruh properti beralih ke material kompos dan wadah guna ulang untuk operasional harian.",
-  },
-  {
-    year: "2021",
-    title: "Kawasan terpadu 11,4 hektar",
-    description:
-      "Integrasi hotel, waterpark, beach club, spa, dan convention centre dalam satu kawasan.",
-  },
-  {
-    year: "2023",
-    title: "Waterpark fase dua & Labuan Bajo",
-    description:
-      "Racer slide 22 meter, kolam ombak 1.100 m², dan penugasan masterplan waterfront Labuan Bajo.",
-  },
-  {
-    year: "2026",
-    title: "Target Net Zero 2040",
-    description:
-      "Peta jalan dekarbonisasi dengan panel surya 4,2 MWp dan target 32% listrik dari energi terbarukan.",
-  },
-];
 
 /** Company values shown on the About page. */
 export const companyValues = [
@@ -91,12 +40,4 @@ export const companyValues = [
       "Konsumsi air, energi, dan limbah dilaporkan setiap kuartal dengan target tahunan yang dipublikasikan.",
     icon: "Leaf" as const,
   },
-];
-
-/** Headline numbers for the About page intro. */
-export const aboutStats: Stat[] = [
-  { value: "1.240", label: "Kamar & suite terkelola" },
-  { value: "1.700+", label: "Karyawan di lima destinasi" },
-  { value: "2,1 juta", label: "Kunjungan tamu per tahun" },
-  { value: "78%", label: "Karyawan berasal dari daerah setempat" },
 ];

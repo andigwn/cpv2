@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { preloaderVariants } from "@/lib/animations";
 import { SITE } from "@/lib/constants";
+import { translate } from "@/i18n/translate";
+import { useLanguage } from "@/i18n/useLanguage";
 
 type PreloaderProps = {
   /** Total intro duration in milliseconds. */
@@ -18,6 +20,7 @@ type PreloaderProps = {
  */
 export function Preloader({ duration = 1500, onFinish }: PreloaderProps) {
   const prefersReducedMotion = useReducedMotion();
+  const language = useLanguage();
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(!prefersReducedMotion);
 
@@ -64,7 +67,7 @@ export function Preloader({ duration = 1500, onFinish }: PreloaderProps) {
           className="via-lagoon-50 to-sand-100 fixed inset-0 z-100 flex flex-col items-center justify-center bg-linear-to-b from-white"
           role="status"
           aria-live="polite"
-          aria-label="Memuat situs Qubu Resort"
+          aria-label={translate(language, "a11y.loadingSite", { site: SITE.name })}
         >
           <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="bg-lagoon-200/60 absolute -top-24 -left-24 h-72 w-72 rounded-full blur-3xl" />
@@ -85,8 +88,8 @@ export function Preloader({ duration = 1500, onFinish }: PreloaderProps) {
             </p>
             <div className="bg-ink-200 relative h-0.75 w-56 overflow-hidden rounded-full sm:w-72">
               <motion.span
-                className="absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-[#0B6C3C] via-[#8BC91B] to-[#FFE52C]"
-                style={{ width: `${progress}%` }}
+                className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-linear-to-r from-[#0B6C3C] via-[#8BC91B] to-[#FFE52C]"
+                style={{ scaleX: progress / 100 }}
               />
             </div>
             <span className="text-ink-500 text-sm font-semibold tracking-[0.3em] tabular-nums">

@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, Moon, Sparkles } from "lucide-react";
-import { services, serviceCategories, stayPackages } from "@/data/services";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import type { ImageAsset, SectionBackgroundConfig, ServiceCategory } from "@/types";
 import { cn } from "@/lib/utils";
@@ -18,14 +17,16 @@ import { ContentBand } from "@/components/sections/ContentBand";
 import { ImageBand } from "@/components/sections/ImageBand";
 import { PageHero } from "@/components/sections/PageHero";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
+import { useServiceCategories, useServices, useStayPackages } from "@/i18n/useContent";
+import { useT } from "@/i18n/useTranslation";
 
 /** Listing pages stay scannable: never more than six cards, the rest become text links. */
 const MAX_LISTED = 6;
 
-const bandImage = (background: SectionBackgroundConfig, alt: string): ImageAsset =>
-  background.type === "video"
-    ? { src: background.poster, alt }
-    : { src: background.src, alt: background.alt };
+const bandImage = (background: SectionBackgroundConfig, alt: string): ImageAsset => ({
+  src: background.src,
+  alt: background.alt || alt,
+});
 
 /**
  * Services listing page: a filtered catalogue of six cards, the stay packages, and one
@@ -36,6 +37,10 @@ export function ServicesPageContent({
 }: {
   heroBackground: (typeof sectionBackgrounds)[keyof typeof sectionBackgrounds];
 }) {
+  const t = useT();
+  const services = useServices();
+  const serviceCategories = useServiceCategories();
+  const stayPackages = useStayPackages();
   const [activeCategory, setActiveCategory] = useState<ServiceCategory | "all">("all");
 
   const filtered = useMemo(
@@ -43,7 +48,7 @@ export function ServicesPageContent({
       activeCategory === "all"
         ? services
         : services.filter((service) => service.category === activeCategory),
-    [activeCategory],
+    [activeCategory, services],
   );
 
   const visible = filtered.slice(0, MAX_LISTED);
@@ -52,18 +57,21 @@ export function ServicesPageContent({
   return (
     <>
       <PageHero
-        eyebrow="Layanan & Fasilitas"
-        title="Satu kawasan, delapan pengalaman berbeda"
-        description="Hotel, waterpark, beach club, spa, restoran, kids club, convention centre, dan transportasi — semuanya dikelola tim internal Qubu Resort."
+        eyebrow={t("services.heroEyebrow")}
+        title={t("services.heroTitle")}
+        description={t("services.heroDescription")}
         background={heroBackground}
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Layanan" }]}
+        breadcrumbs={[
+          { label: t("common.home"), href: "/" },
+          { label: t("services.heroEyebrow") },
+        ]}
       >
         <div className="flex flex-wrap gap-4">
           <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
-            Minta penawaran
+            {t("services.heroCta")}
           </Button>
           <Button href="#paket" variant="outline">
-            Lihat paket menginap
+            {t("services.heroCtaSecondary")}
           </Button>
         </div>
       </PageHero>
@@ -71,13 +79,17 @@ export function ServicesPageContent({
       <ContentBand>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <SectionTitle
-            eyebrow="Katalog"
-            title="Pilih kategori layanan"
+            eyebrow={t("services.catalogEyebrow")}
+            title={t("services.catalogTitle")}
             className="max-w-xl"
             titleClassName="text-2xl sm:text-3xl"
           />
 
-          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter kategori layanan">
+          <div
+            className="flex flex-wrap gap-2"
+            role="tablist"
+            aria-label={t("services.catalogFilterAria")}
+          >
             {serviceCategories.map((category) => (
               <Chip
                 key={category.value}
@@ -106,12 +118,12 @@ export function ServicesPageContent({
               meta={
                 <span className="inline-flex items-center gap-2">
                   <Clock className="h-3.5 w-3.5" aria-hidden />
-                  {service.specs[2]?.value ?? "Fleksibel"}
+                  {service.specs[2]?.value ?? t("common.flexible")}
                 </span>
               }
               footer={
                 <div className="flex items-center justify-between">
-                  <span className="text-ink-500 text-xs">Mulai dari</span>
+                  <span className="text-ink-500 text-xs">{t("common.startingFrom")}</span>
                   <span className="text-lagoon-700 text-sm font-semibold">{service.priceFrom}</span>
                 </div>
               }
@@ -121,7 +133,7 @@ export function ServicesPageContent({
 
         {remaining.length ? (
           <p className="text-ink-500 mt-8 text-sm">
-            Layanan lainnya:{" "}
+            {t("services.catalogOthers")}{" "}
             {remaining.map((service, index) => (
               <span key={service.slug}>
                 <Link
@@ -140,16 +152,16 @@ export function ServicesPageContent({
       <ImageBand
         image={bandImage(
           sectionBackgrounds.servicesIntro,
-          "Beach club Qubu Resort dengan kursi santai di tepi pantai",
+          t("services.bandCaption"),
         )}
-        caption="Delapan layanan dalam satu kawasan."
+        caption={t("services.bandCaption")}
       />
 
       <ContentBand id="paket">
         <SectionTitle
-          eyebrow="Paket menginap"
-          title="Paket siap pesan untuk liburan keluarga"
-          description="Gratis pembatalan hingga 72 jam sebelum kedatangan."
+          eyebrow={t("services.packagesEyebrow")}
+          title={t("services.packagesTitle")}
+          description={t("services.packagesDescription")}
           align="center"
           className="mx-auto items-center text-center"
         />
@@ -158,7 +170,7 @@ export function ServicesPageContent({
           {stayPackages.map((pack) => (
             <motion.div key={pack.name} variants={staggerItem} className="h-full">
               <InfoCard
-                eyebrow={pack.nights + " malam"}
+                eyebrow={t("services.packageNights", { count: pack.nights })}
                 title={pack.name}
                 body={pack.perks[0]}
                 icon={
@@ -180,7 +192,7 @@ export function ServicesPageContent({
                       </span>
                       {pack.highlight ? (
                         <span className="bg-lagoon-600 rounded-full px-3 py-1 text-[0.62rem] font-semibold tracking-[0.16em] text-white uppercase">
-                          Paling populer
+                          {t("services.packagePopular")}
                         </span>
                       ) : null}
                     </div>
@@ -190,7 +202,7 @@ export function ServicesPageContent({
                       fullWidth
                       variant={pack.highlight ? "primary" : "outline"}
                     >
-                      Pesan {pack.name}
+                      {t("services.packageBook", { name: pack.name })}
                     </Button>
                   </div>
                 }
@@ -200,24 +212,33 @@ export function ServicesPageContent({
         </StaggerContainer>
       </ContentBand>
 
-      <ImageBand
-        image={bandImage(sectionBackgrounds.homeCta, "Kolam resort dengan payung putih di siang hari")}
-      />
+      <ImageBand image={bandImage(sectionBackgrounds.homeCta, t("services.bandCaption"))} />
 
       <ContentBand>
         <SectionTitle
-          eyebrow="Reservasi"
-          title="Butuh paket khusus untuk grup besar?"
-          description="Tim reservasi kami menyusun penawaran untuk grup di atas 10 kamar."
+          eyebrow={t("services.reservationEyebrow")}
+          title={t("services.reservationTitle")}
+          description={t("services.reservationDescription")}
           className="max-w-2xl"
         />
 
         <div className="mt-8">
           <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
-            Hubungi tim reservasi
+            {t("common.contactReservation")}
           </Button>
         </div>
       </ContentBand>
+
+      {/* Hidden structured list keeps every service discoverable by crawlers. */}
+      <nav aria-label={t("a11y.servicesList")} className="sr-only">
+        <ul>
+          {services.map((service) => (
+            <li key={service.slug}>
+              <Link href={"/services/" + service.slug}>{service.name}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </>
   );
 }

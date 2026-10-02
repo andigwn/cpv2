@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { EASE_SOFT } from "@/lib/animations";
+import { useT } from "@/i18n/useTranslation";
 
 /** Scroll distance (px) before the shortcut appears. */
 const VISIBLE_AFTER = 560;
@@ -20,6 +21,7 @@ export function BackToTop() {
   const { scrolled } = useScrollProgress(VISIBLE_AFTER);
   const lenis = useLenis();
   const prefersReducedMotion = usePrefersReducedMotion();
+  const t = useT();
 
   const scrollToTop = () => {
     if (lenis) {
@@ -43,7 +45,7 @@ export function BackToTop() {
             type="button"
             variant="primary"
             size="sm"
-            aria-label="Kembali ke atas"
+            aria-label={t("a11y.backToTop")}
             onClick={scrollToTop}
             className="h-12 w-12 p-0"
           >

@@ -106,8 +106,8 @@ export const contactFaqs = [
 export const officeLocations = [
   {
     name: "Kantor Pusat & Qubu Resort",
-    address: "Jl. Pantai Q No. 88, Tanjung Benoa, Badung, Bali 80361",
-    mapsUrl: "https://maps.google.com/?q=Tanjung+Benoa+Badung+Bali",
+    address: "Jl. Arteri Supadio No.16, Sungai Raya, Kec. Sungai Raya, Kabupaten Kubu Raya, Kalimantan Barat 78117",
+    mapsUrl: "https://maps.google.com/?q=Jl.+Arteri+Supadio+No.16,+Sungai+Raya,+Kec.+Sungai+Raya,+Kabupaten+Kubu+Raya,+Kalimantan+Barat+78117",
     image: {
       src: "/images/qubu-resort-1.jpeg",
       alt: "Gerbang masuk kawasan Qubu Resort",

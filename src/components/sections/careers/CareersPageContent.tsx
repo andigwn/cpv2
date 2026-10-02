@@ -10,7 +10,6 @@ import {
   Send,
   Users,
 } from "lucide-react";
-import { careerBenefits, hiringSteps, jobOpenings } from "@/data/careers";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import { SITE } from "@/lib/constants";
 import { staggerItem } from "@/lib/animations";
@@ -23,12 +22,14 @@ import { ContentBand } from "@/components/sections/ContentBand";
 import { ImageBand } from "@/components/sections/ImageBand";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
+import { useCareerBenefits, useHiringSteps, useJobOpenings } from "@/i18n/useContent";
+import { useT } from "@/i18n/useTranslation";
 import type { ImageAsset } from "@/types";
 
 /** Pulls a photo out of the shared background library as an ImageBand asset. */
 function bandImage(key: keyof typeof sectionBackgrounds): ImageAsset {
   const background = sectionBackgrounds[key];
-  return { src: background.src, alt: background.type === "video" ? "" : background.alt };
+  return { src: background.src, alt: background.alt };
 }
 
 /** One lucide icon per hiring step, in order (the data carries only the step label). */
@@ -46,31 +47,38 @@ export function CareersPageContent({
 }: {
   heroBackground: (typeof sectionBackgrounds)[keyof typeof sectionBackgrounds];
 }) {
-  const openings = jobOpenings.slice(0, 6);
-  const benefits = careerBenefits.slice(0, 4);
-  const steps = hiringSteps.slice(0, 4);
+  const t = useT();
+  const openings = useJobOpenings().slice(0, 6);
+  const benefits = useCareerBenefits().slice(0, 4);
+  const steps = useHiringSteps().slice(0, 4);
 
   return (
     <>
       <PageHero
-        eyebrow="Karir"
-        title="Tumbuh bersama tim hospitality yang hangat"
-        description="Lebih dari 1.700 orang bekerja di lima destinasi kami."
+        eyebrow={t("careers.heroEyebrow")}
+        title={t("careers.heroTitle")}
+        description={t("careers.heroDescription")}
         background={heroBackground}
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Karir" }]}
+        breadcrumbs={[
+          { label: t("common.home"), href: "/" },
+          { label: t("nav.careers") },
+        ]}
       >
         <Button
           href={`mailto:${SITE.contact.careerEmail}`}
           icon={<Send className="h-4 w-4" aria-hidden />}
           iconPosition="left"
         >
-          Kirim lamaran
+          {t("careers.heroCta")}
         </Button>
       </PageHero>
 
       {/* ---- Benefits ---- */}
       <ContentBand>
-        <SectionTitle eyebrow="Yang kami sediakan" title="Tunjangan yang membuat tim betah" />
+        <SectionTitle
+          eyebrow={t("careers.benefitsEyebrow")}
+          title={t("careers.benefitsTitle")}
+        />
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit) => (
             <motion.div key={benefit.title} variants={staggerItem} className="h-full">
@@ -88,7 +96,10 @@ export function CareersPageContent({
 
       {/* ---- Openings ---- */}
       <ContentBand>
-        <SectionTitle eyebrow="Lowongan terbuka" title="Posisi yang sedang kami cari" />
+        <SectionTitle
+          eyebrow={t("careers.openingsEyebrow")}
+          title={t("careers.openingsTitle")}
+        />
         <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {openings.map((job) => (
             <motion.div key={job.slug} id={job.slug} variants={staggerItem} className="h-full">
@@ -99,7 +110,7 @@ export function CareersPageContent({
                 icon={<MapPin className="h-5 w-5" aria-hidden />}
                 footer={
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <span className="text-xs text-ink-500">
+                    <span className="text-ink-500 text-xs">
                       {job.location} · {job.level} · {job.type}
                     </span>
                     <Button
@@ -109,7 +120,7 @@ export function CareersPageContent({
                       className="shrink-0"
                       icon={<ArrowRight className="h-4 w-4" aria-hidden />}
                     >
-                      Lamar
+                      {t("careers.apply")}
                     </Button>
                   </div>
                 }
@@ -124,8 +135,8 @@ export function CareersPageContent({
       {/* ---- Hiring steps ---- */}
       <ContentBand>
         <SectionTitle
-          eyebrow="Proses rekrutmen"
-          title="Empat langkah, rata-rata selesai dalam dua pekan"
+          eyebrow={t("careers.stepsEyebrow")}
+          title={t("careers.stepsTitle")}
           align="center"
           className="mx-auto"
         />
@@ -151,19 +162,21 @@ export function CareersPageContent({
       {/* ---- Open application ---- */}
       <ContentBand width="narrow" className="text-center">
         <SectionTitle
-          eyebrow="Lamaran umum"
-          title="Tidak menemukan posisi yang cocok?"
-          description="Kirim CV Anda; kami menyimpannya selama 12 bulan."
+          eyebrow={t("careers.openEyebrow")}
+          title={t("careers.openTitle")}
+          description={t("careers.openDescription")}
           align="center"
           className="mx-auto"
         />
         <FadeIn delay={0.1} className="mt-8 flex justify-center">
           <Button
-            href={`mailto:${SITE.contact.careerEmail}?subject=Lamaran Umum`}
+            href={`mailto:${SITE.contact.careerEmail}?subject=${encodeURIComponent(
+              t("careers.openSubject"),
+            )}`}
             icon={<Send className="h-4 w-4" aria-hidden />}
             iconPosition="left"
           >
-            Kirim lamaran umum
+            {t("careers.openCta")}
           </Button>
         </FadeIn>
       </ContentBand>
