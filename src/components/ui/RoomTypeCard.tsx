@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { ReactElement } from "react";
-import { ArrowRight, BedDouble, Check, Eye, Maximize2, Users } from "lucide-react";
+import { BedDouble, Check, ChevronRight, Eye, Maximize2, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset, RoomType } from "@/types";
 import { EASE_SOFT } from "@/lib/animations";
@@ -168,7 +168,7 @@ export function RoomTypeCard({
             className="group/cta text-lagoon-700 hover:text-lagoon-800 inline-flex items-center gap-2 text-sm font-semibold"
           >
             {ctaLabel ?? t("common.askAvailability")}
-            <ArrowRight
+            <ChevronRight
               className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1"
               aria-hidden
             />

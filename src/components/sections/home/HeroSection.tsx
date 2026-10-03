@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useMotionTemplate, useScroll, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, ChevronDown, PlayCircle } from "lucide-react";
+import { ChevronDown, ChevronRight, PlayCircle } from "lucide-react";
 import { BAND, HERO_REVEAL, ROTATION, SCRUB_SPRING } from "@/lib/animations";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useViewportHeight } from "@/hooks/useViewportHeight";
@@ -137,7 +137,7 @@ export function HeroSection() {
                 <Button
                   href="/contact"
                   size="lg"
-                  icon={<ArrowRight className="h-4 w-4" aria-hidden />}
+                  icon={<ChevronRight className="h-4 w-4" aria-hidden />}
                 >
                   {t("hero.primaryCta")}
                 </Button>

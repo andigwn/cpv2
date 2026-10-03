@@ -292,23 +292,33 @@ export const id = {
     faqBandCaption: "Ruang tunggu tamu",
   },
   dining: {
-    heroEyebrow: "Dining",
-    heroTitle: "Dua restoran, satu filosofi rasa",
-    heroDescription:
-      "Patio Bistro dan Embun Resto menyajikan masakan nusantara, Asia, dan Western dengan bahan lokal segar di kawasan Qubu Resort.",
-    listEyebrow: "Pilihan restoran",
-    listTitle: "Temukan tempat makan Anda",
-    listDescription:
-      "Setiap restoran punya jam buka, suasana, dan menu andalan yang berbeda. Geser foto untuk melihat suasananya.",
     hoursLabel: "Jam buka",
     locationLabel: "Lokasi",
     reserveCta: "Reservasi meja",
-    bandCaption: "Jamuan di kawasan Q",
     ctaEyebrow: "Reservasi",
     ctaTitle: "Meja untuk dua atau banquet besar?",
     ctaDescription:
       "Tim F&B kami menangani reservasi harian hingga jamuan privat dan resepsi berskala besar.",
     ctaButton: "Hubungi tim F&B",
+    aboutEyebrow: "Profil",
+    aboutTitle: "Menyapa dari meja {name}",
+    aboutDescription:
+      "Setiap hidangan {name} berangkat dari bahan lokal Kalimantan yang dibeli dari petani setempat, lalu diolah dengan teknik nusantara, Asia, dan Western.",
+    atmosphereCaption: "Suasana makan di {name}",
+    practicalEyebrow: "Informasi praktis",
+    practicalTitle: "Jam buka & lokasi",
+    practicalDescription:
+      "Reservasi meja {name} disarankan saat jam sibuk, dan tersedia concierge untuk acara pribadi.",
+    hoursNote: "Dilayani setiap hari sesuai jam di atas.",
+    locationNote: "Area makan berada di dalam kawasan Qubu Resort.",
+    galleryBandCaption: "Detail suasana {name}",
+    galleryEyebrow: "Galeri",
+    galleryTitle: "Galeri {name}",
+    galleryDescription:
+      "Geser foto untuk melihat lebih detail interior, tata meja, dan suasana {name}.",
+    othersEyebrow: "Dining lain",
+    othersTitle: "Restoran lainnya di kawasan ini",
+    viewVenue: "Lihat {name}",
   },
   notFound: {
     eyebrow: "404",
@@ -605,23 +615,33 @@ export const en: typeof id = {
     faqBandCaption: "Guest waiting lounge",
   },
   dining: {
-    heroEyebrow: "Dining",
-    heroTitle: "Two restaurants, one philosophy of taste",
-    heroDescription:
-      "Patio Bistro and Embun Resto serve Indonesian, Asian, and Western dishes with fresh local ingredients in the Qubu Resort area.",
-    listEyebrow: "Restaurant options",
-    listTitle: "Find your table",
-    listDescription:
-      "Every restaurant has its own hours, atmosphere, and signature menu. Swipe the photos to see the space.",
     hoursLabel: "Opening hours",
     locationLabel: "Location",
     reserveCta: "Reserve a table",
-    bandCaption: "Feasts in the Q area",
     ctaEyebrow: "Reservations",
     ctaTitle: "A table for two or a large banquet?",
     ctaDescription:
       "Our F&B team handles daily reservations as well as private dinners and large-scale receptions.",
     ctaButton: "Contact the F&B team",
+    aboutEyebrow: "Profile",
+    aboutTitle: "A seat at {name}",
+    aboutDescription:
+      "Every dish at {name} starts with local Kalimantan ingredients bought from nearby farmers, then cooked with Indonesian, Asian, and Western technique.",
+    atmosphereCaption: "Dining atmosphere at {name}",
+    practicalEyebrow: "Practical information",
+    practicalTitle: "Opening hours & location",
+    practicalDescription:
+      "Table reservations at {name} are recommended during peak hours, and our concierge is available for private events.",
+    hoursNote: "Served daily within the hours above.",
+    locationNote: "The dining area is inside the Qubu Resort area.",
+    galleryBandCaption: "{name} atmosphere details",
+    galleryEyebrow: "Gallery",
+    galleryTitle: "{name} gallery",
+    galleryDescription:
+      "Swipe the photos to see more of the interior, table settings, and atmosphere at {name}.",
+    othersEyebrow: "Other dining",
+    othersTitle: "Other restaurants in this area",
+    viewVenue: "View {name}",
   },
   notFound: {
     eyebrow: "404",

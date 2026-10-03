@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Clock, Moon, Sparkles } from "lucide-react";
+import { ChevronRight, Clock, Moon, Sparkles } from "lucide-react";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import type { ImageAsset, SectionBackgroundConfig, ServiceCategory } from "@/types";
 import { cn } from "@/lib/utils";
@@ -67,7 +67,7 @@ export function ServicesPageContent({
         ]}
       >
         <div className="flex flex-wrap gap-4">
-          <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
+          <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
             {t("services.heroCta")}
           </Button>
           <Button href="#paket" variant="outline">
@@ -223,7 +223,7 @@ export function ServicesPageContent({
         />
 
         <div className="mt-8">
-          <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
+          <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
             {t("common.contactReservation")}
           </Button>
         </div>

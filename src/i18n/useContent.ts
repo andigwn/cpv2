@@ -128,3 +128,9 @@ export function useDiningVenues(): DiningVenue[] {
   const language = useLanguage();
   return language === "en" ? diningVenuesEn : diningVenues;
 }
+
+/** Finds the English twin of a server-provided (Indonesian) venue payload. */
+export function useLocalizedDiningVenue(venue: DiningVenue): DiningVenue {
+  const venues = useDiningVenues();
+  return venues.find((item) => item.slug === venue.slug) ?? venue;
+}

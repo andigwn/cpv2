@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
   CalendarCheck,
   CheckCircle2,
+  ChevronRight,
   MapPin,
   Presentation,
   Send,
@@ -118,7 +118,7 @@ export function CareersPageContent({
                       size="sm"
                       variant="outline"
                       className="shrink-0"
-                      icon={<ArrowRight className="h-4 w-4" aria-hidden />}
+                      icon={<ChevronRight className="h-4 w-4" aria-hidden />}
                     >
                       {t("careers.apply")}
                     </Button>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
 import { EASE_CINEMATIC, EASE_IN_OUT, GALLERY } from "@/lib/animations";
@@ -203,7 +203,7 @@ export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
               aria-label={t("gallery.previous")}
               className="text-ink-800 absolute bottom-5 left-5 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/85 backdrop-blur-md transition hover:bg-white"
             >
-              <ArrowLeft className="h-4 w-4" aria-hidden />
+              <ChevronLeft className="h-4 w-4" aria-hidden />
             </button>
             <button
               type="button"
@@ -211,7 +211,7 @@ export function UnitGallery({ slides, label, className }: UnitGalleryProps) {
               aria-label={t("gallery.next")}
               className="text-ink-800 absolute bottom-5 left-20 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/85 backdrop-blur-md transition hover:bg-white"
             >
-              <ArrowRight className="h-4 w-4" aria-hidden />
+              <ChevronRight className="h-4 w-4" aria-hidden />
             </button>
             <span className="text-ink-700 absolute top-5 right-5 z-10 rounded-full bg-white/85 px-3.5 py-1.5 text-xs font-semibold tabular-nums backdrop-blur-md">
               {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}

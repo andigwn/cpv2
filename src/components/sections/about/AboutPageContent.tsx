@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Eye, Target } from "lucide-react";
+import { ChevronRight, Eye, Target } from "lucide-react";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import type { ImageAsset, SectionBackgroundConfig } from "@/types";
 import { staggerItem } from "@/lib/animations";
@@ -68,7 +68,7 @@ export function AboutPageContent({ heroBackground }: AboutPageContentProps) {
           <Button
             href="/services"
             variant="outline"
-            icon={<ArrowRight className="h-4 w-4" aria-hidden />}
+            icon={<ChevronRight className="h-4 w-4" aria-hidden />}
           >
             {t("about.storyCta")}
           </Button>

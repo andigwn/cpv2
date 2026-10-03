@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, CalendarDays } from "lucide-react";
+import { CalendarDays, ChevronRight } from "lucide-react";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import { formatDate } from "@/lib/utils";
 import { staggerItem } from "@/lib/animations";
@@ -56,7 +56,7 @@ export function NewsPageContent({
         <div className="mt-8">
           <Button
             href={`/news/${lead.slug}`}
-            icon={<ArrowRight className="h-4 w-4" aria-hidden />}
+            icon={<ChevronRight className="h-4 w-4" aria-hidden />}
           >
             {t("news.featuredCta")}
           </Button>

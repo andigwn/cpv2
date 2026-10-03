@@ -13,10 +13,20 @@ export type NavItem = {
   label: string;
   /** Dot-path key in `src/i18n/translations.ts`; falls back to `label` when omitted. */
   labelKey?: string;
-  href: string;
+  /**
+   * Target route. Omitted for pure group headers (e.g. "Dining" in the Destinasi
+   * menu) which only exist to reveal their own `children` on hover / tap.
+   */
+  href?: string;
   /** Optional sub-entries: rendered as a dropdown on desktop, accordion on mobile. */
   children?: NavItem[];
 };
+
+/**
+ * A nav entry that always points at a route. Used where a group header would be
+ * meaningless — footer columns and the 404 page index.
+ */
+export type NavLinkItem = NavItem & { href: string };
 
 export type SocialLink = {
   label: string;
@@ -81,7 +91,7 @@ export type UnitFacility = {
   image?: ImageAsset;
 };
 
-/** A dining venue listed on the dedicated /dining page. */
+/** A dining venue, rendered on its own page under /dining/[slug]. */
 export type DiningVenue = {
   slug: string;
   name: string;
@@ -89,7 +99,7 @@ export type DiningVenue = {
   type: string;
   description: string;
   image: ImageAsset;
-  /** Photos used by the venue slider on the Dining page. */
+  /** Photos used by the venue gallery. */
   gallery: ImageAsset[];
   /** Short selling points shown as chips. */
   features: string[];

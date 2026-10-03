@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Store } from "lucide-react";
+import { ChevronRight, Store } from "lucide-react";
 import { unitHref } from "@/data/units";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import type { ImageAsset, SectionBackgroundConfig } from "@/types";
@@ -49,7 +49,7 @@ export function UnitsPageContent({ heroBackground }: UnitsPageContentProps) {
           { label: t("nav.destinations") },
         ]}
       >
-        <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
+        <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
           {t("common.planVisit")}
         </Button>
       </PageHero>

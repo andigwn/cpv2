@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
 import { EASE_CINEMATIC } from "@/lib/animations";
@@ -190,7 +190,7 @@ export function RoomImageSlider({ slides, sizes = "(max-width: 1023px) 100vw, 50
           showLeft ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       >
-        <ArrowLeft className="h-4 w-4" aria-hidden />
+        <ChevronLeft className="h-4 w-4" aria-hidden />
       </button>
       <button
         type="button"
@@ -201,7 +201,7 @@ export function RoomImageSlider({ slides, sizes = "(max-width: 1023px) 100vw, 50
           showRight ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       >
-        <ArrowRight className="h-4 w-4" aria-hidden />
+        <ChevronRight className="h-4 w-4" aria-hidden />
       </button>
     </div>
   );

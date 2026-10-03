@@ -3,6 +3,7 @@ import { SITE } from "@/lib/constants";
 import { services } from "@/data/services";
 import { newsPosts } from "@/data/news";
 import { businessUnits } from "@/data/units";
+import { diningVenues } from "@/data/dining";
 
 /** Basic sitemap covering every static route plus dynamic detail pages. */
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -14,7 +15,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/unit-bisnis`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${base}/dining`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/news`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/careers`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: "yearly", priority: 0.9 },
@@ -41,5 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...unitRoutes, ...newsRoutes];
+  const diningRoutes: MetadataRoute.Sitemap = diningVenues.map((venue) => ({
+    url: `${base}/dining/${venue.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.75,
+  }));
+
+  return [...staticRoutes, ...serviceRoutes, ...unitRoutes, ...diningRoutes, ...newsRoutes];
 }

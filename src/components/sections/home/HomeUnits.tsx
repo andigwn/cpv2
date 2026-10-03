@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import type { BusinessUnit } from "@/types";
 import { unitHref } from "@/data/units";
 import { staggerItem } from "@/lib/animations";
@@ -44,7 +44,7 @@ export function HomeUnits() {
           href="/unit-bisnis"
           variant="outline"
           className="shrink-0"
-          icon={<ArrowRight className="h-4 w-4" aria-hidden />}
+          icon={<ChevronRight className="h-4 w-4" aria-hidden />}
         >
           {t("home.unitsCta")}
         </Button>

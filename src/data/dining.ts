@@ -1,10 +1,11 @@
-import type { DiningVenue } from "@/types";
+import type { DiningVenue, NavItem } from "@/types";
 
 /**
  * Dining venues of the Qubu Resort area.
  *
- * Patio Bistro and Embun Resto were moved here from the Hotel Q and Hotel Qubu
- * Suites pages so every restaurant lives on the dedicated /dining page.
+ * Each venue is a destination of its own: Patio Bistro and Embun Resto were moved out
+ * of the Hotel Q and Hotel Qubu Suites pages and now live on their own routes
+ * (`/dining/[slug]`), reachable from the "Dining" group inside the Destinasi menu.
  */
 export const diningVenues: DiningVenue[] = [
   {
@@ -70,3 +71,14 @@ export const diningVenues: DiningVenue[] = [
 export function getDiningVenueBySlug(slug: string) {
   return diningVenues.find((venue) => venue.slug === slug);
 }
+
+/** Absolute href helper so every layer builds the same venue URLs. */
+export function diningHref(venue: DiningVenue) {
+  return "/dining/" + venue.slug;
+}
+
+/** Entries for the "Dining" group in the Destinasi navigation menu, in display order. */
+export const diningVenueMenu: NavItem[] = diningVenues.map((venue) => ({
+  label: venue.name,
+  href: diningHref(venue),
+}));

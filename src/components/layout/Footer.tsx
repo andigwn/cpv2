@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
+import { ChevronRight, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
 import { SITE, SOCIAL_LINKS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 import { SocialIcon } from "@/components/ui/SocialIcon";
@@ -166,7 +166,7 @@ export function Footer() {
                         className="group text-ink-600 hover:text-lagoon-700 inline-flex items-center gap-1.5 text-sm transition-colors"
                       >
                         {item.label}
-                        <ArrowRight
+                        <ChevronRight
                           className="h-3 w-3 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
                           aria-hidden
                         />

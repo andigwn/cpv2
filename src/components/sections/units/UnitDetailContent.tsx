@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BedDouble, Check, Clock, LayoutGrid } from "lucide-react";
+import { BedDouble, Check, ChevronLeft, ChevronRight, Clock, LayoutGrid } from "lucide-react";
 import type { BusinessUnit } from "@/types";
 import { unitHref } from "@/data/units";
 import { sectionBackgrounds } from "@/data/sectionBackgrounds";
@@ -57,7 +57,7 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
         ]}
       >
         <div className="flex flex-wrap items-center gap-4">
-          <Button href="/contact" icon={<ArrowRight className="h-4 w-4" aria-hidden />}>
+          <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
             {t("unit.contactCta")}
           </Button>
           <span className="border-lagoon-200 text-ink-700 inline-flex items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-sm backdrop-blur-md">
@@ -227,7 +227,7 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
           <Button
             href="/unit-bisnis"
             variant="outline"
-            icon={<ArrowLeft className="h-4 w-4" aria-hidden />}
+            icon={<ChevronLeft className="h-4 w-4" aria-hidden />}
             iconPosition="left"
           >
             {t("common.allDestinations")}

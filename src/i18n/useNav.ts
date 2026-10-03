@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
-import type { NavItem } from "@/types";
+import type { NavItem, NavLinkItem } from "@/types";
 import { FOOTER_NAV, MAIN_NAV } from "@/lib/constants";
 import { useT, type Translate } from "./useTranslation";
 
-function localizeItem(item: NavItem, t: Translate): NavItem {
+/** Resolves the label of an entry (and of every nested child) in the active language. */
+function localizeItem<T extends NavItem>(item: T, t: Translate): T {
   return {
     ...item,
     label: item.labelKey ? t(item.labelKey) : item.label,
@@ -20,7 +21,7 @@ export function useMainNav(): NavItem[] {
 }
 
 /** Footer columns with titles and link labels resolved in the active language. */
-export function useFooterNav(): { title: string; items: NavItem[] }[] {
+export function useFooterNav(): { title: string; items: NavLinkItem[] }[] {
   const t = useT();
   return useMemo(
     () =>

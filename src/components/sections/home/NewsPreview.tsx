@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
@@ -34,7 +34,7 @@ export function NewsPreview() {
           href="/news"
           variant="outline"
           className="shrink-0"
-          icon={<ArrowRight className="h-4 w-4" aria-hidden />}
+          icon={<ChevronRight className="h-4 w-4" aria-hidden />}
         >
           {t("home.newsCta")}
         </Button>

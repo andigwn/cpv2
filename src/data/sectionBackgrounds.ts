@@ -64,8 +64,4 @@ export const sectionBackgrounds: Record<string, SectionBackgroundConfig> = {
     src: "/images/villa-2.jpeg",
     alt: "Ruang keluarga villa dengan tangga kayu",
   },
-  dining: {
-    src: "/images/patio-1.jpeg",
-    alt: "Interior restoran dengan meja kayu dan rak botol",
-  },
 };

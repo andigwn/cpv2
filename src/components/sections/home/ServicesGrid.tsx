@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
 import { InfoCard } from "@/components/ui/InfoCard";
@@ -31,7 +31,7 @@ export function ServicesGrid() {
           href="/services"
           variant="outline"
           className="shrink-0"
-          icon={<ArrowRight className="h-4 w-4" aria-hidden />}
+          icon={<ChevronRight className="h-4 w-4" aria-hidden />}
         >
           {t("home.servicesCta")}
         </Button>

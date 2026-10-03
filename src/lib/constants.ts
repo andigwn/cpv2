@@ -1,5 +1,6 @@
-import type { NavItem, SocialLink } from "@/types";
+import type { NavItem, NavLinkItem, SocialLink } from "@/types";
 import { businessUnitMenu } from "@/data/units";
+import { diningVenueMenu } from "@/data/dining";
 
 /** Single source of truth for brand identity + static site configuration. */
 export const SITE = {
@@ -37,16 +38,16 @@ export const MAIN_NAV: NavItem[] = [
     href: "/unit-bisnis",
     children: [
       ...businessUnitMenu,
-      // Dining lives inside the Destinasi dropdown: Patio Bistro and Embun Resto
-      // were moved there from the hotel pages.
-      { label: "Dining", labelKey: "nav.dining", href: "/dining" },
+      // Dining is a group entry: it has no page of its own and only reveals its
+      // restaurants (Patio Bistro, Embun Resto) on hover / tap.
+      { label: "Dining", labelKey: "nav.dining", children: diningVenueMenu },
     ],
   },
   { label: "Kontak", labelKey: "nav.contact", href: "/contact" },
   { label: "Karir", labelKey: "nav.careers", href: "/careers" },
 ];
 
-export const FOOTER_NAV: { title: string; titleKey: string; items: NavItem[] }[] = [
+export const FOOTER_NAV: { title: string; titleKey: string; items: NavLinkItem[] }[] = [
   {
     title: "Destinasi",
     titleKey: "nav.destinations",
@@ -56,7 +57,8 @@ export const FOOTER_NAV: { title: string; titleKey: string; items: NavItem[] }[]
       { label: "The Q Hall Convention Center", href: "/unit-bisnis/qhall" },
       { label: "Paradis-Q Waterpark", href: "/unit-bisnis/paradis-q" },
       { label: "Villa Town House", href: "/unit-bisnis/villa" },
-      { label: "Dining", labelKey: "nav.dining", href: "/dining" },
+      { label: "Patio Bistro", href: "/dining/patio-bistro" },
+      { label: "Embun Resto", href: "/dining/embun-resto" },
       { label: "Semua Destinasi", labelKey: "common.allDestinations", href: "/unit-bisnis" },
     ],
   },

@@ -7,13 +7,16 @@ const LOGOS: Record<string, { wordmark: string; subtitle: string }> = {
   qhall: { wordmark: "The Q Hall", subtitle: "Convention Center" },
   "paradis-q": { wordmark: "Paradis-Q", subtitle: "Waterpark" },
   villa: { wordmark: "Villa Town House", subtitle: "Private Villas" },
-  dining: { wordmark: "Qubu Dining", subtitle: "Patio Bistro · Embun Resto" },
+  "patio-bistro": { wordmark: "Patio Bistro", subtitle: "All-day Dining" },
+  "embun-resto": { wordmark: "Embun Resto", subtitle: "Signature Restaurant" },
 };
 
-/** Returns the destination slug for a pathname, or null when it is not a destination page. */
+/**
+ * Returns the destination slug for a pathname, or null when it is not a destination page.
+ * Both destination families share this rule: `/unit-bisnis/<slug>` and `/dining/<slug>`.
+ */
 export function destinationSlugFromPath(pathname: string): string | null {
-  if (pathname === "/dining") return "dining";
-  const match = pathname.match(/^\/unit-bisnis\/([^/]+)/);
+  const match = pathname.match(/^\/(?:unit-bisnis|dining)\/([^/]+)/);
   return match ? match[1] : null;
 }
 

@@ -284,6 +284,15 @@ export const navPanelItem: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.34, ease: EASE_SOFT } },
 };
 
+/**
+ * One link inside a second-level panel (the "Dining" fly-out). It slides in sideways so
+ * the reveal reads as a continuation of the parent panel rather than a second dropdown.
+ */
+export const navPanelSubItem: Variants = {
+  hidden: { opacity: 0, x: -10 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: EASE_SOFT } },
+};
+
 /** One child link inside the mobile drawer accordion; `custom` is the item index. */
 export const mobileSubmenuItem: Variants = {
   hidden: { opacity: 0, x: -14 },
