@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DiningVenueContent } from "@/components/sections/dining/DiningVenueContent";
 import { diningHref, diningVenues, getDiningVenueBySlug } from "@/data/dining";
-import { entityBackground } from "@/data/sectionBackgrounds";
 import { SITE } from "@/lib/constants";
 
 type DiningVenuePageProps = {
@@ -20,6 +19,9 @@ export async function generateMetadata({ params }: DiningVenuePageProps): Promis
 
   if (!venue) return { title: "Restoran tidak ditemukan" };
 
+  // Social cards use the hero frame, not the card thumbnail: it is the shot the page opens on.
+  const hero = venue.heroImage ?? venue.image;
+
   return {
     title: venue.name,
     description: venue.description,
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: DiningVenuePageProps): Promis
     openGraph: {
       title: venue.name + " — " + SITE.name,
       description: venue.description,
-      images: [{ url: venue.image.src, alt: venue.image.alt }],
+      images: [{ url: hero.src, alt: hero.alt }],
     },
   };
 }
@@ -38,5 +40,7 @@ export default async function DiningVenuePage({ params }: DiningVenuePageProps) 
 
   if (!venue) notFound();
 
-  return <DiningVenueContent venue={venue} heroBackground={entityBackground(venue.image)} />;
+  // The hero photograph is resolved inside `DiningVenueContent` from the *localized* venue,
+  // so switching to English also swaps the hero's alt text, not just its copy.
+  return <DiningVenueContent venue={venue} />;
 }

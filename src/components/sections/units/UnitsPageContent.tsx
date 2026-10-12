@@ -44,10 +44,7 @@ export function UnitsPageContent({ heroBackground }: UnitsPageContentProps) {
         title={t("units.heroTitle")}
         description={t("units.heroDescription")}
         background={heroBackground}
-        breadcrumbs={[
-          { label: t("common.home"), href: "/" },
-          { label: t("nav.destinations") },
-        ]}
+        breadcrumbs={[{ label: t("common.home"), href: "/" }, { label: t("nav.destinations") }]}
       >
         <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
           {t("common.planVisit")}

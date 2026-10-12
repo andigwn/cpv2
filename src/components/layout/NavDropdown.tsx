@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { navPanelItem, navPanelSubItem, navPanelVariants } from "@/lib/animations";
+import { isSamePageHash } from "@/lib/nav";
+import { jumpToAnchor } from "@/lib/anchorScroll";
+import { useT } from "@/i18n/useTranslation";
 import type { NavItem } from "@/types";
 
 type NavDropdownProps = {
@@ -38,15 +42,17 @@ const PANEL_GAP = "0.125rem";
  * the white labels remain readable. It opens on hover, click and keyboard focus, and
  * closes with Escape.
  *
- * Entries that themselves have children (the "Dining" group) are rendered as group rows
- * with a right-pointing chevron: hovering one opens a second panel docked to its right
- * edge, so every restaurant stays one hover away without ever leaving the dropdown.
+ * Entries that themselves have children open a second panel docked to their right edge:
+ * the "Dining" group, and every destination, whose fly-out lists the sections of its own
+ * page. A destination row is both at once — the label stays a link to the page and only
+ * the chevron reveals its sections — so nothing that used to be one click away is lost.
  */
 export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: NavDropdownProps) {
   const [open, setOpen] = useState(false);
-  const [groupHref, setGroupHref] = useState<string | null>(null);
+  const [groupKey, setGroupKey] = useState<string | null>(null);
   const panelId = useId();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const groupTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const cancelClose = () => {
     if (closeTimer.current) {
@@ -64,18 +70,47 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
     cancelClose();
     closeTimer.current = setTimeout(() => {
       setOpen(false);
-      setGroupHref(null);
+      setGroupKey(null);
     }, 130);
   };
 
   useEffect(() => cancelClose, []);
+
+  /**
+   * One timer drives every row's fly-out, and it lives here rather than in the rows.
+   *
+   * A per-row timer reads fine until the pointer sweeps down the column: the row being
+   * left schedules its own close, then the row being entered opens its fly-out, and only
+   * then does the first timer fire — wiping the fly-out that had just appeared. One shared
+   * timer makes the newest hover win, so a fly-out opens every time instead of only when
+   * the pointer happens to linger.
+   */
+  const showGroup = (key: string) => {
+    if (groupTimer.current) {
+      clearTimeout(groupTimer.current);
+      groupTimer.current = null;
+    }
+    setGroupKey(key);
+  };
+
+  const hideGroupSoon = () => {
+    if (groupTimer.current) clearTimeout(groupTimer.current);
+    groupTimer.current = setTimeout(() => setGroupKey(null), 130);
+  };
+
+  useEffect(
+    () => () => {
+      if (groupTimer.current) clearTimeout(groupTimer.current);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
-        setGroupHref(null);
+        setGroupKey(null);
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -137,9 +172,9 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
             exit="exit"
             style={{ "--nav-panel-inset": PANEL_INSET } as CSSProperties}
             className={cn(
-              "absolute top-full left-0 z-50 mt-3 w-72 max-w-[calc(100vw-2rem)] overflow-visible rounded-3xl border p-[var(--nav-panel-inset)] shadow-[0_40px_90px_-50px_rgba(19,25,34,0.65)] backdrop-blur-xl",
+              "absolute top-full left-0 z-50 mt-3 w-72 max-w-[calc(100vw-2rem)] overflow-visible rounded-3xl border p-(--nav-panel-inset) shadow-[0_40px_90px_-50px_rgba(19,25,34,0.65)] backdrop-blur-xl",
               // Transparent panel: the hero photograph stays visible behind it.
-              "border-white/25 bg-ink-900/35",
+              "bg-ink-900/35 border-white/25",
             )}
           >
             <motion.span
@@ -151,12 +186,16 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
             />
 
             <ul className="flex flex-col gap-1">
-              {children.map((child) => (
+              {children.map((child, index) => (
                 <NavPanelRow
                   key={child.href ?? child.label}
                   child={child}
-                  groupHref={groupHref}
-                  onGroupOpen={setGroupHref}
+                  // The last row hangs its fly-out from its own bottom edge, so the two
+                  // cards share a flush baseline; rows above it open downwards instead.
+                  alignBottom={index === children.length - 1}
+                  groupKey={groupKey}
+                  onGroupOpen={showGroup}
+                  onGroupClose={hideGroupSoon}
                 />
               ))}
             </ul>
@@ -167,49 +206,44 @@ export function NavDropdown({ item, isActive, overHero, linkTone, activeTone }: 
   );
 }
 
+type NavPanelRowProps = {
+  child: NavItem;
+  /** Last row of the panel: its fly-out is docked to the shared bottom edge instead. */
+  alignBottom: boolean;
+  /** Which row currently has its fly-out open, so only one is revealed at a time. */
+  groupKey: string | null;
+  onGroupOpen: (key: string) => void;
+  onGroupClose: () => void;
+};
+
 /**
- * One row of the dropdown panel. A plain entry links straight to its route; an entry with
- * children acts as a group header and reveals a second, narrower panel on its right.
+ * One row of the dropdown panel.
+ *
+ * A plain entry links straight to its route. An entry with children reveals a second,
+ * narrower panel on its right, and the two things can coexist: a destination row links to
+ * its page through its label while its chevron opens the sections of that same page.
  */
 function NavPanelRow({
   child,
-  groupHref,
+  alignBottom,
+  groupKey,
   onGroupOpen,
-}: {
-  child: NavItem;
-  groupHref: string | null;
-  onGroupOpen: (href: string | null) => void;
-}) {
+  onGroupClose,
+}: NavPanelRowProps) {
+  const pathname = usePathname();
+  const t = useT();
   const groupChildren = child.children ?? [];
-  const groupKey = child.href ?? child.label;
-  const groupOpen = groupChildren.length > 0 && groupHref === groupKey;
+  const rowKey = child.href ?? child.label;
+  const groupOpen = groupChildren.length > 0 && groupKey === rowKey;
   const groupPanelId = useId();
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(
-    () => () => {
-      if (closeTimer.current) clearTimeout(closeTimer.current);
-    },
-    [],
-  );
-
-  const openGroup = () => {
-    if (closeTimer.current) {
-      clearTimeout(closeTimer.current);
-      closeTimer.current = null;
-    }
-    onGroupOpen(groupKey);
-  };
-
-  // The grace timer keeps the panel alive while the pointer crosses the gap between the
-  // two panels, so the submenu does not snap shut mid-travel.
-  const closeGroupSoon = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => onGroupOpen(null), 130);
-  };
+  // The grace period belongs to the parent: it owns the one timer that decides which
+  // fly-out is open, so a row only reports that the pointer arrived or left.
+  const openGroup = () => onGroupOpen(rowKey);
+  const closeGroupSoon = onGroupClose;
 
   const rowClasses =
-    "group/unit relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-2xl px-4 py-2.5 text-left transition-colors duration-300 hover:bg-white/15 focus-visible:bg-white/15";
+    "group/unit relative flex w-full items-center gap-2 rounded-2xl px-4 py-2.5 text-left transition-colors duration-300 hover:bg-white/15 focus-within:bg-white/15";
 
   const labelClasses =
     "font-display relative z-10 text-sm font-bold text-white drop-shadow-[0_1px_6px_rgba(19,25,34,0.55)]";
@@ -220,11 +254,52 @@ function NavPanelRow({
   const chevronClasses =
     "relative z-10 h-3.5 w-3.5 shrink-0 text-white/70 transition-[translate,color] duration-300 group-hover/unit:translate-x-0.5 group-hover/unit:text-white";
 
+  // A row that both links somewhere and groups children: the label navigates, the
+  // chevron toggles the fly-out. Anchors on the page already on screen bypass the router
+  // so the scroll stays under Lenis' control.
+  const label = <span className={labelClasses}>{child.label}</span>;
+  const rowLabel = isSamePageHash(child.href, pathname) ? (
+    <a
+      href={child.href}
+      onClick={(event) => {
+        event.preventDefault();
+        jumpToAnchor(child.href!);
+      }}
+      className="min-w-0 flex-1 rounded-lg"
+    >
+      {label}
+    </a>
+  ) : child.href ? (
+    <Link href={child.href} className="min-w-0 flex-1 rounded-lg">
+      {label}
+    </Link>
+  ) : null;
+
+  const groupChevron = (
+    <ChevronRight
+      className={cn(
+        "relative z-10 h-3.5 w-3.5 shrink-0 text-white/70 transition-[translate,rotate,color] duration-300",
+        groupOpen
+          ? "translate-x-0.5 rotate-90 text-white"
+          : "group-hover/unit:translate-x-0.5 group-hover/unit:text-white",
+      )}
+      aria-hidden
+    />
+  );
+
   if (!groupChildren.length) {
     return (
       <motion.li variants={navPanelItem}>
-        <Link href={child.href ?? "#"} className={rowClasses}>
-          <span className={labelClasses}>{child.label}</span>
+        <Link
+          href={child.href ?? "#"}
+          onClick={(event) => {
+            if (!isSamePageHash(child.href, pathname)) return;
+            event.preventDefault();
+            jumpToAnchor(child.href!);
+          }}
+          className={cn(rowClasses, "justify-between gap-3")}
+        >
+          {label}
           <ChevronRight className={chevronClasses} aria-hidden />
         </Link>
       </motion.li>
@@ -238,28 +313,25 @@ function NavPanelRow({
       onMouseEnter={openGroup}
       onMouseLeave={closeGroupSoon}
     >
-      <button
-        type="button"
-        aria-haspopup="true"
-        aria-expanded={groupOpen}
-        aria-controls={groupPanelId}
-        onClick={() => onGroupOpen(groupOpen ? null : groupKey)}
-        onFocus={openGroup}
-        className={rowClasses}
-      >
-        <span className={labelClasses}>{child.label}</span>
-        {/* Group rows point down while open, so a header and a plain link never look
-            like the same kind of row. */}
-        <ChevronRight
-          className={cn(
-            "relative z-10 h-3.5 w-3.5 shrink-0 text-white/70 transition-[translate,rotate,color] duration-300",
-            groupOpen
-              ? "translate-x-0.5 rotate-90 text-white"
-              : "group-hover/unit:translate-x-0.5 group-hover/unit:text-white",
-          )}
-          aria-hidden
-        />
-      </button>
+      <div className={rowClasses}>
+        {rowLabel ?? (
+          <span className="min-w-0 flex-1">{label}</span>
+        )}
+        <button
+          type="button"
+          aria-haspopup="true"
+          aria-expanded={groupOpen}
+          aria-controls={groupPanelId}
+          aria-label={t("nav.showSections", { name: child.label })}
+          onClick={() => (groupOpen ? onGroupClose() : onGroupOpen(rowKey))}
+          onFocus={openGroup}
+          className="relative z-10 -mr-1 shrink-0 rounded-full p-1 focus-visible:bg-white/20"
+        >
+          {/* Group rows point down while open, so a header and a plain link never look
+              like the same kind of row. */}
+          {groupChevron}
+        </button>
+      </div>
 
       <AnimatePresence>
         {groupOpen ? (
@@ -271,16 +343,26 @@ function NavPanelRow({
             exit="exit"
             style={{ "--nav-panel-gap": PANEL_GAP } as CSSProperties}
             className={cn(
-              // Docked level with the parent panel: it repeats the panel's own inset and
-              // is lifted by the same amount, so its first row starts exactly on the
-              // group row's top edge and the two menus read as one aligned block.
-              "absolute left-full z-50 top-[calc(-1*var(--nav-panel-inset))] ml-[calc(var(--nav-panel-gap)+var(--nav-panel-inset))] w-60 rounded-3xl border border-white/25 bg-ink-900/40 p-[var(--nav-panel-inset)] shadow-[0_40px_90px_-50px_rgba(19,25,34,0.65)] backdrop-blur-xl",
+              "bg-ink-900/40 absolute left-full z-50 ml-[calc(var(--nav-panel-gap)+var(--nav-panel-inset))] max-h-[min(70vh,32rem)] w-60 overflow-y-auto rounded-3xl border border-white/25 p-(--nav-panel-inset) shadow-[0_40px_90px_-50px_rgba(19,25,34,0.65)] backdrop-blur-xl",
+              // Docked level with the parent panel, anchored by whichever edge keeps the two
+              // cards flush. The last row (Dining) hangs from its BOTTOM edge so it shares
+              // the panel's baseline and grows upward; a row anywhere else opens from its
+              // TOP edge and grows downward, which stays on screen whichever row it is.
+              alignBottom ? "-bottom-(--nav-panel-inset)" : "-top-(--nav-panel-inset)",
             )}
           >
             <ul className="flex flex-col gap-1">
               {groupChildren.map((leaf) => (
                 <motion.li key={leaf.href ?? leaf.label} variants={navPanelSubItem}>
-                  <Link href={leaf.href ?? "#"} className={rowClasses}>
+                  <Link
+                    href={leaf.href ?? "#"}
+                    onClick={(event) => {
+                      if (!isSamePageHash(leaf.href, pathname)) return;
+                      event.preventDefault();
+                      jumpToAnchor(leaf.href!);
+                    }}
+                    className={cn(rowClasses, "justify-between gap-3")}
+                  >
                     <span className={labelClasses}>{leaf.label}</span>
                     <ChevronRight className={chevronClasses} aria-hidden />
                   </Link>

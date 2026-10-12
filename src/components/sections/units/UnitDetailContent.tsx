@@ -4,14 +4,13 @@ import { motion } from "framer-motion";
 import { BedDouble, Check, ChevronLeft, ChevronRight, Clock, LayoutGrid } from "lucide-react";
 import type { BusinessUnit } from "@/types";
 import { unitHref } from "@/data/units";
-import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { RoomTypeCard } from "@/components/ui/RoomTypeCard";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { PageHero } from "@/components/sections/PageHero";
+import { DestinationHero } from "@/components/sections/DestinationHero";
 import { ContentBand } from "@/components/sections/ContentBand";
 import { ImageBand } from "@/components/sections/ImageBand";
 import { UnitGallery } from "@/components/sections/units/UnitGallery";
@@ -21,12 +20,12 @@ import { useT } from "@/i18n/useTranslation";
 
 type UnitDetailContentProps = {
   unit: BusinessUnit;
-  heroBackground: (typeof sectionBackgrounds)[keyof typeof sectionBackgrounds];
 };
 
 /** Call-to-action copy differs between lodging, venues and the waterpark. */
 function roomCtaLabel(unit: BusinessUnit, t: ReturnType<typeof useT>) {
-  if (unit.slug === "qhall") return t("common.discussEvent");
+  if (unit.sectionCopy?.rooms?.ctaLabel) return unit.sectionCopy.rooms.ctaLabel;
+  if (unit.slug === "qhall") return t("common.askVenueAvailability");
   if (unit.slug === "paradis-q") return t("common.askTickets");
   return t("common.askAvailability");
 }
@@ -35,44 +34,45 @@ function roomCtaLabel(unit: BusinessUnit, t: ReturnType<typeof useT>) {
  * Detail page for one business unit. The rhythm follows the brief:
  * profile → room/venue/pool categories → supporting facilities → photo gallery.
  */
-export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentProps) {
+export function UnitDetailContent({ unit }: UnitDetailContentProps) {
   const t = useT();
   const units = useBusinessUnits();
   const localized = useLocalizedUnit(unit);
   const others = units.filter((item) => item.slug !== unit.slug).slice(0, 3);
   const [first, second, third] = localized.gallery;
   const noun = localized.roomTypesNoun ?? localized.roomTypesLabel?.toLowerCase() ?? "";
+  // Read from the localized unit so the hero's alt text follows the language, not just the copy.
+  const hero = localized.heroImage ?? localized.image;
+
+  // Destinations whose brief fixes its own wording override the shared headings here; the
+  // rest keep the generic ones from the dictionary.
+  const copy = localized.sectionCopy;
 
   return (
     <>
-      <PageHero
+      <DestinationHero
         eyebrow={localized.type}
         title={localized.name}
         description={localized.summary}
-        background={heroBackground}
-        breadcrumbs={[
-          { label: t("common.home"), href: "/" },
-          { label: t("nav.destinations"), href: "/unit-bisnis" },
-          { label: localized.name },
-        ]}
+        background={hero}
       >
         <div className="flex flex-wrap items-center gap-4">
           <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
-            {t("unit.contactCta")}
+            {copy?.heroCtaLabel ?? t("unit.contactCta")}
           </Button>
-          <span className="border-lagoon-200 text-ink-700 inline-flex items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-sm backdrop-blur-md">
-            <Clock className="text-lagoon-600 h-4 w-4" aria-hidden />
-            {localized.hours}
+          <span className="bg-ink-900/40 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-sm text-white/90">
+            <Clock className="text-sunshine-300 h-4 w-4" aria-hidden />
+            {copy?.heroNote ?? localized.hours}
           </span>
         </div>
-      </PageHero>
+      </DestinationHero>
 
       {/* Profil */}
       <ContentBand>
         <SectionTitle
-          eyebrow={t("unit.aboutEyebrow")}
-          title={t("unit.aboutTitle", { name: localized.name })}
-          description={localized.description[0]}
+          eyebrow={copy?.profile?.eyebrow ?? t("unit.aboutEyebrow")}
+          title={copy?.profile?.title ?? t("unit.aboutTitle", { name: localized.name })}
+          description={copy?.profile?.description ?? localized.description[0]}
           className="max-w-2xl"
         />
 
@@ -108,9 +108,9 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
         <ContentBand>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionTitle
-              eyebrow={localized.roomTypesLabel ?? ""}
-              title={t("unit.roomsTitle", { noun, name: localized.name })}
-              description={t("unit.roomsDescription")}
+              eyebrow={copy?.rooms?.eyebrow ?? localized.roomTypesLabel ?? ""}
+              title={copy?.rooms?.title ?? t("unit.roomsTitle", { noun, name: localized.name })}
+              description={copy?.rooms?.description ?? t("unit.roomsDescription")}
               className="max-w-2xl"
             />
             <span className="border-lagoon-200 text-ink-700 inline-flex w-fit items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-sm backdrop-blur-md">
@@ -139,62 +139,78 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
         </ContentBand>
       ) : null}
 
-      {/* Fasilitas pendukung */}
-      <ImageBand
-        image={second ?? first ?? localized.image}
-        caption={t("unit.groundsCaption", { name: localized.name })}
-      />
+{/* Fasilitas pendukung. Destinations that have nothing of their own to list here
+          (Hotel Q) opt out, so the photo beat never sits between two blocks of text. */}
+      {localized.showFacilitiesSection !== false ? (
+        <>
+          <ImageBand
+            image={second ?? first ?? localized.image}
+            caption={t("unit.groundsCaption", { name: localized.name })}
+          />
 
-      <ContentBand>
-        <SectionTitle
-          eyebrow={t("unit.facilitiesEyebrow")}
-          title={
-            localized.facilities.length
-              ? t("unit.facilitiesTitleWith")
-              : t("unit.facilitiesTitleWithout", { name: localized.name })
-          }
-          description={
-            localized.facilities.length
-              ? t("unit.facilitiesDescriptionWith", { name: localized.name })
-              : t("unit.facilitiesDescriptionWithout", { name: localized.name })
-          }
-          className="max-w-2xl"
-        />
+          <ContentBand>
+            <SectionTitle
+              eyebrow={copy?.facilities?.eyebrow ?? t("unit.facilitiesEyebrow")}
+              title={
+                copy?.facilities?.title ??
+                (localized.facilities.length
+                  ? t("unit.facilitiesTitleWith")
+                  : t("unit.facilitiesTitleWithout", { name: localized.name }))
+              }
+              description={
+                copy?.facilities?.description ??
+                (localized.facilities.length
+                  ? t("unit.facilitiesDescriptionWith")
+                  : t("unit.facilitiesDescriptionWithout", { name: localized.name }))
+              }
+              className="max-w-2xl"
+            />
 
-        {localized.facilities.length ? (
-          <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {localized.facilities.map((facility) =>
-              facility.image ? (
-                <Card
-                  key={facility.slug}
-                  variants={staggerItem}
-                  image={facility.image}
-                  eyebrow={facility.type}
-                  title={facility.name}
-                  description={facility.description}
-                />
-              ) : (
-                <motion.div key={facility.slug} variants={staggerItem} className="h-full">
-                  <InfoCard
-                    eyebrow={facility.type}
-                    title={facility.name}
-                    body={facility.description}
-                    icon={<LayoutGrid className="h-5 w-5" aria-hidden />}
-                  />
-                </motion.div>
-              ),
+            {localized.facilities.length ? (
+              <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {localized.facilities.map((facility) => (
+                  // The wrapper carries the anchor the navbar submenu links to, plus the
+                  // offset that clears the fixed navbar — same treatment as the room cards.
+                  <motion.div
+                    key={facility.slug}
+                    id={facility.slug}
+                    variants={staggerItem}
+                    className="h-full scroll-mt-32"
+                  >
+                    {facility.image ? (
+                      <Card
+                        image={facility.image}
+                        eyebrow={facility.type}
+                        title={facility.name}
+                        description={facility.description}
+                        highlights={facility.highlights}
+                        note={facility.note}
+                        variants={staggerItem}
+                      />
+                    ) : (
+                      <InfoCard
+                        eyebrow={facility.type}
+                        title={facility.name}
+                        body={facility.description}
+                        icon={<LayoutGrid className="h-5 w-5" aria-hidden />}
+                        variants={staggerItem}
+                      />
+                    )}
+                  </motion.div>
+                ))}
+              </StaggerContainer>
+            ) : (
+              <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {localized.features.map((feature) => (
+                  <motion.div key={feature} variants={staggerItem} className="h-full">
+                    <InfoCard title={feature} icon={<Check className="h-5 w-5" aria-hidden />} />
+                  </motion.div>
+                ))}
+              </StaggerContainer>
             )}
-          </StaggerContainer>
-        ) : (
-          <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {localized.features.map((feature) => (
-              <motion.div key={feature} variants={staggerItem} className="h-full">
-                <InfoCard title={feature} icon={<Check className="h-5 w-5" aria-hidden />} />
-              </motion.div>
-            ))}
-          </StaggerContainer>
-        )}
-      </ContentBand>
+          </ContentBand>
+        </>
+      ) : null}
 
       {/* Galeri */}
       <ImageBand
@@ -204,16 +220,34 @@ export function UnitDetailContent({ unit, heroBackground }: UnitDetailContentPro
 
       <ContentBand id="galeri">
         <SectionTitle
-          eyebrow={t("unit.galleryEyebrow")}
-          title={t("unit.galleryTitle", { name: localized.name })}
-          description={t("unit.galleryDescription")}
+          eyebrow={copy?.gallery?.eyebrow ?? t("unit.galleryEyebrow")}
+          title={copy?.gallery?.title ?? t("unit.galleryTitle", { name: localized.name })}
+          description={copy?.gallery?.description ?? t("unit.galleryDescription")}
           className="max-w-2xl"
         />
         <UnitGallery
           slides={localized.gallery}
-          label={t("unit.galleryTitle", { name: localized.name })}
+          label={copy?.gallery?.title ?? t("unit.galleryTitle", { name: localized.name })}
         />
       </ContentBand>
+
+      {/* Closing CTA: only rendered for destinations that declare one in their brief. */}
+      {copy?.closing ? (
+        <ContentBand>
+          <SectionTitle
+            eyebrow={t("unit.closingEyebrow")}
+            title={copy.closing.title}
+            description={copy.closing.description}
+            align="center"
+            className="mx-auto"
+          />
+          <div className="mt-8 flex justify-center">
+            <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
+              {copy.closing.ctaLabel}
+            </Button>
+          </div>
+        </ContentBand>
+      ) : null}
 
       {/* Destinasi lain */}
       <ContentBand>

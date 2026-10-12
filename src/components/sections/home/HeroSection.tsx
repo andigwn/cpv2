@@ -70,9 +70,25 @@ export function HeroSection() {
           <RotatingBackground
             slides={backgrounds.map((item) => ({ src: item.src, alt: item.alt }))}
             intervalMs={ROTATION.intervalMs}
-            overlayClassName="bg-gradient-to-t from-ink-900/70 via-ink-900/30 to-ink-900/15"
+            // Phones see the photo fill the whole frame, so the copy always sits on
+            // photography. The scrim is heavier there so the white headline holds up over a
+            // bright pool or sky, and eases back to the original strength from sm up.
+            overlayClassName="bg-gradient-to-t from-ink-900/85 via-ink-900/55 to-ink-900/40 sm:from-ink-900/70 sm:via-ink-900/30 sm:to-ink-900/15"
           />
         </div>
+
+        {/* Phones only: the photo fills the whole frame, so the strip behind the navbar is
+            whatever the sky happens to be — often the darkest part of the picture — and the
+            dark-green wordmark disappears into it. A sand scrim over the header's height
+            guarantees a light ground and takes the darkness out of the status-bar strip.
+
+            It has to be a direct child of the section: inside the copy wrapper below, its
+            `top-0` would resolve against that wrapper (which starts ~160px down) and the
+            light band would land across the headline instead of the navbar. */}
+        <div
+          aria-hidden
+          className="from-sand-100/90 pointer-events-none absolute inset-x-0 top-0 h-(--site-header-height) bg-linear-to-b to-transparent sm:hidden"
+        />
 
         {/* Brand reveal: the official logo is unmasked by a growing circle, so the
           wordmark appears as if the camera iris opened on it. No dark card — the white

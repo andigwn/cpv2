@@ -8,7 +8,9 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import type { SectionBackgroundConfig } from "@/types";
 import { EASE_CINEMATIC, EASE_SOFT } from "@/lib/animations";
+import { photoRatio, type AspectRatioStyle } from "@/lib/photoFrame";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { MEDIA_QUERIES, useMediaQuery } from "@/hooks/useMediaQuery";
 import { useT } from "@/i18n/useTranslation";
 
 type PageHeroProps = {
@@ -28,6 +30,19 @@ type PageHeroProps = {
  * Same visual language as ImageBand: a full-bleed photograph that fades into the
  * broken-white canvas at the bottom instead of ending on a divider, with the page
  * title set over it so it stays readable on any photo.
+ *
+ * ## Fitting
+ *
+ * From `sm` up the section is a single full-bleed cover frame with the copy layered on top,
+ * exactly as before.
+ *
+ * On a phone the copy moves below the photograph onto the page canvas, and the photo becomes a
+ * full-bleed strip shaped like the photograph itself. Covering a portrait strip with landscape
+ * photography would throw the picture away, and containing it would leave empty bands on either
+ * side that previously had to be papered over with a blurred second copy of the same image —
+ * an extra full-size request and a smear behind the title. Matching the frame's aspect ratio to
+ * the photo removes both failure modes: the picture runs edge to edge, complete, with the title
+ * underneath on clean canvas.
  */
 export function PageHero({
   eyebrow,
@@ -40,16 +55,44 @@ export function PageHero({
   align = "left",
 }: PageHeroProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const isWide = useMediaQuery(MEDIA_QUERIES.sm);
   const t = useT();
   const centered = align === "center";
 
+  // Phone strip shape, resolved before first paint so the layout never jumps.
+  const stripStyle: AspectRatioStyle = { "--hero-ar": photoRatio(background.src).css };
+
   return (
     <section
-      className={cn("relative isolate flex min-h-[68vh] items-end overflow-hidden", className)}
+      className={cn(
+        // Phones reserve the fixed header's height so the photo strip starts below the
+        // navbar and the logo keeps its contrast against the canvas, instead of sitting
+        // on top of the photograph.
+        "relative isolate flex flex-col overflow-hidden pt-(--site-header-height) sm:min-h-[68vh] sm:justify-end sm:pt-0",
+        className,
+      )}
     >
+      {/* Phone: a full-bleed strip as tall as the photograph needs at full width, so the
+          picture is complete and fills the frame instead of being cropped or letterboxed. */}
+      <div
+        style={stripStyle}
+        className="relative aspect-(--hero-ar) w-full shrink-0 overflow-hidden sm:hidden"
+      >
+        <Image
+          src={background.src}
+          alt={background.alt}
+          fill
+          sizes="100vw"
+          priority
+          quality={75}
+          className="object-cover"
+        />
+      </div>
+
+      {/* sm and up: full-bleed cover with the slow Ken Burns drift. */}
       <motion.div
-        className="absolute inset-[-6%]"
-        animate={prefersReducedMotion ? undefined : { scale: [1, 1.06, 1] }}
+        className="absolute inset-[-6%] hidden sm:block"
+        animate={prefersReducedMotion || !isWide ? undefined : { scale: [1, 1.06, 1] }}
         transition={{ duration: 26, repeat: Infinity, ease: EASE_CINEMATIC }}
       >
         <Image
@@ -63,16 +106,17 @@ export function PageHero({
         />
       </motion.div>
 
+      {/* The veils only exist to blend the full-bleed desktop photo into the canvas. */}
       <div
         aria-hidden
-        className="from-sand-100 via-sand-100/45 absolute inset-0 bg-linear-to-t to-transparent"
+        className="from-sand-100 via-sand-100/45 absolute inset-0 hidden bg-linear-to-t to-transparent sm:block"
       />
       <div
         aria-hidden
-        className="from-sand-100/80 absolute inset-x-0 top-0 h-32 bg-linear-to-b to-transparent sm:h-44"
+        className="from-sand-100/80 absolute inset-x-0 top-0 hidden h-32 bg-linear-to-b to-transparent sm:h-44"
       />
 
-      <div className="shell relative z-10 pt-40 pb-16 sm:pb-20 lg:pb-24">
+      <div className="shell relative z-10 pt-8 pb-14 sm:pt-40 sm:pb-20 lg:pb-24">
         {breadcrumbs?.length ? (
           <nav aria-label={t("a11y.breadcrumb")} className="mb-6">
             <ol className="text-ink-600 flex flex-wrap items-center gap-2 text-xs">

@@ -3,7 +3,16 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { ReactElement } from "react";
-import { BedDouble, Check, ChevronRight, Eye, Maximize2, Users } from "lucide-react";
+import {
+  BedDouble,
+  Check,
+  ChevronRight,
+  DoorOpenIcon,
+  Eye,
+  MapPin,
+  Maximize2,
+  Users,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset, RoomType } from "@/types";
 import { EASE_SOFT } from "@/lib/animations";
@@ -51,10 +60,14 @@ export function RoomTypeCard({
   const image = roomType.image ?? fallbackImage;
   const slides: ImageAsset[] = roomType.images?.length ? roomType.images : image ? [image] : [];
 
+  // Pools and venues relabel a few of the shared spec captions ("Kedalaman" instead of
+  // "Luas"), so each caption falls back to the generic key only when the entry is silent.
+  const labels = roomType.specLabels ?? {};
+
   const specs: RoomSpec[] = [
     roomType.size
       ? {
-          label: t("room.size"),
+          label: labels.size ?? t("room.size"),
           value: roomType.size,
           icon: <Maximize2 className="h-4 w-4" aria-hidden />,
         }
@@ -68,16 +81,30 @@ export function RoomTypeCard({
       : null,
     roomType.capacity
       ? {
-          label: t("room.capacity"),
+          label: labels.capacity ?? t("room.capacity"),
           value: roomType.capacity,
           icon: <Users className="h-4 w-4" aria-hidden />,
         }
       : null,
     roomType.view
       ? {
-          label: t("room.view"),
+          label: labels.view ?? t("room.view"),
           value: roomType.view,
           icon: <Eye className="h-4 w-4" aria-hidden />,
+        }
+      : null,
+    roomType.location
+      ? {
+          label: labels.location ?? t("room.location"),
+          value: roomType.location,
+          icon: <MapPin className="h-4 w-4" aria-hidden />,
+        }
+      : null,
+    roomType.countRoom
+      ? {
+          label: labels.countRoom ?? t("room.countRoom"),
+          value: roomType.countRoom,
+          icon: <DoorOpenIcon className="h-4 w-4" aria-hidden />,
         }
       : null,
   ].filter((spec): spec is RoomSpec => spec !== null);
@@ -93,18 +120,18 @@ export function RoomTypeCard({
         className,
       )}
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-16/10 overflow-hidden">
         {slides.length ? (
           <RoomImageSlider slides={slides} sizes="(max-width: 1023px) 100vw, 50vw" />
         ) : (
-          <div className="from-lagoon-100 via-sand-100 to-lagoon-50 flex h-full w-full items-center justify-center bg-gradient-to-br">
+          <div className="from-lagoon-100 via-sand-100 to-lagoon-50 flex h-full w-full items-center justify-center bg-linear-to-br">
             <BedDouble className="text-lagoon-300 h-12 w-12" aria-hidden />
           </div>
         )}
 
         <div
           aria-hidden
-          className="from-ink-900/85 via-ink-900/25 pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent"
+          className="from-ink-900/85 via-ink-900/25 pointer-events-none absolute inset-0 bg-linear-to-t to-transparent"
         />
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">

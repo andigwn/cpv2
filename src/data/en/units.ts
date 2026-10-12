@@ -8,19 +8,24 @@ import type { BusinessUnit } from "@/types";
 export const businessUnitsEn: BusinessUnit[] = [
   {
     slug: "qubu-suites",
-    name: "Hotel Qubu Suites",
+    name: "Qubu Suites Hotel",
     type: "Hotel & Suites",
-    tagline: "Suites with private balconies, a bar lounge, and a spa",
+    tagline:
+      "Qubu Suites Hotel offers a stay that blends modern comfort with the calm of nature, creating a space to rest, unwind, and enjoy every moment more meaningfully.",
     summary:
-      "The suite wing of the Q area with private balconies, 24-hour butler service, and Qubiq Bar, spa, and family facilities all in one building.",
+      "Enjoy a special stay at Qubu Suites Hotel, with comfortable rooms, private balconies, and complete facilities to relax together as a family.",
     description: [
-      "Hotel Qubu Suites occupies the west wing of the Q area with 144 suites divided into five types: Deluxe, Deluxe with View, Suite Room, Family Suite, and Qubu Grand Suite.",
-      "All suites feature pocket-spring mattresses, organic cotton linens, and private balconies overlooking the tropical garden or Benoa Bay. Suite guests receive Executive Lounge access for private breakfast and 24-hour butler service.",
-      "The building also houses Qubiq Bar, Meeting Room, Spa & Wellness Center, Entertainment Room, and Kids Club, so guests never need to leave the suite wing to relax or let the children play.",
+      "Qubu Suites Hotel offers a comfortable stay across five room types: Deluxe, Deluxe with View, Suite Room, Family Suite, and Qubu Grand Suite.",
+      "Every room is designed with a modern, comfortable atmosphere, complete with a private balcony and facilities that support your needs during the stay. The range of rooms makes Qubu Suites suitable for business trips, family holidays, or simply taking time to rest.",
+      "Beyond the comfort of the rooms, Qubu Suites also offers a range of facilities within one area — restaurants, wellness & spa, Kids Club, an entertainment room, and meeting rooms. Everything is designed so you can enjoy more experiences without travelling far from the comfort of the hotel.",
     ],
     image: {
       src: "/images/qubu-suites-1.jpeg",
       alt: "Hotel Qubu Suites room with a king bed and carved wooden panels",
+    },
+    heroImage: {
+      src: "/images/qubu-suites-2.jpeg",
+      alt: "Hotel Qubu Suites suite interior with a work desk and a large window",
     },
     gallery: [
       {
@@ -65,20 +70,23 @@ export const businessUnitsEn: BusinessUnit[] = [
       },
     ],
     features: [
-      "144 suites in five types",
-      "Private balconies in most suites",
-      "24-hour butler service",
-      "Executive Lounge access for private breakfast",
-      "Qubiq Bar and Entertainment Room",
-      "Spa & Wellness Center and Kids Club",
+      "88 rooms in five types",
+      "A private balcony in every room type",
+      "Paradis-Q Waterpark",
+      "Embun Resto",
+      "Qubik Bar and Entertainment Room",
+      "Wellness & Spa and Kids Club",
     ],
     specs: [
-      { label: "Number of suites", value: "144 suites" },
-      { label: "Room types", value: "5 categories" },
-      { label: "Room size", value: "48 – 160 m2" },
-      { label: "Check-in / out", value: "14:00 / 12:00 WITA" },
-      { label: "Signature facilities", value: "Qubiq Bar, Spa, Kids Club" },
-      { label: "Location", value: "Q area, west wing" },
+      { label: "Number of rooms", value: "88 Rooms" },
+      { label: "Room types", value: "5 Room Types" },
+      { label: "Room size", value: "27–75 m2" },
+      { label: "Check-in / out", value: "14:00/12:00 WIB" },
+      {
+        label: "Facilities",
+        value:
+          "Paradis-Q Waterpark, Embun Resto, Qubik Bar, entertainment room, Wellness & Spa, Kids Club.",
+      },
     ],
     hours: "24-hour reception",
     roomTypesLabel: "Room Types",
@@ -86,9 +94,9 @@ export const businessUnitsEn: BusinessUnit[] = [
     roomTypes: [
       {
         slug: "deluxe",
-        name: "Deluxe",
+        name: "Deluxe Room",
         description:
-          "Deluxe room with a king bed, work desk, and warm lighting for two guests.",
+          "Deluxe Room is designed to deliver comfort every guest can enjoy. It offers a choice of comfortable Double or Twin beds, a modern bathroom, a functional work area, a 43-inch Smart TV, and high-speed internet access.",
         image: {
           src: "/images/qubu-suites-2.jpeg",
           alt: "Deluxe room with a king bed and a work desk facing the window",
@@ -107,22 +115,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Deluxe room with a sofa and a wide window",
           },
         ],
-        size: "48 m2",
-        bed: "1 King or 2 Singles",
-        capacity: "2 guests",
-        view: "Garden view",
-        features: [
-          "AC and smart TV",
-          "Bathroom with shower",
-          "Mini bar and safety box",
-          "Private balcony",
-        ],
+        size: "27 m2",
+        bed: "Double or Twin size bed",
+        capacity: "2 Guests",
+        view: "Street view / Garden view",
+        location: "Floor 1",
+        countRoom: "24 Rooms",
       },
       {
         slug: "deluxe-with-view",
         name: "Deluxe with View",
         description:
-          "Upper-floor deluxe room with a balcony overlooking the tropical garden or Benoa Bay.",
+          "Deluxe Room with View offers a more special stay on floors 2 and 3, with a view from the room to enjoy throughout your stay. It comes with a choice of Queen or Twin beds, a modern bathroom, a 43-inch Smart TV, a work area, and high-speed internet access.",
         image: {
           src: "/images/qubu-suites-1.jpeg",
           alt: "Deluxe with View room with a king bed and carved wooden panels",
@@ -141,22 +145,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Deluxe with View room with a wavy headboard panel",
           },
         ],
-        size: "52 m2",
-        bed: "1 King",
-        capacity: "2 guests + 1 child",
-        view: "Garden or Benoa Bay",
-        features: [
-          "Private balcony with a view",
-          "Seating area",
-          "Mini fridge and coffee machine",
-          "Executive Lounge access",
-        ],
+        size: "27 m2",
+        bed: "Double or Twin size bed",
+        capacity: "2 Guests",
+        view: "Pool view / Nature view",
+        location: "Floor 2 & Floor 3",
+        countRoom: "50 Rooms",
       },
       {
         slug: "suite-room",
         name: "Suite Room",
         description:
-          "One-bedroom suite with a separate living room, dining table, and Executive Lounge access.",
+          "Suite Room offers spacious and elegant interiors, designed to give guests who want a special stay that much more comfort. Complete with a living room and pantry, it provides a comfortable space to relax or enjoy time together.",
         image: {
           src: "/images/qubu-suites-4.jpeg",
           alt: "Suite Room living room with a sofa and dining table",
@@ -175,22 +175,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Suite Room with a wavy headboard panel",
           },
         ],
-        size: "64 m2",
-        bed: "1 King",
-        capacity: "2 guests",
-        view: "Garden view",
-        features: [
-          "Separate living room",
-          "Private balcony",
-          "Executive Lounge access",
-          "24-hour butler service",
-        ],
+        size: "48 m2",
+        bed: "Double size bed",
+        capacity: "2 Guests",
+        view: "Pool view / Nature view",
+        location: "Floors 1, 2 & 3",
+        countRoom: "6 Rooms",
       },
       {
         slug: "family-suite",
         name: "Family Suite",
         description:
-          "Family suite with a kitchenette and shared living room for up to four guests.",
+          "Family Suite offers spacious and comfortable rooms designed specifically for families who want to enjoy their time together with more freedom. With two bedrooms and two bathrooms, every family member gets privacy and comfort — the right choice for larger families who want a comfortable, practical space to stay.",
         image: {
           src: "/images/qubu-suites-3.jpeg",
           alt: "Kitchenette and minibar area in a Family Suite at Hotel Qubu Suites",
@@ -209,22 +205,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Family Suite living room with a sofa and dining table",
           },
         ],
-        size: "96 m2",
-        bed: "1 King + 2 Single",
-        capacity: "4 guests",
-        view: "Tropical garden",
-        features: [
-          "Shared living room",
-          "Kitchenette",
-          "Children's amenities available",
-          "Executive Lounge access",
-        ],
+        size: "75 m2",
+        bed: "Double & Twin Size bed",
+        capacity: "4 Guests",
+        view: "Pool view / Nature view",
+        location: "Floor 1 & Floor 2",
+        countRoom: "3 Rooms",
       },
       {
         slug: "qubu-grand-suite",
         name: "Qubu Grand Suite",
         description:
-          "The largest suite with a separate living room and dining room plus a panoramic balcony.",
+          "Qubu Grand Suite is the most spacious and exclusive room type at Qubu Suites Hotel, offering elegant interiors with premium facilities for a special stay. Complete with a bathtub overlooking the waterpark, a comfortable living room, and a spacious walk-in closet, every space is designed to deliver comfort and privacy in one refined experience.",
         image: {
           src: "/images/hero-hotel-room.jpg",
           alt: "Qubu Grand Suite with a seating area and a bed facing a large window",
@@ -243,30 +235,15 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Qubu Grand Suite living room with a sofa and dining table",
           },
         ],
-        size: "160 m2",
-        bed: "1 King",
-        capacity: "2 – 4 guests",
-        view: "Benoa Bay panorama",
-        features: [
-          "Separate living room and dining room",
-          "Panoramic balcony",
-          "24-hour butler service",
-          "Executive Lounge access",
-        ],
+        size: "75 m2",
+        bed: "Double & Twin Size bed",
+        capacity: "4 Guests",
+        view: "Pool / Nature / forest view",
+        location: "Floor 3",
+        countRoom: "1 Room",
       },
     ],
     facilities: [
-      {
-        slug: "qubiq-bar",
-        name: "Qubiq Bar",
-        type: "Bar & Lounge",
-        description:
-          "Bar lounge with tropical cocktails, a wine selection, and small bites, open every afternoon into the evening.",
-        image: {
-          src: "/images/work-sky-lounge.jpg",
-          alt: "Bar lounge with a seating area and a bottle shelf facing the sea",
-        },
-      },
       {
         slug: "meeting-room",
         name: "Meeting Room",
@@ -294,7 +271,12 @@ export const businessUnitsEn: BusinessUnit[] = [
         name: "Entertainment Room",
         type: "Entertainment Room",
         description:
-          "Entertainment room with a billiard table, karaoke, and game consoles for adult guests and families alike.",
+          "An entertainment room to relax and gather, whether to fill your free time after a busy day or to get together before heading to bed.",
+        highlights: [
+          "In-hotel entertainment. Practical and easy to access while you stay.",
+          "Good for gathering. Suits families, friends, or groups.",
+          "A comfortable, relaxed atmosphere. A place to unwind after travelling.",
+        ],
         image: {
           src: "/images/work-lobby.jpg",
           alt: "Lounge with red sofas and wooden tables",
@@ -305,7 +287,13 @@ export const businessUnitsEn: BusinessUnit[] = [
         name: "Kids Club",
         type: "Kids Club",
         description:
-          "Kids play area with certified supervisors, daily activities, and a 1:6 supervision ratio.",
+          "A fun play space for the little ones — ideal right after check-in, between family activities, or before bedtime.",
+        highlights: [
+          "A cheerful, child-friendly atmosphere.",
+          "Play area inside the hotel.",
+          "Perfect for family holidays.",
+        ],
+        note: "Children should be accompanied by a parent or guardian while playing.",
         image: {
           src: "/images/service-kids-club.jpg",
           alt: "Kids play area with a slide and colourful frames",
@@ -317,15 +305,20 @@ export const businessUnitsEn: BusinessUnit[] = [
     slug: "hotel-q",
     name: "Hotel Q",
     type: "Hotel",
-    tagline: "Superior to Suite rooms in the main building of the Q area",
+    tagline:
+      "Hotel Q brings a relaxed atmosphere with a touch of modern style mixed with local accents. With 38 rooms across a range of types, enjoy a comfortable space to rest and recharge.",
     summary:
-      "The main building of the Q area with five room types, an adult pool and a kids pool, plus pedestrian access to The Q Hall and Paradis-Q.",
+      "Hotel Q offers a relaxed atmosphere with a modern take on lifestyle, mixed with local accents. With 38 rooms across a range of types, Hotel Q is a comfortable place to rest and spend a calmer kind of time.",
     description: [
       "Hotel Q is the main building of the Q area and the entry point for most guests. It offers five room types: Superior, Superior Plus, Premier, Premier Plus, and Suite Room.",
       "An atrium-style lobby connects the reception, lobby lounge, and tourist information centre for guests newly arrived in the Q area.",
       "Supporting facilities include an adult pool and kids pool, a fitness centre, a meeting room, and a covered pedestrian walkway to The Q Hall and Paradis-Q.",
     ],
     image: {
+      src: "/images/hotel-q-1.jpeg",
+      alt: "Hotel Q facade with layered red and white geometric lattice",
+    },
+    heroImage: {
       src: "/images/hotel-q-1.jpeg",
       alt: "Hotel Q facade with layered red and white geometric lattice",
     },
@@ -368,12 +361,11 @@ export const businessUnitsEn: BusinessUnit[] = [
       "Covered pedestrian walkway to The Q Hall and Paradis-Q",
     ],
     specs: [
-      { label: "Number of rooms", value: "268 rooms" },
-      { label: "Room types", value: "5 categories" },
-      { label: "Room size", value: "24 – 56 m2" },
-      { label: "Check-in / out", value: "14:00 / 12:00 WITA" },
-      { label: "Signature facilities", value: "Adult Pool & Meeting Room" },
-      { label: "Location", value: "Q area, Tanjung Benoa" },
+      { label: "Number of rooms", value: "38 Rooms" },
+      { label: "Room types", value: "5 Room Types" },
+      { label: "Room size", value: "18-45 m2" },
+      { label: "Check-in / out", value: "14:00/12:00 WIB" },
+      { label: "Signature facilities", value: "Paradis-Q Waterpark" },
     ],
     hours: "24-hour reception",
     roomTypesLabel: "Room Types",
@@ -381,9 +373,9 @@ export const businessUnitsEn: BusinessUnit[] = [
     roomTypes: [
       {
         slug: "superior",
-        name: "Superior",
+        name: "Superior Room",
         description:
-          "Hotel Q's entry-level room type with full amenities for two guests and access to the entire Q area.",
+          "Enjoy simple yet memorable comfort, in a space designed to deliver a calm and practical stay.",
         image: {
           src: "/images/hotel-q-2.jpeg",
           alt: "Superior room at Hotel Q with a large bed and elephant-shaped towels",
@@ -402,22 +394,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Superior room with a wavy headboard panel",
           },
         ],
-        size: "24 m2",
-        bed: "1 King or 2 Singles",
-        capacity: "2 guests",
-        view: "City or garden",
-        features: [
-          "AC and smart TV",
-          "Bathroom with shower",
-          "Mini bar and safety box",
-          "Adult pool & kids pool access",
-        ],
+        size: "21 m2",
+        bed: "Double or Twin Size bed",
+        capacity: "2 Guests",
+        view: "Lotus / Teras field / City view",
+        location: "Floors 1, 2 and 3",
+        countRoom: "Double (17 Rooms) / Twin (11 Rooms)",
       },
       {
         slug: "superior-plus",
         name: "Superior Plus",
         description:
-          "A larger superior room with a seating area, work desk, and large window.",
+          "More space and more complete comfort — ideal for resting after enjoying the various experiences at Hotel Q.",
         image: {
           src: "/images/hero-hotel-room.jpg",
           alt: "Superior Plus room with a sofa, large bed, and wide window",
@@ -436,22 +424,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Superior Plus room with a wavy headboard panel",
           },
         ],
-        size: "28 m2",
-        bed: "1 King",
-        capacity: "2 guests + 1 child",
-        view: "Pool view",
-        features: [
-          "Extra seating area",
-          "Private balcony",
-          "Coffee maker and mini bar",
-          "Adult pool & kids pool access",
-        ],
+        size: "24 m2",
+        bed: "Double or Twin Size bed",
+        capacity: "2 Guests",
+        view: "Lotus / Teras field / City view",
+        location: "Floors 2 and 3",
+        countRoom: "Double (4 Rooms) / Twin (2 Rooms)",
       },
       {
         slug: "premier",
-        name: "Premier",
+        name: "Premier Room",
         description:
-          "Premier room with a large bed, wooden panels, and more generous space.",
+          "With more open space and a more comfortable atmosphere, Premier Room offers a more special stay for every trip.",
         image: {
           src: "/images/work-suite.jpg",
           alt: "Premier room with a large bed and a wavy headboard panel",
@@ -470,22 +454,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Premier room with a large bed and towel decorations",
           },
         ],
-        size: "32 m2",
-        bed: "1 King",
-        capacity: "3 guests",
-        view: "Garden view",
-        features: [
-          "Work area and vanity desk",
-          "Mini fridge and coffee machine",
-          "Bathrobe and slippers",
-          "Adult pool & kids pool access",
-        ],
+        size: "36 m2",
+        bed: "Double or Twin Size bed",
+        capacity: "2 Guests",
+        view: "Lotus / Teras field / City view",
+        location: "Floors 2 and 3",
+        countRoom: "Double (2 Rooms)",
       },
       {
         slug: "premier-plus",
         name: "Premier Plus",
         description:
-          "Premier room with an extra seating area and pool or garden views of the Q area.",
+          "More spacious, more comfortable, and designed to give you room to relax and enjoy your time at Hotel Q.",
         image: {
           src: "/images/hero-hotel-room.jpg",
           alt: "Premier Plus room with a sofa and a bed facing a large window",
@@ -504,22 +484,18 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Premier Plus room with a large bed and towel decorations",
           },
         ],
-        size: "36 m2",
-        bed: "1 King",
-        capacity: "2 guests + 1 child",
-        view: "Pool & garden view",
-        features: [
-          "Extra seating area",
-          "Private balcony",
-          "Coffee maker and mini bar",
-          "Adult pool & kids pool access",
-        ],
+        size: "45 m2",
+        bed: "Double or Twin Size bed",
+        capacity: "2 Guests",
+        view: "Lotus / Teras field / City view",
+        location: "Floor 3",
+        countRoom: "King Bed (1 Room)",
       },
       {
         slug: "suite-room",
         name: "Suite Room",
         description:
-          "One-bedroom suite with a small living room and the most generous space at Hotel Q.",
+          "Enjoy a more complete stay with generous space and an area to relax, creating a comfortable setting for moments with the people closest to you.",
         image: {
           src: "/images/work-suite.jpg",
           alt: "Suite Room with a large bed and seating area at Hotel Q",
@@ -538,45 +514,37 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Suite Room at Hotel Q with a large bed",
           },
         ],
-        size: "56 m2",
-        bed: "1 King",
-        capacity: "2 guests + 2 children",
-        view: "Pool view",
-        features: [
-          "Separate living room",
-          "Private balcony",
-          "24-hour room service",
-          "Adult pool & kids pool access",
-        ],
+        size: "40 m2",
+        bed: "Double or Twin Size bed",
+        capacity: "2 Guests",
+        view: "Lotus / Teras field / City view",
+        location: "Floor 2",
+        countRoom: "King Bed (1 Room)",
       },
     ],
-    facilities: [
-      {
-        slug: "meeting-room",
-        name: "Meeting Room",
-        type: "Meeting Room",
-        description:
-          "Meeting room with a projector and sound system for corporate meetings and small-scale private events.",
-        image: {
-          src: "/images/service-ballroom.jpg",
-          alt: "Meeting room with rows of chairs and a high ceiling",
-        },
-      },
-    ],
+    // No supporting facilities of its own: the meeting room it shares is published on the
+    // Qubu Suites page, so the band is dropped from this page rather than duplicated.
+    facilities: [],
+    showFacilitiesSection: false,
   },
   {
     slug: "qhall",
-    name: "The Q Hall Convention Center",
-    type: "Convention Center",
-    tagline: "A pillar-free ballroom and six versatile meeting rooms",
+    name: "The Q Hall Ballroom and Convention Center",
+    type: "Ballroom and Convention Center",
+    tagline:
+      "With a capacity of up to 2,000 guests, The Q Hall Convention Center is a flexible venue for every occasion — from weddings and conferences to meetings, seminars, workshops, and gatherings.",
     summary:
-      "A convention centre with a pillar-free ballroom, pre-function lounge, and a technical event team for conferences, exhibitions, and large-scale weddings.",
+      "A spacious and comfortable venue for your conferences, exhibitions, and weddings, supported by an event team ready to guide you from planning through to event day.",
     description: [
-      "The Q Hall Convention Center is designed for conferences, exhibitions, and large-scale weddings. Its main ballroom is pillar-free with a 9-metre ceiling height and can be divided into three independent rooms.",
-      "Six meeting rooms — Merbau, Lontar, Pulai, The Q Hall Floor 1, Mahoni, and Mahoni Outdoor — are available for parallel sessions, banquets, and private events with varying capacities.",
-      "The Q Hall event team handles technical planning, catering for thousands of pax, and accommodation coordination for delegates staying at Hotel Q and Hotel Qubu Suites.",
+      "The Q Hall's main ballroom covers 1,340 m² and is designed without pillars, so all of your guests can enjoy the event with an unobstructed view. For smaller guest counts, the ballroom can be divided into three standalone rooms.",
+      "We also provide six meeting rooms of varying sizes and capacities for parallel sessions, banquets, and private events.",
+      "Our event team helps prepare technical requirements, catering for thousands of servings, and accommodation for attendees staying at Hotel Q and Qubu Suites. That way, you can focus on the content of your event.",
     ],
     image: {
+      src: "/images/qhall-1.jpeg",
+      alt: "The Q Hall Convention Center facade with a decorative wire canopy",
+    },
+    heroImage: {
       src: "/images/qhall-1.jpeg",
       alt: "The Q Hall Convention Center facade with a decorative wire canopy",
     },
@@ -615,61 +583,24 @@ export const businessUnitsEn: BusinessUnit[] = [
       },
     ],
     features: [
-      "Pillar-free ballroom with a 9-metre ceiling",
-      "Can be divided into three independent rooms",
-      "Six versatile meeting rooms",
-      "Pre-function lounge for receptions and exhibitions",
-      "Integrated LED screens, audio system, and rigging",
-      "Catering for thousands of pax with a halal kitchen",
+      "VIP Room / Naratama Room. A dedicated area for special guests. It can be used as a transit room or a preparation space for your special guests.",
+      "Integrated LED Videotron screens, audio system, and rigging. Supports large-scale event production.",
+      "Catering for thousands of pax from a halal kitchen. Keeps every one of your guests comfortable.",
     ],
     specs: [
-      { label: "Ballroom", value: "1,800 m2" },
-      { label: "Meeting rooms", value: "6 rooms" },
-      { label: "Ceiling", value: "9 metres, pillar-free" },
-      { label: "Banquet capacity", value: "1,200 pax" },
-      { label: "Theatre capacity", value: "1,500 delegates" },
-      { label: "Location", value: "Q area, east wing" },
+      { label: "Main ballroom area", value: "1,340 m²" },
+      { label: "Meeting room options", value: "6 rooms" },
+      { label: "Banquet capacity", value: "2,000 pax" },
     ],
-    hours: "Flexible according to the event schedule",
+    hours: "The schedule can be adjusted to your needs",
     roomTypesLabel: "Venue Types",
     roomTypesNoun: "venues",
     roomTypes: [
       {
-        slug: "merbau",
-        name: "Merbau",
-        description:
-          "The largest meeting room with theatre or classroom setups and the signature patterned carpet of Q Hall.",
-        image: {
-          src: "/images/qhall-2.jpeg",
-          alt: "Merbau room with rows of chairs and a red patterned carpet",
-        },
-        images: [
-          {
-            src: "/images/qhall-2.jpeg",
-            alt: "Merbau room with rows of chairs and a red patterned carpet",
-          },
-          {
-            src: "/images/qhall-4.jpeg",
-            alt: "Merbau room with classroom table setup and chandeliers",
-          },
-          {
-            src: "/images/qhall-6.jpeg",
-            alt: "Merbau room with round tables, red carpet, and gold chandeliers",
-          },
-        ],
-        size: "500 m2",
-        capacity: "400 delegates",
-        features: [
-          "Theatre, classroom, or banquet setups",
-          "LED screen and sound system",
-          "Direct access door to the pre-function lounge",
-        ],
-      },
-      {
         slug: "lontar",
         name: "Lontar",
         description:
-          "Banquet room with round tables for gala dinners, receptions, and delegate dinners.",
+          "A comfortable banquet room for meetings, receptions, and delegate dinners. Located close to the QHall entrance.",
         image: {
           src: "/images/qhall-3.jpeg",
           alt: "Lontar room with round tables and a patterned red carpet",
@@ -688,19 +619,38 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Lontar room with chair setup and a red patterned carpet",
           },
         ],
-        size: "380 m2",
-        capacity: "300 guests",
-        features: [
-          "Round-table banquet setup",
-          "Close to the catering kitchen",
-          "Holding room for the bridal couple",
+        size: "204 m²",
+      },
+      {
+        slug: "merbau",
+        name: "Merbau",
+        description:
+          "A meeting room with warm lighting for your conference sessions. Setups can be classroom, theatre, or U-shape, with a projector and screen.",
+        image: {
+          src: "/images/qhall-2.jpeg",
+          alt: "Merbau room with rows of chairs and a red patterned carpet",
+        },
+        images: [
+          {
+            src: "/images/qhall-2.jpeg",
+            alt: "Merbau room with rows of chairs and a red patterned carpet",
+          },
+          {
+            src: "/images/qhall-4.jpeg",
+            alt: "Merbau room with classroom table setup and chandeliers",
+          },
+          {
+            src: "/images/qhall-6.jpeg",
+            alt: "Merbau room with round tables, red carpet, and gold chandeliers",
+          },
         ],
+        size: "306 m²",
       },
       {
         slug: "pulai",
         name: "Pulai",
         description:
-          "Meeting room with classroom table setup and warm lighting for parallel conference sessions.",
+          "The largest meeting room, with theatre, standing, or banquet setups to suit your needs. Can be equipped with an LED Videotron screen and a sound system.",
         image: {
           src: "/images/qhall-4.jpeg",
           alt: "Pulai room with classroom table setup and chandeliers",
@@ -719,19 +669,13 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Pulai room with round tables and a patterned carpet",
           },
         ],
-        size: "240 m2",
-        capacity: "180 attendees",
-        features: [
-          "Classroom or U-shape setup",
-          "Projector and screen",
-          "Connection to other breakout rooms",
-        ],
+        size: "740 m²",
       },
       {
         slug: "the-q-hall-lantai-1",
-        name: "The Q Hall Floor 1",
+        name: "The Q Hall Lantai 1",
         description:
-          "Main ground-floor hall for exhibitions, conventions, and large banquets with a high ceiling.",
+          "The largest main hall on the ground floor, formed by combining three rooms for exhibitions, conventions, and large banquets. Loading dock access and rigging are available.",
         image: {
           src: "/images/qhall-6.jpeg",
           alt: "The Q Hall Floor 1 with round tables, red carpet, and gold chandeliers",
@@ -750,19 +694,13 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "The Q Hall Floor 1 with classroom table setup",
           },
         ],
-        size: "1,200 m2",
-        capacity: "1,200 guests",
-        features: [
-          "Loading dock access",
-          "Can be combined with the main ballroom",
-          "Rigging and three-phase power",
-        ],
+        size: "1,340 m²",
       },
       {
         slug: "mahoni",
         name: "Mahoni",
         description:
-          "Meeting and banquet room with round-table setups and draped chairs for private events.",
+          "A comfortable room for your seminars or private banquets, with banquet or seminar setups. Equipped with a projector and a small stage to complete your event.",
         image: {
           src: "/images/mahoni-1.jpeg",
           alt: "Mahoni room with round tables and pink-draped chairs",
@@ -781,19 +719,13 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Banquet room with a flower-decorated aisle and chandeliers",
           },
         ],
-        size: "320 m2",
-        capacity: "240 guests",
-        features: [
-          "Banquet and seminar setups",
-          "Projector and small stage",
-          "Kitchen connected to Q Hall catering",
-        ],
+        size: "368 m²",
       },
       {
         slug: "mahoni-outdoor",
         name: "Mahoni Outdoor",
         description:
-          "Semi-open area beside Mahoni for casual events, birthdays, and garden-themed receptions.",
+          "A semi-open area with natural airflow, suited to birthdays, family events, and private garden-themed receptions. The decorative stage can be tailored to your concept.",
         image: {
           src: "/images/mahoni-2.jpeg",
           alt: "Mahoni Outdoor room with balloon decorations and an event stage",
@@ -812,32 +744,62 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Semi-open area with a flower-decorated aisle",
           },
         ],
-        size: "260 m2",
-        capacity: "200 guests",
-        features: [
-          "Flexible decorative stage",
-          "Open-air ventilation",
-          "Great for family events",
-        ],
+        size: "442 m²",
       },
     ],
     facilities: [],
+    sectionCopy: {
+      heroCtaLabel: "Discuss Your Event",
+      heroNote: "The schedule can be adjusted to your needs",
+      profile: {
+        eyebrow: "A closer look at The Q Hall",
+        title: "A space that helps your event run smoothly",
+      },
+      rooms: {
+        eyebrow: "Venue Options",
+        title: "Venue options to match the needs of your event",
+        description:
+          "Every room differs in size, capacity, and facilities so it can suit your event.",
+        ctaLabel: "Ask about availability",
+      },
+      facilities: {
+        eyebrow: "Supporting Facilities",
+        title: "Other facilities for a smooth-running event",
+        description: "Additional equipment available to make your event more memorable.",
+      },
+      gallery: {
+        eyebrow: "Gallery",
+        title: "The Q Hall Ballroom Convention Center gallery",
+        description:
+          "See what our hall looks like as a reference for planning your best event yet.",
+      },
+      closing: {
+        title: "Ready to plan your event?",
+        description:
+          "Tell us the date, number of guests, and the concept you have in mind. Our Q Hall team will get to work and make your event unforgettable.",
+        ctaLabel: "Contact Us Now",
+      },
+    },
   },
   {
     slug: "paradis-q",
     name: "Paradis-Q Waterpark",
     type: "Waterpark",
-    tagline: "A wave pool, lazy river, and a 22-metre slide tower",
+    tagline:
+      "Time for fun at Paradis-Q Waterpark! Enjoy the thrill of the wave pool, ride a range of water slides, swim in a leafy area, or simply relax in a gazebo with the family.",
     summary:
-      "A family waterpark with five main pool areas, a slide tower, plus Food Corner and Rooftop Q within the area.",
+      "A water recreation destination for families, offering a range of pools and water attractions for all ages. Find the fun at Paradis Q Waterpark, with water experiences across five pools of different flavours and attractions worth the challenge. Complete with a lounging area and dining options. Make the day more fun by swimming at Paradis Q Waterpark.",
     description: [
-      "Paradis-Q Waterpark is the heart of the family holiday experience in the Q area. Five main pool areas serve every age, from a 20 cm-deep kids pool to a 1,100 m2 wave pool and a 22-metre slide tower.",
-      "The entire area uses a closed-circulation filtration system with water quality monitoring every two hours, and is guarded by Bronze Medallion-certified lifeguards patrolling in shifts.",
-      "Supporting facilities include lockers, warm-water shower rooms, a lactation room, Food Corner, and Rooftop Q with direct views of the pool area.",
+      "A water recreation destination for families, offering a range of pools and water attractions for all ages. Find the fun at Paradis Q Waterpark, with water experiences across five pools of different flavours, right through to attractions worth the challenge.",
+      "Complete with a lounging area and dining options. Make the day more fun by swimming at Paradis Q Waterpark.",
     ],
     image: {
       src: "/images/thower_slide_1.jpg",
       alt: "Colourful 22-metre slide tower at Paradis-Q Waterpark",
+    },
+    heroImage: {
+      src: "/images/thower_slide_1.jpg",
+      alt: "Slide tower and main pool at Paradis-Q Waterpark",
     },
     gallery: [
       {
@@ -902,22 +864,17 @@ export const businessUnitsEn: BusinessUnit[] = [
       },
     ],
     features: [
-      "1,100 m2 wave pool with scheduled waves",
-      "260-metre lazy river",
-      "22-metre slide tower",
-      "Kids pool with a depth of 20 – 40 cm",
-      "Certified lifeguards with regular monitoring",
-      "Food Corner and Rooftop Q within the area",
+      "Five pools with different flavours of fun",
+      "Water attractions for an adrenaline hit",
+      "A lounging area and dining options",
     ],
     specs: [
-      { label: "Area size", value: "3.4 hectares" },
-      { label: "Pool types", value: "5 pool areas" },
-      { label: "Daily capacity", value: "4,500 visitors" },
-      { label: "Operating hours", value: "09:00 – 18:00 WITA" },
-      { label: "Tallest slide", value: "22 metres" },
-      { label: "Location", value: "Q area, north side" },
+      { label: "Number of pools", value: "5 Pools" },
+      { label: "Price", value: "Weekday 75,000 & Weekend 125,000" },
+      { label: "Operating hours", value: "09:00 – 17:00 WIB" },
+      { label: "Free entry", value: "Seniors 60+ & children under 80 cm" },
     ],
-    hours: "09:00 – 18:00 WITA",
+    hours: "09:00 – 17:00 WIB",
     roomTypesLabel: "Pool Types",
     roomTypesNoun: "pools",
     roomTypes: [
@@ -925,7 +882,7 @@ export const businessUnitsEn: BusinessUnit[] = [
         slug: "kolam-anak",
         name: "Kids Pool",
         description:
-          "Shallow solar-heated pool with small slides and lifeguard supervision for toddlers.",
+          "A kids pool with plenty of fun attractions and an iconic giant tipping bucket.",
         image: {
           src: "/images/kolam_anak_1.jpg",
           alt: "Water play structure with small slides and a tipping bucket at the kids pool",
@@ -944,50 +901,15 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Giant bucket pouring water in the kids pool play area",
           },
         ],
-        size: "Depth 20 – 40 cm",
-        capacity: "Children & toddlers",
-        features: [
-          "Warm water from solar heating",
-          "Small slides designed for children",
-          "Full lifeguard supervision",
-        ],
-      },
-      {
-        slug: "semi-olympic",
-        name: "Semi Olympic",
-        description:
-          "Semi-olympic-size pool with six lanes for serious swimming and light training.",
-        image: {
-          src: "/images/semi_olympic_2.jpg",
-          alt: "Semi-olympic pool lanes with lane ropes and swimming visitors",
-        },
-        images: [
-          {
-            src: "/images/semi_olympic_2.jpg",
-            alt: "Semi-olympic pool lanes with lane ropes and swimming visitors",
-          },
-          {
-            src: "/images/semi_olympic_1.jpg",
-            alt: "Semi-olympic pool with swimming visitors and a patterned deck",
-          },
-          {
-            src: "/images/semi_olympic_3.jpg",
-            alt: "Semi-olympic pool facing the building and tropical garden",
-          },
-        ],
-        size: "25 metres, 6 lanes",
-        capacity: "Adults & teens",
-        features: [
-          "Depth 1.2 – 1.5 metres",
-          "Lanes with clear markers",
-          "Start and finish area for training",
-        ],
+        size: "40 CM",
+        capacity: "Children & Toddlers",
+        specLabels: { size: "Pool Depth", capacity: "Pool Category" },
       },
       {
         slug: "kolam-arus",
         name: "Lazy River",
         description:
-          "A 260-metre lazy river winding around the waterpark's green area.",
+          "A lazy river set amid lush greenery, with a gentle current to float along and relax.",
         image: {
           src: "/images/kolam_arus_1.jpg",
           alt: "Lazy river channel between rocks and greenery",
@@ -1006,19 +928,41 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Winding lazy river channel between rocks",
           },
         ],
-        size: "260 metres",
-        capacity: "All ages",
-        features: [
-          "Gentle current along a circular route",
-          "Inner tubes available",
-          "Exit points in several zones",
+        size: "120 CM",
+        capacity: "General",
+        specLabels: { size: "Pool Depth", capacity: "Pool Category" },
+      },
+      {
+        slug: "semi-olympic",
+        name: "Semi Olympic",
+        description: "A comfortable semi-Olympic pool for a calmer spell of swimming.",
+        image: {
+          src: "/images/semi_olympic_2.jpg",
+          alt: "Semi-olympic pool lanes with lane ropes and swimming visitors",
+        },
+        images: [
+          {
+            src: "/images/semi_olympic_2.jpg",
+            alt: "Semi-olympic pool lanes with lane ropes and swimming visitors",
+          },
+          {
+            src: "/images/semi_olympic_1.jpg",
+            alt: "Semi-olympic pool with swimming visitors and a patterned deck",
+          },
+          {
+            src: "/images/semi_olympic_3.jpg",
+            alt: "Semi-olympic pool facing the building and tropical garden",
+          },
         ],
+        size: "80 CM – 2 M",
+        capacity: "Teens & Adults",
+        specLabels: { size: "Pool Depth", capacity: "Pool Category" },
       },
       {
         slug: "kolam-ombak",
         name: "Wave Pool",
         description:
-          "A 1,100 m2 wave pool with scheduled waves every session.",
+          "An iconic wave pool with waves arriving on a rhythm, delivering thrills you never quite expect.",
         image: {
           src: "/images/kolam_ombak_2.jpg",
           alt: "Visitors playing in the wave pool with green inner tubes",
@@ -1037,19 +981,14 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Crowded wave pool beneath palm trees",
           },
         ],
-        size: "1,100 m2",
-        capacity: "All ages",
-        features: [
-          "Scheduled waves every session",
-          "Gradual depth 0.3 – 1.5 metres",
-          "Poolside seating area",
-        ],
+        size: "0 – 2 M",
+        capacity: "General",
+        specLabels: { size: "Pool Depth", capacity: "Pool Category" },
       },
       {
         slug: "tower-slide",
-        name: "Tower Slide",
-        description:
-          "A 22-metre slide tower with a racer slide and bowl slide for adrenaline seekers.",
+        name: "Slide Pool",
+        description: "A slide pool with an extreme run for a fully adrenaline-fuelled experience.",
         image: {
           src: "/images/thower_slide_1.jpg",
           alt: "Colourful slide tower with a pool below",
@@ -1068,36 +1007,32 @@ export const businessUnitsEn: BusinessUnit[] = [
             alt: "Wide view of the waterpark with its slide tower and pools",
           },
         ],
-        size: "Height 22 metres",
-        capacity: "Minimum height 120 cm",
-        features: [
-          "Multi-lane racer slide",
-          "Bowl slide for one or two riders",
-          "Height check at the entrance",
-        ],
+        size: "80 CM",
+        capacity: "General",
+        specLabels: { size: "Pool Depth", capacity: "Pool Category" },
       },
     ],
     facilities: [
-      {
-        slug: "food-corner",
-        name: "Food Corner",
-        type: "Food Court",
-        description:
-          "Food court with eight Indonesian-themed tenants and a covered dining area for waterpark visitors.",
-        image: {
-          src: "/images/service-restaurant.jpg",
-          alt: "Dining area with tables and chairs facing the sea",
-        },
-      },
       {
         slug: "rooftop-q",
         name: "Rooftop Q",
         type: "Rooftop Venue",
         description:
-          "Versatile rooftop for private events, banquets, and weddings with direct views of the waterpark area.",
+          "Rooftop Q overlooks the waterpark and offers indoor and semi-outdoor areas, suited to a wide range of events.",
         image: {
           src: "/images/q-rooftop-1.jpeg",
           alt: "Rooftop Q with a flower-decorated aisle and round tables",
+        },
+      },
+      {
+        slug: "food-corner",
+        name: "Food Corner",
+        type: "Food Court",
+        description:
+          "A food corner within the waterpark area with a wide range of dining choices, suited to a range of social events.",
+        image: {
+          src: "/images/service-restaurant.jpg",
+          alt: "Dining area with tables and chairs overlooking the garden",
         },
       },
     ],
@@ -1106,15 +1041,18 @@ export const businessUnitsEn: BusinessUnit[] = [
     slug: "villa",
     name: "Villa Town House",
     type: "Villa",
-    tagline: "Six private two-storey villas with their own pools and kitchens",
+    tagline:
+      "An accommodation destination at Qubu Resort made up of four two-storey villas, suited to large families or guests who want more privacy.",
     summary:
-      "Six private villas with two to four bedrooms, private pools, kitchens, and villa host service.",
+      "An accommodation destination at Qubu Resort made up of four two-storey villas, suited to large families or guests who want more privacy.",
     description: [
-      "Villa Town House consists of six private two-storey units with two to four bedrooms, each with its own private pool, kitchen, and dining area.",
-      "Each villa has a villa host who takes care of guest needs, from transportation and catering to scheduling family activities.",
-      "The villas suit large families, small groups, and guests on long stays who need more privacy.",
+      "An accommodation destination at Qubu Resort made up of four two-storey villas, suited to large families or guests who want more privacy.",
     ],
     image: {
+      src: "/images/villa-5.jpeg",
+      alt: "Orange two-storey Villa Town House facade",
+    },
+    heroImage: {
       src: "/images/villa-5.jpeg",
       alt: "Orange two-storey Villa Town House facade",
     },
@@ -1149,19 +1087,21 @@ export const businessUnitsEn: BusinessUnit[] = [
       },
     ],
     features: [
-      "Six private villas, 2 to 4 bedrooms",
-      "Private pool and full kitchen",
-      "Villa host for daily needs",
-      "Private catering on request",
-      "In-area shuttle service",
+      "2 bedrooms + 1 children's room",
+      "Mini chiller",
+      "Living room",
+      "AC and non-smoking",
+      "Hot water",
+      "Second-floor balcony",
+      "Kitchen + free breakfast for 6 people",
+      "6 Paradis-Q Waterpark entry tickets",
+      "Free Wi-Fi",
+      "Free airport / A Yani pick-up and drop-off",
     ],
     specs: [
-      { label: "Number of villas", value: "6 units" },
-      { label: "Bedrooms", value: "2 – 4 rooms per villa" },
-      { label: "Capacity", value: "4 – 10 guests per villa" },
-      { label: "Check-in / out", value: "14:00 / 12:00 WITA" },
-      { label: "Facilities", value: "Private pool, kitchen, villa host" },
-      { label: "Location", value: "Q area, south side" },
+      { label: "Number of villas", value: "4 Units" },
+      { label: "Number of rooms", value: "3 Rooms" },
+      { label: "Check-in / out", value: "14:00 / 12:00 WIB" },
     ],
     hours: "Check-in 14:00 · Check-out 12:00",
     facilities: [],

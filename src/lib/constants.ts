@@ -1,6 +1,4 @@
 import type { NavItem, NavLinkItem, SocialLink } from "@/types";
-import { businessUnitMenu } from "@/data/units";
-import { diningVenueMenu } from "@/data/dining";
 
 /** Single source of truth for brand identity + static site configuration. */
 export const SITE = {
@@ -28,24 +26,27 @@ export const SITE = {
   },
 } as const;
 
-export const MAIN_NAV: NavItem[] = [
-  { label: "Home", labelKey: "nav.home", href: "/" },
-  { label: "Tentang", labelKey: "nav.about", href: "/about" },
-  // Dropdown entries are derived from src/data/units.ts (single source of truth).
-  {
-    label: "Destinasi",
-    labelKey: "nav.destinations",
-    href: "/unit-bisnis",
-    children: [
-      ...businessUnitMenu,
-      // Dining is a group entry: it has no page of its own and only reveals its
-      // restaurants (Patio Bistro, Embun Resto) on hover / tap.
-      { label: "Dining", labelKey: "nav.dining", children: diningVenueMenu },
-    ],
-  },
-  { label: "Kontak", labelKey: "nav.contact", href: "/contact" },
-  { label: "Karir", labelKey: "nav.careers", href: "/careers" },
-];
+/**
+ * Builds the main navigation tree.
+ *
+ * The "Destinasi" entries are passed in rather than imported, because they are derived
+ * from the *localized* destination and dining data (see `useMainNav`), so their labels
+ * follow the active language instead of freezing at the Indonesian source.
+ */
+export function buildMainNav(destinationsChildren: NavItem[]): NavItem[] {
+  return [
+    { label: "Home", labelKey: "nav.home", href: "/" },
+    { label: "Tentang", labelKey: "nav.about", href: "/about" },
+    {
+      label: "Destinasi",
+      labelKey: "nav.destinations",
+      href: "/unit-bisnis",
+      children: destinationsChildren,
+    },
+    { label: "Kontak", labelKey: "nav.contact", href: "/contact" },
+    { label: "Karir", labelKey: "nav.careers", href: "/careers" },
+  ];
+}
 
 export const FOOTER_NAV: { title: string; titleKey: string; items: NavLinkItem[] }[] = [
   {
@@ -57,8 +58,10 @@ export const FOOTER_NAV: { title: string; titleKey: string; items: NavLinkItem[]
       { label: "The Q Hall Convention Center", href: "/unit-bisnis/qhall" },
       { label: "Paradis-Q Waterpark", href: "/unit-bisnis/paradis-q" },
       { label: "Villa Town House", href: "/unit-bisnis/villa" },
-      { label: "Patio Bistro", href: "/dining/patio-bistro" },
       { label: "Embun Resto", href: "/dining/embun-resto" },
+      { label: "Qubiq Bar", href: "/dining/qubiq-bar" },
+      { label: "Patio Bistro", href: "/dining/patio-bistro" },
+      { label: "Food Corner", href: "/dining/food-corner" },
       { label: "Semua Destinasi", labelKey: "common.allDestinations", href: "/unit-bisnis" },
     ],
   },

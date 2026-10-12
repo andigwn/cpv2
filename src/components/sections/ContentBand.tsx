@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { bandOverlapStyle } from "@/lib/animations";
+import { BAND_OVERLAP } from "@/lib/animations";
 
 type ContentBandProps = {
   children: ReactNode;
@@ -12,6 +12,11 @@ type ContentBandProps = {
    * Pull the sheet up over the tail of the ImageBand above it so the content slides
    * over the still-pinned photo instead of only meeting its edge (the reference's
    * signature hand-off). Only use directly after an ImageBand.
+   *
+   * From `sm` up, where the band is a pinned full-screen frame. A phone band is only as
+   * tall as its photograph (see `photoFrame`), so the same overlap would swallow the whole
+   * picture before the visitor ever saw it; there the sheet simply starts at the photo's
+   * lower edge.
    */
   overlap?: boolean;
   className?: string;
@@ -58,8 +63,8 @@ export function ContentBand({
   return (
     <section
       id={id}
-      style={overlap ? bandOverlapStyle : undefined}
-      className={cn("bg-sand-100 relative z-10", className)}
+      style={overlap ? ({ "--band-overlap": BAND_OVERLAP } as CSSProperties) : undefined}
+      className={cn("bg-sand-100 relative z-10", overlap && "sm:-mt-(--band-overlap)", className)}
     >
       <div
         className={cn(

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ImageAsset } from "@/types";
 import { imageHover, staggerItem, viewportOnce } from "@/lib/animations";
@@ -16,6 +16,10 @@ type CardProps = {
   description?: string;
   eyebrow?: string;
   meta?: ReactNode;
+  /** Short selling points listed under the description. */
+  highlights?: string[];
+  /** Small muted caveat rendered below the highlights. */
+  note?: string;
   /** Optional footer row: tags, price, actions. */
   footer?: ReactNode;
   href?: string;
@@ -57,6 +61,8 @@ export function Card({
   description,
   eyebrow,
   meta,
+  highlights,
+  note,
   footer,
   href,
   ctaLabel,
@@ -97,7 +103,7 @@ export function Card({
         <div
           aria-hidden
           className={cn(
-            "absolute inset-0 bg-gradient-to-t opacity-0 transition-opacity duration-500 group-hover/card:opacity-90",
+            "absolute inset-0 bg-linear-to-t opacity-0 transition-opacity duration-500 group-hover/card:opacity-90",
             accentClasses[accent],
           )}
         />
@@ -127,6 +133,20 @@ export function Card({
           {title}
         </motion.h3>
         {description ? <p className="text-ink-600 text-sm leading-relaxed">{description}</p> : null}
+
+        {highlights?.length ? (
+          <ul className="flex flex-col gap-1.5">
+            {highlights.map((highlight) => (
+              <li key={highlight} className="text-ink-600 flex items-start gap-2 text-sm">
+                <Check className="text-leaf-600 mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                {highlight}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {note ? <p className="text-ink-400 text-xs leading-relaxed italic">{note}</p> : null}
+
         {footer ? <div className="mt-auto pt-3">{footer}</div> : null}
       </div>
     </>

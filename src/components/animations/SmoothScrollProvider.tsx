@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Lenis, type LenisRef } from "lenis/react";
 import { usePathname } from "next/navigation";
 import { ScrollTrigger } from "@/lib/gsap";
+import { registerLenis, scrollToAnchor } from "@/lib/anchorScroll";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 type SmoothScrollProviderProps = {
@@ -61,11 +62,9 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     // Deep link to an in-page section (e.g. /services#paket): after the new page has
     // painted, glide to the anchor instead of forcing the top of the document.
     const hash = window.location.hash;
-    const target = hash.length > 1 ? document.getElementById(hash.slice(1)) : null;
-    if (target) {
+    if (hash.length > 1 && scrollToAnchor(hash)) {
       const settle = setTimeout(() => {
         lenis.resize();
-        lenis.scrollTo(target, { offset: -96 });
         ScrollTrigger.refresh();
       }, 450);
       return () => clearTimeout(settle);
@@ -88,6 +87,26 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       clearTimeout(settle);
     };
   }, [pathname, lenisRef]);
+
+  // Publish the instance so the navigation menus can glide to an anchor on the page they
+  // are already on. That case never changes `pathname`, so the effect above never runs
+  // for it, and the browser's own fragment jump is suppressed while Lenis is driving.
+  useEffect(() => {
+    registerLenis(lenisRef?.lenis ?? null);
+  }, [lenisRef]);
+
+  useEffect(() => {
+    if (!lenisRef?.lenis) return;
+
+    // Back/forward across anchors on the same page, plus any native fragment jump.
+    const onHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.length > 1) scrollToAnchor(hash);
+    };
+
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, [lenisRef]);
 
   useEffect(() => {
     if (!lenisRef?.lenis) return;

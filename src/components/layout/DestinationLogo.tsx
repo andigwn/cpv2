@@ -5,10 +5,13 @@ const LOGOS: Record<string, { wordmark: string; subtitle: string }> = {
   "qubu-suites": { wordmark: "Qubu Suites", subtitle: "Hotel & Suites" },
   "hotel-q": { wordmark: "Hotel Q", subtitle: "Hotel" },
   qhall: { wordmark: "The Q Hall", subtitle: "Convention Center" },
+  // Wordmarks follow the brand names in the copywriting deck.
   "paradis-q": { wordmark: "Paradis-Q", subtitle: "Waterpark" },
   villa: { wordmark: "Villa Town House", subtitle: "Private Villas" },
   "patio-bistro": { wordmark: "Patio Bistro", subtitle: "All-day Dining" },
   "embun-resto": { wordmark: "Embun Resto", subtitle: "Signature Restaurant" },
+  "qubiq-bar": { wordmark: "Qubik Bar", subtitle: "Bar & Lounge" },
+  "food-corner": { wordmark: "Food Corner", subtitle: "Food Court" },
 };
 
 /**
@@ -24,8 +27,20 @@ export function destinationSlugFromPath(pathname: string): string | null {
  * Destination logo shown in the navbar on destination pages: the shared "Q" mark plus
  * the destination's own wordmark, so every destination reads as its own brand while
  * staying inside the Qubu lockup language.
+ *
+ * `overHero` switches the wordmark to white. The Q mark keeps its own colours either way —
+ * they are bright enough to hold on photography — but the dark green wordmark disappears
+ * against a full-bleed hero photograph, which is what destination pages now open with.
  */
-export function DestinationLogo({ slug, className }: { slug: string; className?: string }) {
+export function DestinationLogo({
+  slug,
+  overHero = false,
+  className,
+}: {
+  slug: string;
+  overHero?: boolean;
+  className?: string;
+}) {
   const logo = LOGOS[slug];
   if (!logo) return null;
 
@@ -33,10 +48,20 @@ export function DestinationLogo({ slug, className }: { slug: string; className?:
     <span className={cn("inline-flex min-w-0 items-center gap-2 sm:gap-2.5", className)}>
       <QMark className="h-7 w-7 shrink-0 sm:h-8 sm:w-8" />
       <span className="flex min-w-0 flex-col leading-none">
-        <span className="font-display text-lagoon-700 truncate text-[1.05rem] font-bold tracking-[0.01em] uppercase sm:text-[1.2rem]">
+        <span
+          className={cn(
+            "font-display truncate text-[1.05rem] font-bold tracking-[0.01em] uppercase sm:text-[1.2rem]",
+            overHero ? "text-white drop-shadow-[0_1px_10px_rgba(19,25,34,0.7)]" : "text-lagoon-700",
+          )}
+        >
           {logo.wordmark}
         </span>
-        <span className="text-ink-500 mt-0.5 truncate text-[0.42rem] font-semibold tracking-[0.22em] uppercase sm:text-[0.5rem]">
+        <span
+          className={cn(
+            "mt-0.5 truncate text-[0.42rem] font-semibold tracking-[0.22em] uppercase sm:text-[0.5rem]",
+            overHero ? "text-white/75" : "text-ink-500",
+          )}
+        >
           {logo.subtitle}
         </span>
       </span>

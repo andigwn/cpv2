@@ -87,8 +87,30 @@ export type UnitFacility = {
   /** Short type label, e.g. "Restoran", "Bar", "Meeting Room". */
   type: string;
   description: string;
+  /** Short selling points listed under the description. */
+  highlights?: string[];
+  /** Small closing caveat, e.g. a supervision note. Rendered muted below the highlights. */
+  note?: string;
   /** Optional: text-only cards are valid for facilities without official photography. */
   image?: ImageAsset;
+};
+
+/**
+ * Per-destination overrides for the section copy that `UnitDetailContent` otherwise takes
+ * from the shared dictionary. Destinations whose brief fixes its own wording supply these;
+ * the rest fall back to the generic headings.
+ */
+export type UnitSectionCopy = {
+  /** Hero button label. Defaults to `unit.contactCta`. */
+  heroCtaLabel?: string;
+  /** Small note beside the hero buttons, e.g. a scheduling caveat. */
+  heroNote?: string;
+  profile?: { eyebrow?: string; title?: string; description?: string };
+  rooms?: { eyebrow?: string; title?: string; description?: string; ctaLabel?: string };
+  facilities?: { eyebrow?: string; title?: string; description?: string };
+  gallery?: { eyebrow?: string; title?: string; description?: string };
+  /** Optional closing call-to-action band rendered after the gallery. */
+  closing?: { title: string; description: string; ctaLabel: string };
 };
 
 /** A dining venue, rendered on its own page under /dining/[slug]. */
@@ -99,6 +121,12 @@ export type DiningVenue = {
   type: string;
   description: string;
   image: ImageAsset;
+  /**
+   * Full-bleed opening photograph for the venue page. Picked for the frame rather than for
+   * the card, so it is usually the venue's widest, most atmospheric shot. Falls back to
+   * `image` when omitted.
+   */
+  heroImage?: ImageAsset;
   /** Photos used by the venue gallery. */
   gallery: ImageAsset[];
   /** Short selling points shown as chips. */
@@ -129,6 +157,15 @@ export type RoomType = {
   view?: string;
   /** Short selling points shown as chips on the card. */
   features?: string[];
+  /** Location within the unit, e.g. "Kawasan Q, sayap barat". */
+  location?: string;
+  // /jumlah kamar
+  countRoom?: string;
+  /**
+   * Overrides the card's spec labels for this entry. Pools read as "Kedalaman" / "Kategori"
+   * rather than "Luas" / "Kapasitas"; anything omitted keeps the shared label.
+   */
+  specLabels?: Partial<Record<"size" | "capacity" | "view" | "location" | "countRoom", string>>;
 };
 
 /** A business unit owned by the group, with its rooms, facilities and gallery. */
@@ -141,6 +178,12 @@ export type BusinessUnit = {
   summary: string;
   description: string[];
   image: ImageAsset;
+  /**
+   * Full-bleed opening photograph for the destination page. Picked for the frame rather than
+   * for the card - usually the building's exterior - because the hero crops to fill a whole
+   * viewport, which an interior close-up cannot survive. Falls back to `image` when omitted.
+   */
+  heroImage?: ImageAsset;
   gallery: ImageAsset[];
   features: string[];
   specs: { label: string; value: string }[];
@@ -153,6 +196,14 @@ export type BusinessUnit = {
   roomTypesNoun?: string;
   /** Supporting facilities shown on the page (restaurants, spa, meeting rooms, ...). */
   facilities: UnitFacility[];
+  /**
+   * Set to false to drop the supporting-facilities band from the page entirely, including
+   * the `features` chips it falls back to. Defaults to true. Used by destinations that
+   * have nothing of their own to list there.
+   */
+  showFacilitiesSection?: boolean;
+  /** Destinations whose brief dictates its own section wording supply these. */
+  sectionCopy?: UnitSectionCopy;
 };
 
 export type JobOpening = {

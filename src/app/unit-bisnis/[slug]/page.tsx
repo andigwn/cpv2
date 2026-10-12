@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { UnitDetailContent } from "@/components/sections/units/UnitDetailContent";
 import { businessUnits, getUnitBySlug } from "@/data/units";
-import { entityBackground } from "@/data/sectionBackgrounds";
 import { SITE } from "@/lib/constants";
 
 type UnitPageProps = {
@@ -20,6 +19,9 @@ export async function generateMetadata({ params }: UnitPageProps): Promise<Metad
 
   if (!unit) return { title: "Destinasi tidak ditemukan" };
 
+  // Social cards use the hero frame, not the card thumbnail: it is the shot the page opens on.
+  const hero = unit.heroImage ?? unit.image;
+
   return {
     title: unit.name,
     description: unit.summary,
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: UnitPageProps): Promise<Metad
     openGraph: {
       title: unit.name + " — " + SITE.name,
       description: unit.summary,
-      images: [{ url: unit.image.src, alt: unit.image.alt }],
+      images: [{ url: hero.src, alt: hero.alt }],
     },
   };
 }
@@ -38,5 +40,7 @@ export default async function UnitPage({ params }: UnitPageProps) {
 
   if (!unit) notFound();
 
-  return <UnitDetailContent unit={unit} heroBackground={entityBackground(unit.image)} />;
+  // The hero photograph is resolved inside `UnitDetailContent` from the *localized* unit,
+  // so switching to English also swaps the hero's alt text, not just its copy.
+  return <UnitDetailContent unit={unit} />;
 }

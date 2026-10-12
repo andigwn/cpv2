@@ -4,13 +4,12 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Clock, MapPin, UtensilsCrossed } from "lucide-react";
 import type { DiningVenue } from "@/types";
 import { diningHref } from "@/data/dining";
-import { sectionBackgrounds } from "@/data/sectionBackgrounds";
 import { staggerItem } from "@/lib/animations";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { PageHero } from "@/components/sections/PageHero";
+import { DestinationHero } from "@/components/sections/DestinationHero";
 import { ContentBand } from "@/components/sections/ContentBand";
 import { ImageBand } from "@/components/sections/ImageBand";
 import { UnitGallery } from "@/components/sections/units/UnitGallery";
@@ -20,7 +19,6 @@ import { useT } from "@/i18n/useTranslation";
 
 type DiningVenueContentProps = {
   venue: DiningVenue;
-  heroBackground: (typeof sectionBackgrounds)[keyof typeof sectionBackgrounds];
 };
 
 /**
@@ -29,20 +27,22 @@ type DiningVenueContentProps = {
  * Rhythm follows the business-unit pages: hero → profile & signature points → photo beat
  * → hours & location → photo beat → gallery → the other restaurants.
  */
-export function DiningVenueContent({ venue, heroBackground }: DiningVenueContentProps) {
+export function DiningVenueContent({ venue }: DiningVenueContentProps) {
   const t = useT();
   const diningVenues = useDiningVenues();
   const localized = useLocalizedDiningVenue(venue);
   const others = diningVenues.filter((item) => item.slug !== localized.slug);
   const [first, second] = localized.gallery;
+  // Read from the localized venue so the hero's alt text follows the language, not just the copy.
+  const hero = localized.heroImage ?? localized.image;
 
   return (
     <>
-      <PageHero
+      <DestinationHero
         eyebrow={localized.type}
         title={localized.name}
         description={localized.description}
-        background={heroBackground}
+        background={hero}
         breadcrumbs={[
           { label: t("common.home"), href: "/" },
           { label: t("nav.destinations"), href: "/unit-bisnis" },
@@ -54,12 +54,12 @@ export function DiningVenueContent({ venue, heroBackground }: DiningVenueContent
           <Button href="/contact" icon={<ChevronRight className="h-4 w-4" aria-hidden />}>
             {t("dining.reserveCta")}
           </Button>
-          <span className="border-lagoon-200 text-ink-700 inline-flex items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-sm backdrop-blur-md">
-            <Clock className="text-lagoon-600 h-4 w-4" aria-hidden />
+          <span className="bg-ink-900/40 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-sm text-white/90">
+            <Clock className="text-sunshine-300 h-4 w-4" aria-hidden />
             {localized.hours}
           </span>
         </div>
-      </PageHero>
+      </DestinationHero>
 
       {/* Profil & poin andalan */}
       <ContentBand>
@@ -70,16 +70,18 @@ export function DiningVenueContent({ venue, heroBackground }: DiningVenueContent
           className="max-w-2xl"
         />
 
-        <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {localized.features.map((feature) => (
-            <motion.div key={feature} variants={staggerItem} className="h-full">
-              <InfoCard
-                title={feature}
-                icon={<UtensilsCrossed className="h-5 w-5" aria-hidden />}
-              />
-            </motion.div>
-          ))}
-        </StaggerContainer>
+        {localized.features.length ? (
+          <StaggerContainer className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {localized.features.map((feature) => (
+              <motion.div key={feature} variants={staggerItem} className="h-full">
+                <InfoCard
+                  title={feature}
+                  icon={<UtensilsCrossed className="h-5 w-5" aria-hidden />}
+                />
+              </motion.div>
+            ))}
+          </StaggerContainer>
+        ) : null}
       </ContentBand>
 
       {/* Foto suasana */}
