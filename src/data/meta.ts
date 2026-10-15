@@ -18,8 +18,8 @@ export const heroBackgrounds = [
 ];
 
 export const companyStats: Stat[] = [
-  { value: "16", label: "Tahun pengalaman hospitality" },
-  { value: "5", label: "Destinasi di Indonesia" },
-  { value: "1.240", label: "Kamar & suite terkelola" },
-  { value: "18", label: "Penghargaan industri" },
+  { value: "10", label: "Tahun menyambut tamu" },
+  { value: "5", label: "Destinasi dalam satu kawasan" },
+  { value: "2.000", label: "Kapasitas tamu The Q Hall" },
+  { value: "88", label: "Kamar di Qubu Suites Hotel" },
 ];

@@ -16,7 +16,9 @@ import { useT, type Translate } from "@/i18n/useTranslation";
 
 /** Short footer summary for a unit card: facilities, room/venue count, or unit size. */
 function unitFooter(unit: BusinessUnit, t: Translate) {
-  if (unit.facilities.length) {
+  // One supporting facility reads better as nothing than as "1 fasilitas pendukung", so
+  // those destinations fall through to their room/venue count instead.
+  if (unit.facilities.length > 1) {
     return t("home.unitsFooterFacilities", { count: unit.facilities.length });
   }
   if (unit.roomTypes?.length) {
@@ -57,7 +59,7 @@ export function HomeUnits() {
               href={unitHref(unit)}
               eyebrow={unit.type}
               title={unit.name}
-              body={unit.tagline}
+              body={unit.homeTagline ?? unit.tagline}
               icon={
                 <Image
                   src={unit.image.src}

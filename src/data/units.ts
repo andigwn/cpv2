@@ -16,6 +16,8 @@ export const businessUnits: BusinessUnit[] = [
     type: "Hotel & Suites",
     tagline:
       "Qubu Suites Hotel menghadirkan pengalaman menginap yang memadukan kenyamanan modern dengan ketenangan alam, menciptakan ruang untuk beristirahat, bersantai, dan menikmati setiap momen dengan lebih bermakna.",
+    homeTagline:
+      "88 kamar yang memadukan kenyamanan modern dengan suasana tenang. Tempat terbaik untuk beristirahat setelah seharian beraktivitas.",
     summary:
       "Nikmati pengalaman menginap istimewa di Qubu Suites Hotel, dengan kamar nyaman, balkon privat, dan fasilitas lengkap untuk bersantai bersama keluarga.",
     description: [
@@ -312,6 +314,8 @@ export const businessUnits: BusinessUnit[] = [
     type: "Hotel",
     tagline:
       "Hotel Q menghadirkan suasana santai dengan sentuhan modern dan aksen lokal. Dengan 38 kamar dalam berbagai pilihan tipe, nikmati ruang yang nyaman untuk beristirahat dan recharge.",
+    homeTagline:
+      "Hotel bintang 4 dengan suasana santai, sentuhan modern, dan aksen lokal. Pilihan menginap hangat untuk liburan maupun perjalanan dinas.",
     summary:
       "Hotel Q menawarkan suasana santai dengan sentuhan gaya hidup modern yang dipadukan dengan aksen lokal. Dengan 38 kamar dalam berbagai pilihan tipe, Hotel Q menjadi tempat yang nyaman untuk beristirahat dan menikmati waktu dengan lebih tenang.",
     description: [
@@ -538,6 +542,8 @@ export const businessUnits: BusinessUnit[] = [
     type: "Ballroom and Convention Center",
     tagline:
       "Dengan kapasitas hingga 2.000 tamu, The Q Hall Convention Center hadir sebagai ruang yang fleksibel untuk berbagai momen, mulai dari wedding, konferensi, meeting, seminar, workshop, hingga gathering.",
+    homeTagline:
+      "Ballroom dengan kapasitas hingga 2.000 tamu. Siap untuk pernikahan, konferensi, seminar, hingga gathering perusahaan.",
     summary:
       "Ruang yang luas dan nyaman untuk konferensi, pameran, dan pernikahan Anda, didukung tim event yang siap mendampingi dari perencanaan hingga hari acara.",
     description: [
@@ -793,6 +799,8 @@ export const businessUnits: BusinessUnit[] = [
     type: "Waterpark",
     tagline:
       "Saatnya seru-seruan di Paradis-Q Waterpark! Rasakan keseruan wave pool, nikmati berbagai wahana air, berenang di area yang rindang, atau sekadar santai di gazebo bersama keluarga.",
+    homeTagline:
+      "Waterpark keluarga dengan wave pool, kiddy pool, area rindang, dan gazebo untuk bersantai bersama orang tersayang.",
     summary:
       "Destinasi rekreasi air untuk keluarga, menghadirkan beragam kolam dan wahana air untuk berbagai usia. Temukan keseruan di Paradis Q Waterpark, dengan beragam pengalaman air melalui lima kolam dengan keseruan yang berbeda hingga merasakan sensasi wahana yang menantang. Dilengkapi area bersantai dan pilihan kuliner. Jadikan hari lebih seru dengan berenang di Paradis Q Waterpark.",
     description: [
@@ -1030,17 +1038,6 @@ export const businessUnits: BusinessUnit[] = [
           alt: "Rooftop Q dengan lorong dekorasi bunga dan meja bundar",
         },
       },
-      {
-        slug: "food-corner",
-        name: "Food Corner",
-        type: "Food Court",
-        description:
-          "Food corner area di kawasan waterpark, dengan beraneka ragam pilihan kuliner, dan cocok untuk berbagai social event.",
-        image: {
-          src: "/images/service-restaurant.jpg",
-          alt: "Area makan dengan meja dan kursi menghadap taman",
-        },
-      },
     ],
   },
   {
@@ -1049,6 +1046,8 @@ export const businessUnits: BusinessUnit[] = [
     type: "Villa",
     tagline:
       "Destinasi penginapan di Qubu Resort yang terdiri dari empat villa dua lantai, cocok untuk keluarga besar maupun tamu dengan kebutuhan privasi lebih.",
+    homeTagline:
+      "Empat villa dua lantai untuk keluarga besar atau rombongan yang menginginkan privasi lebih.",
     summary:
       "Destinasi penginapan di Qubu Resort yang terdiri dari empat villa dua lantai, cocok untuk keluarga besar maupun tamu dengan kebutuhan privasi lebih.",
     description: [

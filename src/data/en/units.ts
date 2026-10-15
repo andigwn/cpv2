@@ -12,6 +12,8 @@ export const businessUnitsEn: BusinessUnit[] = [
     type: "Hotel & Suites",
     tagline:
       "Qubu Suites Hotel offers a stay that blends modern comfort with the calm of nature, creating a space to rest, unwind, and enjoy every moment more meaningfully.",
+    homeTagline:
+      "88 rooms that blend modern comfort with a calm atmosphere — the best place to rest after a full day of activities.",
     summary:
       "Enjoy a special stay at Qubu Suites Hotel, with comfortable rooms, private balconies, and complete facilities to relax together as a family.",
     description: [
@@ -307,6 +309,8 @@ export const businessUnitsEn: BusinessUnit[] = [
     type: "Hotel",
     tagline:
       "Hotel Q brings a relaxed atmosphere with a touch of modern style mixed with local accents. With 38 rooms across a range of types, enjoy a comfortable space to rest and recharge.",
+    homeTagline:
+      "A 4-star hotel with a relaxed atmosphere, modern touches, and local accents — a warm place to stay, whether you are on holiday or travelling for work.",
     summary:
       "Hotel Q offers a relaxed atmosphere with a modern take on lifestyle, mixed with local accents. With 38 rooms across a range of types, Hotel Q is a comfortable place to rest and spend a calmer kind of time.",
     description: [
@@ -533,6 +537,8 @@ export const businessUnitsEn: BusinessUnit[] = [
     type: "Ballroom and Convention Center",
     tagline:
       "With a capacity of up to 2,000 guests, The Q Hall Convention Center is a flexible venue for every occasion — from weddings and conferences to meetings, seminars, workshops, and gatherings.",
+    homeTagline:
+      "A ballroom with capacity for up to 2,000 guests, ready for weddings, conferences, seminars, and company gatherings.",
     summary:
       "A spacious and comfortable venue for your conferences, exhibitions, and weddings, supported by an event team ready to guide you from planning through to event day.",
     description: [
@@ -787,6 +793,8 @@ export const businessUnitsEn: BusinessUnit[] = [
     type: "Waterpark",
     tagline:
       "Time for fun at Paradis-Q Waterpark! Enjoy the thrill of the wave pool, ride a range of water slides, swim in a leafy area, or simply relax in a gazebo with the family.",
+    homeTagline:
+      "A family waterpark with a wave pool, a kiddy pool, shaded areas, and gazebos to relax with your loved ones.",
     summary:
       "A water recreation destination for families, offering a range of pools and water attractions for all ages. Find the fun at Paradis Q Waterpark, with water experiences across five pools of different flavours and attractions worth the challenge. Complete with a lounging area and dining options. Make the day more fun by swimming at Paradis Q Waterpark.",
     description: [
@@ -1024,17 +1032,6 @@ export const businessUnitsEn: BusinessUnit[] = [
           alt: "Rooftop Q with a flower-decorated aisle and round tables",
         },
       },
-      {
-        slug: "food-corner",
-        name: "Food Corner",
-        type: "Food Court",
-        description:
-          "A food corner within the waterpark area with a wide range of dining choices, suited to a range of social events.",
-        image: {
-          src: "/images/service-restaurant.jpg",
-          alt: "Dining area with tables and chairs overlooking the garden",
-        },
-      },
     ],
   },
   {
@@ -1043,6 +1040,8 @@ export const businessUnitsEn: BusinessUnit[] = [
     type: "Villa",
     tagline:
       "An accommodation destination at Qubu Resort made up of four two-storey villas, suited to large families or guests who want more privacy.",
+    homeTagline:
+      "Four two-storey villas for large families or groups who want more privacy.",
     summary:
       "An accommodation destination at Qubu Resort made up of four two-storey villas, suited to large families or guests who want more privacy.",
     description: [

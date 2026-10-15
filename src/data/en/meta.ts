@@ -1,10 +1,10 @@
 import type { Stat } from "@/types";
 
 export const companyStatsEn: Stat[] = [
-  { value: "16", label: "Years of hospitality experience" },
-  { value: "5", label: "Destinations across Indonesia" },
-  { value: "1,240", label: "Rooms & suites managed" },
-  { value: "18", label: "Industry awards" },
+  { value: "10", label: "Years welcoming guests" },
+  { value: "5", label: "Destinations in one area" },
+  { value: "2,000", label: "Guest capacity at The Q Hall" },
+  { value: "88", label: "Rooms at Qubu Suites Hotel" },
 ];
 
 export const heroBackgroundsEn = [

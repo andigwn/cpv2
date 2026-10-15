@@ -3,7 +3,7 @@
 import { HeroSection } from "@/components/sections/home/HeroSection";
 import { AboutPreview } from "@/components/sections/home/AboutPreview";
 import { HomeUnits } from "@/components/sections/home/HomeUnits";
-import { ServicesGrid } from "@/components/sections/home/ServicesGrid";
+import { EnjoyGrid } from "@/components/sections/home/EnjoyGrid";
 import { NewsPreview } from "@/components/sections/home/NewsPreview";
 import { CtaBanner } from "@/components/sections/home/CtaBanner";
 import { ImageBand } from "@/components/sections/ImageBand";
@@ -51,7 +51,7 @@ export function HomePageContent() {
         float3d
       />
 
-      <ServicesGrid />
+      <EnjoyGrid />
 
       <ImageBand
         image={{

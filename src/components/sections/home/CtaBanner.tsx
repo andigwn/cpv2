@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { CalendarCheck, Phone } from "lucide-react";
-import { SITE } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 import { FinaleBand } from "@/components/sections/FinaleBand";
 import { useCompanyStats } from "@/i18n/useContent";
@@ -20,6 +19,7 @@ const closingImage = {
 export function CtaBanner() {
   const t = useT();
   const companyStats = useCompanyStats();
+  const phone = t("home.ctaPhone");
 
   return (
     <FinaleBand id="cta" image={{ ...closingImage, alt: t("home.closingAlt") }}>
@@ -52,13 +52,13 @@ export function CtaBanner() {
             {t("home.ctaPrimary")}
           </Button>
           <Button
-            href={"tel:" + SITE.contact.phone.replace(/[^+\d]/g, "")}
+            href={"tel:" + phone.replace(/[^+\d]/g, "")}
             size="lg"
             variant="light"
             icon={<Phone className="h-4 w-4" aria-hidden />}
             iconPosition="left"
           >
-            {SITE.contact.phone}
+            {phone}
           </Button>
         </div>
       </motion.div>

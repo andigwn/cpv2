@@ -175,6 +175,12 @@ export type BusinessUnit = {
   /** Short type label shown as the eyebrow, e.g. "Hotel", "Convention Center". */
   type: string;
   tagline: string;
+  /**
+   * Shorter card copy for the Home destinations grid, where five long taglines would
+   * bury the scan. Falls back to `tagline` when omitted, so only destinations whose home
+   * brief fixes its own wording need to supply it.
+   */
+  homeTagline?: string;
   summary: string;
   description: string[];
   image: ImageAsset;
