@@ -64,10 +64,10 @@ export const diningVenuesEn: DiningVenue[] = [
   },
   {
     slug: "qubiq-bar",
-    name: "Qubik Bar",
+    name: "Qubiq Bar",
     type: "Bar & Lounge",
     description:
-      "Qubik Bar offers a relaxed experience in the outdoor area of Qubu Suites, with a selection of cocktails, wine, and beer against views of the sky bridge, super tree, and aviary — the backdrop of a memorable evening.",
+      "Qubiq Bar offers a relaxed experience in the outdoor area of Qubu Suites, with a selection of cocktails, wine, and beer against views of the sky bridge, super tree, and aviary — the backdrop of a memorable evening.",
     image: {
       src: "/images/work-sky-lounge.jpg",
       alt: "Bar lounge with a seating area and a bottle shelf facing the sea",

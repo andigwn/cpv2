@@ -81,7 +81,7 @@ export const businessUnits: BusinessUnit[] = [
       "Balkon privat di setiap tipe kamar",
       "Paradis-Q Waterpark",
       "Embun Resto",
-      "Qubik Bar dan Entertainment Room",
+      "Qubiq Bar dan Entertainment Room",
       "Wellness & Spa dan Kids Club",
     ],
     specs: [
@@ -92,7 +92,7 @@ export const businessUnits: BusinessUnit[] = [
       {
         label: "Fasilitas",
         value:
-          "Paradis-Q Waterpark, Embun Resto, Qubik Bar, entertain room, Wellness & Spa, kids club.",
+          "Paradis-Q Waterpark, Embun Resto, Qubiq Bar, entertain room, Wellness & Spa, kids club.",
       },
     ],
     hours: "Resepsionis 24 jam",

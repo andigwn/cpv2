@@ -1,17 +1,61 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+type DestinationIdentity = {
+  name: string;
+  /** Official artwork in `public/images/`, when the destination has one. */
+  logo?: { src: string; width: number; height: number };
+  wordmark: string;
+  subtitle: string;
+};
+
 /** Per-destination logo identities. Each unit gets its own mark + wordmark. */
-const LOGOS: Record<string, { wordmark: string; subtitle: string }> = {
-  "qubu-suites": { wordmark: "Qubu Suites", subtitle: "Hotel & Suites" },
-  "hotel-q": { wordmark: "Hotel Q", subtitle: "Hotel" },
-  qhall: { wordmark: "The Q Hall", subtitle: "Convention Center" },
+const LOGOS: Record<string, DestinationIdentity> = {
+  "qubu-suites": {
+    name: "Hotel Qubu Suites",
+    logo: { src: "/images/logo-qubu-suites.png", width: 3322, height: 1556 },
+    wordmark: "Qubu Suites",
+    subtitle: "Hotel & Suites",
+  },
+  "hotel-q": {
+    name: "Hotel Q",
+    logo: { src: "/images/logo-hotel-q.png", width: 2524, height: 1575 },
+    wordmark: "Hotel Q",
+    subtitle: "Hotel",
+  },
+  qhall: {
+    name: "The Q Hall",
+    logo: { src: "/images/logo-the-qhall.png", width: 7304, height: 2188 },
+    wordmark: "The Q Hall",
+    subtitle: "Convention Center",
+  },
   // Wordmarks follow the brand names in the copywriting deck.
-  "paradis-q": { wordmark: "Paradis-Q", subtitle: "Waterpark" },
-  villa: { wordmark: "Villa Town House", subtitle: "Private Villas" },
-  "patio-bistro": { wordmark: "Patio Bistro", subtitle: "All-day Dining" },
-  "embun-resto": { wordmark: "Embun Resto", subtitle: "Signature Restaurant" },
-  "qubiq-bar": { wordmark: "Qubik Bar", subtitle: "Bar & Lounge" },
-  "food-corner": { wordmark: "Food Corner", subtitle: "Food Court" },
+  "paradis-q": {
+    name: "Paradis-Q Waterpark",
+    logo: { src: "/images/logo-paradis-q-waterpark.png", width: 1604, height: 969 },
+    wordmark: "Paradis-Q",
+    subtitle: "Waterpark",
+  },
+  villa: { name: "Villa Town House", wordmark: "Villa Town House", subtitle: "Private Villas" },
+  "patio-bistro": {
+    name: "Patio Bistro",
+    logo: { src: "/images/logo-patio.png", width: 4566, height: 2962 },
+    wordmark: "Patio Bistro",
+    subtitle: "All-day Dining",
+  },
+  "embun-resto": {
+    name: "Embun Resto",
+    logo: { src: "/images/logo-embun.png", width: 3508, height: 2480 },
+    wordmark: "Embun Resto",
+    subtitle: "Signature Restaurant",
+  },
+  "qubiq-bar": { name: "Qubiq Bar", wordmark: "Qubiq Bar", subtitle: "Bar & Lounge" },
+  "food-corner": {
+    name: "Food Corner",
+    logo: { src: "/images/logo-food-corner.png", width: 7608, height: 3791 },
+    wordmark: "Food Corner",
+    subtitle: "Food Court",
+  },
 };
 
 /**
@@ -24,13 +68,12 @@ export function destinationSlugFromPath(pathname: string): string | null {
 }
 
 /**
- * Destination logo shown in the navbar on destination pages: the shared "Q" mark plus
- * the destination's own wordmark, so every destination reads as its own brand while
- * staying inside the Qubu lockup language.
+ * Destination logo shown in the navbar on destination pages. Where the destination ships an
+ * official logo file that artwork is used; the remaining ones fall back to the shared "Q"
+ * mark plus the destination's own wordmark.
  *
- * `overHero` switches the wordmark to white. The Q mark keeps its own colours either way —
- * they are bright enough to hold on photography — but the dark green wordmark disappears
- * against a full-bleed hero photograph, which is what destination pages now open with.
+ * The artwork sits directly on the page like the default logo on the home page — no plate
+ * or card behind it — so every destination keeps the same clean navbar treatment.
  */
 export function DestinationLogo({
   slug,
@@ -43,6 +86,22 @@ export function DestinationLogo({
 }) {
   const logo = LOGOS[slug];
   if (!logo) return null;
+
+  if (logo.logo) {
+    return (
+      <span className={cn("inline-flex items-center", className)}>
+        <Image
+          src={logo.logo.src}
+          alt={logo.name}
+          width={logo.logo.width}
+          height={logo.logo.height}
+          sizes="(min-width: 1280px) 220px, (min-width: 640px) 190px, 150px"
+          priority
+          className="h-10 w-auto sm:h-12 lg:h-14 xl:h-16"
+        />
+      </span>
+    );
+  }
 
   return (
     <span className={cn("inline-flex min-w-0 items-center gap-2 sm:gap-2.5", className)}>

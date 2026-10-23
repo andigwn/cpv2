@@ -76,7 +76,7 @@ export const businessUnitsEn: BusinessUnit[] = [
       "A private balcony in every room type",
       "Paradis-Q Waterpark",
       "Embun Resto",
-      "Qubik Bar and Entertainment Room",
+      "Qubiq Bar and Entertainment Room",
       "Wellness & Spa and Kids Club",
     ],
     specs: [
@@ -87,7 +87,7 @@ export const businessUnitsEn: BusinessUnit[] = [
       {
         label: "Facilities",
         value:
-          "Paradis-Q Waterpark, Embun Resto, Qubik Bar, entertainment room, Wellness & Spa, Kids Club.",
+          "Paradis-Q Waterpark, Embun Resto, Qubiq Bar, entertainment room, Wellness & Spa, Kids Club.",
       },
     ],
     hours: "24-hour reception",
