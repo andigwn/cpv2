@@ -77,6 +77,7 @@ export function ContactPageContent({
         title={t("contact.heroTitle")}
         description={t("contact.heroDescription")}
         background={heroBackground}
+        veil="none"
         breadcrumbs={[{ label: t("common.home"), href: "/" }, { label: t("nav.contact") }]}
       >
         <Button href={contactChannels[1].href}>{t("contact.heroCta")}</Button>

@@ -38,7 +38,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <SmoothScrollProvider>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-ink-900 focus:shadow-lg"
+        className="focus:text-ink-900 sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-70 focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:shadow-lg"
       >
         {t("a11y.skipToContent")}
       </a>

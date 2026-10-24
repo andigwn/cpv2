@@ -9,7 +9,13 @@ import { useState, type MouseEvent } from "react";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/types";
 import { SITE, SOCIAL_LINKS } from "@/lib/constants";
-import { navItemIsActive, navItemKey, hasDarkHero, isSamePageHash } from "@/lib/nav";
+import {
+  navItemIsActive,
+  navItemKey,
+  hasDarkHero,
+  hasWhiteNavText,
+  isSamePageHash,
+} from "@/lib/nav";
 import { jumpToAnchor } from "@/lib/anchorScroll";
 import { NavDropdown } from "@/components/layout/NavDropdown";
 import { DestinationLogo, destinationSlugFromPath } from "@/components/layout/DestinationLogo";
@@ -55,10 +61,15 @@ export function Navbar() {
   const onLightGround = scrolled || isOpen;
   const lightHeroChrome = overHero && !isOpen;
 
-  const linkTone = lightHeroChrome
-    ? "text-white/90 hover:text-white"
-    : "text-ink-600 hover:text-ink-900";
-  const activeTone = lightHeroChrome ? "text-white" : "text-lagoon-700";
+  // About, careers and contact open on a photo too, but keep the dark chrome controls;
+  // only their menu labels turn white over the transparent bar. Those photographs are bright,
+  // so the bar also takes a short dark scrim to keep the white labels readable.
+  const photoNavText = !isOpen && !scrolled && hasWhiteNavText(pathname);
+  const whiteNavText = lightHeroChrome || photoNavText;
+  const whiteNavTone = "text-white hover:text-white [text-shadow:0_1px_2px_rgba(19,25,34,0.45)]";
+
+  const linkTone = whiteNavText ? whiteNavTone : "text-ink-600 hover:text-ink-900";
+  const activeTone = whiteNavText ? whiteNavTone : "text-lagoon-700";
 
   // Destination pages swap the navbar logo for that destination's own logo.
   const destinationSlug = destinationSlugFromPath(pathname);
@@ -76,6 +87,16 @@ export function Navbar() {
             : "bg-transparent",
         )}
       >
+        {/* Short scrim behind the desktop menu on the three light-hero pages, so the white
+            labels stay readable without veiling the whole photograph. Fades in and out with
+            the scroll state instead of snapping when the solid header takes over. */}
+        <div
+          aria-hidden
+          className={cn(
+            "from-ink-900/60 via-ink-900/30 pointer-events-none absolute inset-0 hidden bg-linear-to-b to-transparent transition-opacity duration-500 lg:block",
+            photoNavText ? "opacity-100" : "opacity-0",
+          )}
+        />
         <nav
           aria-label={t("a11y.mainNav")}
           className="shell relative flex h-(--site-header-height) items-center justify-between gap-4 xl:gap-6"
@@ -118,7 +139,7 @@ export function Navbar() {
                     <NavDropdown
                       item={item}
                       isActive={isActive}
-                      overHero={lightHeroChrome}
+                      overHero={whiteNavText}
                       linkTone={linkTone}
                       activeTone={activeTone}
                     />

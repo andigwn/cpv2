@@ -22,6 +22,11 @@ type PageHeroProps = {
   children?: ReactNode;
   className?: string;
   align?: "left" | "center";
+  /**
+   * Canvas veils that blend the photo into the page. `"none"` leaves the photograph
+   * fully visible with no gradient over it.
+   */
+  veil?: "canvas" | "none";
 };
 
 /**
@@ -53,11 +58,15 @@ export function PageHero({
   children,
   className,
   align = "left",
+  veil = "canvas",
 }: PageHeroProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const isWide = useMediaQuery(MEDIA_QUERIES.sm);
   const t = useT();
   const centered = align === "center";
+  // With the canvas veils off, the copy sits directly on the photograph from `sm` up and
+  // has to switch to a light tone. Phones keep the dark copy below the photo on canvas.
+  const onPhoto = veil === "none";
 
   // Phone strip shape, resolved before first paint so the layout never jumps.
   const stripStyle: AspectRatioStyle = { "--hero-ar": photoRatio(background.src).css };
@@ -107,32 +116,53 @@ export function PageHero({
       </motion.div>
 
       {/* The veils only exist to blend the full-bleed desktop photo into the canvas. */}
-      <div
-        aria-hidden
-        className="from-sand-100 via-sand-100/45 absolute inset-0 hidden bg-linear-to-t to-transparent sm:block"
-      />
-      <div
-        aria-hidden
-        className="from-sand-100/80 absolute inset-x-0 top-0 hidden h-32 bg-linear-to-b to-transparent sm:h-44"
-      />
+      {veil === "canvas" ? (
+        <>
+          <div
+            aria-hidden
+            className="from-sand-100 via-sand-100/45 absolute inset-0 hidden bg-linear-to-t to-transparent sm:block"
+          />
+          <div
+            aria-hidden
+            className="from-sand-100/80 absolute inset-x-0 top-0 hidden h-32 bg-linear-to-b to-transparent sm:h-44"
+          />
+        </>
+      ) : null}
 
       <div className="shell relative z-10 pt-8 pb-14 sm:pt-40 sm:pb-20 lg:pb-24">
         {breadcrumbs?.length ? (
           <nav aria-label={t("a11y.breadcrumb")} className="mb-6">
-            <ol className="text-ink-600 flex flex-wrap items-center gap-2 text-xs">
+            <ol
+              className={cn(
+                "text-ink-600 flex flex-wrap items-center gap-2 text-xs",
+                onPhoto && "sm:text-white/85",
+              )}
+            >
               {breadcrumbs.map((crumb, index) => (
                 <li key={crumb.label + "-" + index} className="flex items-center gap-2">
                   {crumb.href ? (
-                    <Link href={crumb.href} className="hover:text-lagoon-700 transition-colors">
+                    <Link
+                      href={crumb.href}
+                      className={cn(
+                        "hover:text-lagoon-700 transition-colors",
+                        onPhoto && "sm:hover:text-white",
+                      )}
+                    >
                       {crumb.label}
                     </Link>
                   ) : (
-                    <span aria-current="page" className="text-ink-800">
+                    <span
+                      aria-current="page"
+                      className={cn("text-ink-800", onPhoto && "sm:text-white")}
+                    >
                       {crumb.label}
                     </span>
                   )}
                   {index < breadcrumbs.length - 1 ? (
-                    <ChevronRight className="text-ink-400 h-3 w-3" aria-hidden />
+                    <ChevronRight
+                      className={cn("text-ink-400 h-3 w-3", onPhoto && "sm:text-white/60")}
+                      aria-hidden
+                    />
                   ) : null}
                 </li>
               ))}
@@ -140,12 +170,22 @@ export function PageHero({
           </nav>
         ) : null}
 
-        <div className={cn("max-w-2xl", centered && "mx-auto text-center")}>
+        <div
+          className={cn(
+            "max-w-2xl",
+            centered && "mx-auto text-center",
+            onPhoto &&
+              "sm:[text-shadow:0_1px_2px_rgba(19,25,34,0.95),0_0_10px_rgba(19,25,34,0.75),0_2px_24px_rgba(19,25,34,0.45)]",
+          )}
+        >
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: EASE_SOFT }}
-            className="text-lagoon-700 inline-flex items-center gap-2 text-[0.7rem] font-semibold tracking-[0.28em] uppercase"
+            className={cn(
+              "text-lagoon-700 inline-flex items-center gap-2 text-[0.7rem] font-semibold tracking-[0.28em] uppercase",
+              onPhoto && "sm:text-white",
+            )}
           >
             <span aria-hidden className="h-px w-8 bg-current opacity-60" />
             {eyebrow}
@@ -155,7 +195,10 @@ export function PageHero({
             initial={{ opacity: 0, y: 22, clipPath: "inset(0 0 100% 0)" }}
             animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" }}
             transition={{ duration: 0.8, ease: EASE_SOFT, delay: 0.08 }}
-            className="font-display text-ink-900 mt-4 text-4xl leading-[1.03] sm:text-5xl lg:text-6xl"
+            className={cn(
+              "font-display text-ink-900 mt-4 text-4xl leading-[1.03] sm:text-5xl lg:text-6xl",
+              onPhoto && "sm:text-white",
+            )}
           >
             {title}
           </motion.h1>
@@ -165,7 +208,10 @@ export function PageHero({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: EASE_SOFT, delay: 0.18 }}
-              className="text-ink-600 mt-4 text-base leading-relaxed"
+              className={cn(
+                "text-ink-600 mt-4 text-base leading-relaxed",
+                onPhoto && "sm:text-white",
+              )}
             >
               {description}
             </motion.p>

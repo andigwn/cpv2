@@ -59,6 +59,7 @@ export function CareersPageContent({
         title={t("careers.heroTitle")}
         description={t("careers.heroDescription")}
         background={heroBackground}
+        veil="none"
         breadcrumbs={[
           { label: t("common.home"), href: "/" },
           { label: t("nav.careers") },

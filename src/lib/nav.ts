@@ -88,3 +88,15 @@ const DARK_HERO_ROUTE_PREFIXES = ["/unit-bisnis/", "/dining/"];
 export function hasDarkHero(pathname: string) {
   return pathname === "/" || DARK_HERO_ROUTE_PREFIXES.some((route) => pathname.startsWith(route));
 }
+
+/**
+ * Pages that open on a photograph but keep the default (dark) navbar chrome. Their menu
+ * labels still switch to white while the bar is transparent over that photograph, matching
+ * the light hero copy; the language toggle and mobile menu button keep their dark treatment
+ * so they stay visible on bright skies.
+ */
+const WHITE_NAV_TEXT_ROUTES = new Set(["/about", "/careers", "/contact"]);
+
+export function hasWhiteNavText(pathname: string) {
+  return WHITE_NAV_TEXT_ROUTES.has(pathname);
+}
