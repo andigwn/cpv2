@@ -50,6 +50,10 @@ export function AboutPageContent({ heroBackground }: AboutPageContentProps) {
         title={aboutStory.title}
         description={aboutStory.lead}
         background={heroBackground}
+        /* Photo fully visible, no canvas veil: the sand veils melt the lower half of the
+           photograph into fog, which reads as a blur right at the hand-off into the first
+           ContentBand. White copy + its own shadow carries the contrast instead. */
+        veil="none"
         breadcrumbs={[
           { label: t("common.home"), href: "/" },
           { label: t("nav.about") },

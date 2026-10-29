@@ -175,7 +175,7 @@ export function PageHero({
             "max-w-2xl",
             centered && "mx-auto text-center",
             onPhoto &&
-              "sm:[text-shadow:0_1px_2px_rgba(19,25,34,0.95),0_0_10px_rgba(19,25,34,0.75),0_2px_24px_rgba(19,25,34,0.45)]",
+              "sm:[text-shadow:0_1px_2px_rgba(19,25,34,0.95),0_0_4px_rgba(19,25,34,0.9),0_0_16px_rgba(19,25,34,0.9),0_2px_36px_rgba(19,25,34,0.6)]",
           )}
         >
           <motion.span
